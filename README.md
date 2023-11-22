@@ -19,3 +19,10 @@ First and foremost, this is a empirical study. We are open sourcing all the deta
 ```bash
 python3 collect_data_single_layers.py
 ```
+Note: `+` sign demonstrates the layers are merged. `||` demonstrates outputs of the layers will be concataned (as concatanation layer). `{}` demonstrates that DLA fuses the layers and profiling of all layers are treated as one layer(basically, this is a profiling limitation in DLA architectures).
+
+* Transition time profiling: The easiest way to profile the layer's transition cost is to generate transition per layer engines. ([TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#abstract) refers to executable DNN files, we follow the same terms to prevent any confusion)
+```bash
+python3 build_transition_time_engines.py
+```
+

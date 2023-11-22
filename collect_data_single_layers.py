@@ -6,10 +6,10 @@ from pathlib import Path
 from natsort import natsorted
 import time
 
-avgRun=1
-warmUp=2000
-warmUpList=[2000]
-iteration=1000
+avgRun = 1
+warmUp = 2000
+warmUpList = [2000]
+iteration = 1000
 TRTEXEC_PATH = "/usr/src/tensorrt/bin/trtexec"
 
 # output_dir = "inception_dla_logs"
@@ -62,7 +62,7 @@ TRTEXEC_PATH = "/usr/src/tensorrt/bin/trtexec"
 #             print("Network1:",network_name)
 #             print("Network2:",network_name_2)
 #             print("--------------------")
-            
+
 #             # with open(output_dir+"/"+str(network_name)+"_single_network.log", 'w') as log_file:
 #             dt = datetime.now()
 #             current_time="Time:"+str(dt.hour)+":"+str(dt.minute)+":"+str(dt.second)+" "+str(dt.microsecond)
@@ -79,7 +79,6 @@ TRTEXEC_PATH = "/usr/src/tensorrt/bin/trtexec"
 #             # exit()
 #                 # subprocess.run([TRTEXEC_PATH, "--iterations="+str(iteration),"--dumpProfile", "--exportProfile=temp/"+str(network_name)+".profile", "--avgRuns="+str(avgRun), "--warmUp="+str(warmUp), "--duration=0", f"--loadEngine={engine}"], stdout=log_file)
 #             # if count > 0:
-            
 
 
 # input_dir_path="all_gpu_dla_engines/"
@@ -130,29 +129,55 @@ TRTEXEC_PATH = "/usr/src/tensorrt/bin/trtexec"
 #                 # exit()
 
 TRTEXEC_PATH = "/usr/src/tensorrt/bin/trtexec"
-input_dir_path="group_layers_dla/"
+input_dir_path = "group_layers_dla/"
 input_engines = glob.glob(f"{input_dir_path}/*.plan")
 
-avgRun=1
+avgRun = 1
 print("test")
-count=0
+count = 0
 # iteration=20
-warmUpList=[0]
-iteration=1000
+warmUpList = [0]
+iteration = 1000
 for warmUp in warmUpList:
     for engine in input_engines:
         if "vgg" not in engine:
             continue
-        count+=1
+        count += 1
         test_network = Path(str(engine))
         # engine="resnet101_15_.plan"
         print(engine)
         network_name = test_network.stem
-        with open("group_layers_gpu_and_dla_standalone/"+str(network_name)+"_standalone.log", 'w') as log_file:
+        with open(
+            "group_layers_gpu_and_dla_standalone/"
+            + str(network_name)
+            + "_standalone.log",
+            "w",
+        ) as log_file:
             dt = datetime.now()
-            current_time="Time:"+str(dt.hour)+":"+str(dt.minute)+":"+str(dt.second)+" "+str(dt.microsecond)
-            print("CURRENT TIME: ",current_time)
-            subprocess.run([TRTEXEC_PATH, "--iterations="+str(iteration),"--dumpProfile", "--exportProfile=temp/"+str(network_name)+".profile", "--avgRuns="+str(avgRun), "--warmUp="+str(warmUp), "--duration=0", f"--loadEngine={engine}"], stdout=log_file)
+            current_time = (
+                "Time:"
+                + str(dt.hour)
+                + ":"
+                + str(dt.minute)
+                + ":"
+                + str(dt.second)
+                + " "
+                + str(dt.microsecond)
+            )
+            print("CURRENT TIME: ", current_time)
+            subprocess.run(
+                [
+                    TRTEXEC_PATH,
+                    "--iterations=" + str(iteration),
+                    "--dumpProfile",
+                    "--exportProfile=temp/" + str(network_name) + ".profile",
+                    "--avgRuns=" + str(avgRun),
+                    "--warmUp=" + str(warmUp),
+                    "--duration=0",
+                    f"--loadEngine={engine}",
+                ],
+                stdout=log_file,
+            )
         # if count == 1:
         #     exit()
 
@@ -192,7 +217,7 @@ for warmUp in warmUpList:
 #         for engine in input_engines_2:
 #             count+=1
 #             test_network = Path(str(engine))
-            
+
 #             print(input_engines)
 #             input_engines=natsorted(input_engines)
 #             print(input_engines)
@@ -212,7 +237,6 @@ for warmUp in warmUpList:
 #                 # subprocess.run([TRTEXEC_PATH, "--iterations="+str(iteration),"--dumpProfile", "--exportProfile=temp/"+str(network_name)+".profile", "--avgRuns="+str(avgRun), "--warmUp="+str(warmUp), "--duration=0", f"--loadEngine={engine}"], stdout=log_file)
 #             if count == 1:
 #                 exit()
-
 
 
 # input_engines=natsorted(input_engines)

@@ -1,0 +1,14 @@
+'''
+We profile extarnal memory controller (EMC) utilization by using `sudo tegrastats` command. 
+The output format is simply formatted: Date, CPU utilization, .... EMC_FREQ(EMC_utilization), ....
+EMC_FREQ prompt shows two parts: 1) utilization percentage 2)the frequency of the EMC
+We take first part as our EMC utilization per DNN. 
+
+Note: When nothing running on the system, the prompt shows EMC_FREQ 0%@800. 
+Since our baseline is 0 utilization, we don't make any further calculations.
+
+Note 2: Since EMC_FREQ calculates the average of last couple of seconds. 
+'''
+
+#Tegrastats log for each second
+tegrastats_line="10-16-2023 09:06:55 RAM 29959/30587MB (lfb 25x4MB) SWAP 2307/15294MB (cached 46MB) CPU [40%@1113,0%@1113,0%@1113,89%@1113,off,off,off,off,off,off,off,off] EMC_FREQ 16%@2133 GR3D_FREQ 67%@407 GR3D2_FREQ 67%@0 VIC_FREQ 729 APE 174 CV0@-256C CPU@49.343C Tboard@37C SOC2@45.187C Tdiode@39C SOC0@46.281C CV1@-256C GPU@45.375C tj@49.343C SOC1@46.5C CV2@-256C VDD_GPU_SOC 3972mW/3698mW VDD_CPU_CV 794mW/580mW VIN_SYS_5V0 5745mW/5325mW NC 0mW/0mW VDDQ_VDD2_1V8AO 1912mW/1478mW NC 0mW/0mW"RAM 3199/15825MB (lfb 1849x4MB) SWAP 0/7912MB (cached 0MB) CPU [0%@1267,0%@1266,0%@1267,0%@1266,1%@1267,3%@1266,2%@1190,3%@1190] EMC_FREQ 0%@800 GR3D_FREQ 0%@318 VIC_FREQ 0%@115 APE 150 MTS fg 0% bg 2% AO@43C GPU@44.5C Tdiode@46.25C PMIC@100C AUX@43.5C CPU@44.5C thermal@43.8C Tboard@45C GPU 0/0 CPU 619/619 SOC 1083/1083 CV 0/0 VDDRQ 0/0 SYS5V 2294/2294

@@ -1,0 +1,23 @@
+name: "VGG_ILSVRC_19_layers"
+input: "data"
+input_dim: 1
+input_dim: 64
+input_dim: 56
+input_dim: 56
+layer {
+  bottom: "data"
+  top: "conv3_1"
+  name: "conv3_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 5
+  }
+}
+layer {
+  bottom: "conv3_1"
+  top: "conv3_1"
+  name: "relu3_1"
+  type: "ReLU"
+}

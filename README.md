@@ -26,3 +26,15 @@ Note: `+` sign demonstrates the layers are merged. `||` demonstrates outputs of 
 python3 build_transition_time_engines.py
 ```
 
+
+
+* EMC utilization can be profiled running the command below. 
+Figure 3 is calculated through running the script below for each DNN.
+```bash
+sudo tegrastats >> emc_utilization.tex
+```
+DNNs are generated as running the script below. The script reads to prototxt files from $convolution_characterization_prototxts and generates an TensorRT engine for each layer. 
+
+```bash
+python3 engine_build_convolution_characterization.py
+```

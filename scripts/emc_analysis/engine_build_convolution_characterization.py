@@ -78,6 +78,7 @@ def save_engine(serialized_engine, save_file):
     with open(save_file, "wb") as f:
         f.write(serialized_engine)
 
+
 script_dir = os.path.dirname(os.path.realpath(__file__))
 root_path = os.path.join(script_dir, "../../")
 

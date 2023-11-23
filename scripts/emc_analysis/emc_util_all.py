@@ -42,5 +42,5 @@ for conv in range(1, 6):
 with open(root_path + 'output/emc_results.yaml', 'w') as file:
     yaml.dump(emc_results, file, default_flow_style=False)
 
-print("EMC utilization data collected and saved to emc_results.yaml.")
+print("EMC utilization data collected and saved to output/emc_results.yaml.")
 

@@ -82,6 +82,7 @@ def save_engine(serialized_engine, save_file):
 if __name__ == "__main__":
     input_dir_path = "convolution_characterization_prototxts/"
     input_engines = glob.glob(f"{input_dir_path}/*.prototxt")
+    output_dir_path = "convolution_characterization_plans/"
     for engine in input_engines:
         # print(engine)
         count = 0
@@ -90,9 +91,10 @@ if __name__ == "__main__":
         network_stem = test_network.stem
         print(network_stem)
         print(engine)
+        Path(output_dir_path).mkdir(parents=True, exist_ok=True)
         serialized_engine = build_engine_caffe(None, engine, 0, True, batch)
         if serialized_engine is not None:
             save_engine(
                 serialized_engine.serialize(),
-                str("convolution_characterization_plans/" + network_stem + ".plan"),
+                str(output_dir_path + network_stem + ".plan"),
             )

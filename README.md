@@ -15,7 +15,8 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 First and foremost, this is a empirical study. We are open sourcing all the details how we collected data. The data collected through profiling has been encoded to script.  
 
-## Layer profiling: This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use mean data as the average of X number of iterations   #TODO_ISMET
+## Layer profiling: 
+This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use mean data as the average of X number of iterations   #TODO_ISMET
 ```bash
 python3 collect_data_single_layers.py
 ```

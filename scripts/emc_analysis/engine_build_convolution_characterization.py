@@ -78,11 +78,11 @@ def save_engine(serialized_engine, save_file):
     with open(save_file, "wb") as f:
         f.write(serialized_engine)
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     script_dir = Path(__file__).resolve().parent
     root_path = str(script_dir.parent.parent) + "/"
-    
+
     print(root_path)
     input_dir_path = root_path + "convolution_characterization_prototxts/"
     input_engines = glob.glob(f"{input_dir_path}/*.prototxt")

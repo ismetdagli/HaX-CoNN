@@ -13,6 +13,7 @@ count = 0
 warmUp = 0
 iteration = 1000
 
+
 def process_run(
     network_name,
     batch,
@@ -94,7 +95,7 @@ t2 = threading.Thread(
     ),
 )
 t1.start()
-time.sleep(1)  
+time.sleep(1)
 t2.start()
 t1.join()
 t2.join()

@@ -95,11 +95,11 @@ if __name__ == "__main__":
     prototxt = "googlenet.prototxt"
     serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
     save_engine(
-                serialized_engine.serialize(),
-                str("google_only_gpu.plan"),
-            )
+        serialized_engine.serialize(),
+        str("google_only_gpu.plan"),
+    )
     serialized_engine = build_engine_caffe(None, prototxt, transition, False, batch)
     save_engine(
-                serialized_engine.serialize(),
-                str("google_only_dla.plan"),
-            )
+        serialized_engine.serialize(),
+        str("google_only_dla.plan"),
+    )

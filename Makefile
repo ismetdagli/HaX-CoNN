@@ -2,6 +2,7 @@
 
 TR_TIME_PLANS_DIR    := build/googlenet_transition_plans
 TR_TIME_PROFILES_DIR := $(TR_TIME_PLANS_DIR)/profiles
+TR_TIME_PROF_LOGS_DIR := $(TR_TIME_PLANS_DIR)/profile_logs
 
 # workaround as the python script generates all plans at once
 TR_TIME_SENTINEL := $(TR_TIME_PLANS_DIR)/.sentinel
@@ -12,11 +13,12 @@ $(TR_TIME_SENTINEL):
 	mkdir -p $(TR_TIME_PLANS_DIR) && touch $(TR_TIME_SENTINEL)
 
 $(TR_TIME_PROFILES_DIR)/%.profile: $(TR_TIME_SENTINEL)
-	mkdir -p $(TR_TIME_PROFILES_DIR)
+	mkdir -p $(TR_TIME_PROFILES_DIR) $(TR_TIME_PROF_LOGS_DIR)
 	# The corresponding plan is found for each target profile here
 	plan_file=$(patsubst $(TR_TIME_PROFILES_DIR)/%.profile,$(TR_TIME_PLANS_DIR)/%.plan,$@); \
-	/usr/src/tensorrt/bin/trtexec --iterations=10000  \
-	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$$plan_file
+	log_file=$(patsubst $(TR_TIME_PROFILES_DIR)/%.profile,$(TR_TIME_PROF_LOGS_DIR)/%.log,$@); \
+	/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile \
+	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$$plan_file > $$log_file
 
 .PHONY: profiles
 profiles: $(TR_TIME_SENTINEL)

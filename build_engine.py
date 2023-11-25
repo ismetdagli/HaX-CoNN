@@ -92,7 +92,7 @@ if __name__ == "__main__":
     count = 0
     batch = 1
     transition = -1
-    prototxt = "googlenet.prototxt"
+    prototxt = "prototxt_input_files/googlenet.prototxt"
     serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
     save_engine(
         serialized_engine.serialize(),

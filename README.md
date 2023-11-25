@@ -58,15 +58,17 @@ The script will provide you the maximum EMC usage during the engine's run.
 
 ## Synchronous multiple DNN execution
 
-1/2-create two distinct copies of the original Tensorrt directory to an empty directories
-3/4-replace sampleInference.cpp with the corresponding directories
-5/6-build the directories
-7-run the multiple dnn
+* create two distinct copies of the original Tensorrt directory to an empty directories
+* *replace sampleInference.cpp with the corresponding directories
+* build the directories
+* built googlenet only gpu and dla engines
+* run the multiple dnn
 #TODO_ISMET UPDATE THE SHM FILE, CHANGE THE NAME, assign to 0 in run_multiple.py
 ```bash
 cp /usr/src/tensorrt tensorrt_sharedMem1 && cp /usr/src/tensorrt tensorrt_sharedMem2
 cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp  && cp modified_tensorrts/sampleInference2.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp 
 cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd tensorrt_sharedMem2/samples/trtexec && make -j4 
-python3 run_multiple_dnn.py
+python3
+mkdir multi_dnn_execution && python3 run_multiple_dnn.py
 ```
 

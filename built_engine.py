@@ -70,8 +70,6 @@ def build_engine_caffe(model_file, deploy_file, trans_layer, runs_on_gpu, batch)
                     network.mark_output(
                         network.get_layer(network.num_layers - 1).get_output(0)
                     )
-                if i == transition:
-                    network.mark_output(model_tensors.find(layer.name))
             else:
                 config.set_device_type(layer, trt.DeviceType.DLA)  # DLA
                 if i < trans_layer:
@@ -95,17 +93,13 @@ if __name__ == "__main__":
     batch = 1
     transition = -1
     prototxt = "googlenet.prototxt"
-    for transition in {0, 10, 24, 38, 53, 67, 81, 95, 109, 124, 141}:
-        serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
-        if serialized_engine is not None:
-            save_engine(
+    serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
+    save_engine(
                 serialized_engine.serialize(),
-                str("googlenet_gpu_transition_at_" + transition + ".plan"),
+                str("google_only_gpu.plan"),
             )
-    for transition in {0, 10, 24, 38, 53, 67, 81, 95, 109, 124, 141}:
-        serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
-        if serialized_engine is not None:
-            save_engine(
+    serialized_engine = build_engine_caffe(None, prototxt, transition, False, batch)
+    save_engine(
                 serialized_engine.serialize(),
-                str("googlenet_dla_transition_at_" + transition + ".plan"),
+                str("google_only_dla.plan"),
             )

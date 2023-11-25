@@ -6,7 +6,6 @@ TR_TIME_PROFILES_DIR := $(TR_TIME_PLANS_DIR)/profiles
 # workaround as the python script generates all plans at once
 TR_TIME_SENTINEL := $(TR_TIME_PLANS_DIR)/.sentinel
 
-TR_TIME_PLANS := $(wildcard $(TR_TIME_PLANS_DIR)/*.plan)
 
 $(TR_TIME_SENTINEL):
 	python3 scripts/transition_time_analysis/build_transition_time_engines.py
@@ -19,7 +18,11 @@ $(TR_TIME_PROFILES_DIR)/%.profile: $(TR_TIME_SENTINEL)
 	/usr/src/tensorrt/bin/trtexec --iterations=10000  \
 	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$$plan_file
 
-profiles: $(patsubst $(TR_TIME_PLANS_DIR)/%.plan,$(TR_TIME_PROFILES_DIR)/%.profile,$(TR_TIME_PLANS))
+.PHONY: profiles
+profiles: $(TR_TIME_SENTINEL)
+	$(eval TR_TIME_PLANS := $(wildcard $(TR_TIME_PLANS_DIR)/*.plan))
+	$(MAKE) $(patsubst $(TR_TIME_PLANS_DIR)/%.plan,$(TR_TIME_PROFILES_DIR)/%.profile,$(TR_TIME_PLANS))
+
 
 # EMC Analysis
 EMC_PLANS_DIR := build/convolution_characterization_plans
@@ -46,7 +49,7 @@ output/emc_results.json: $(EMC_SENTINEL) $(EMC_TIMES)
 .PHONY: emc
 emc: output/emc_results.json
 
-all: emc
+all: emc profiles
 
 clean:
 	rm -rf output/* build/*

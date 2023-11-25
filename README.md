@@ -67,8 +67,8 @@ The script will provide you the maximum EMC usage during the engine's run.
 ```bash
 cp -r /usr/src/tensorrt tensorrt_sharedMem1 && cp -r /usr/src/tensorrt tensorrt_sharedMem2
 cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp  && cp modified_tensorrts/sampleInference2.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp 
-cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd tensorrt_sharedMem2/samples/trtexec && make -j4 
-echo '0' > /tmp/shared_mem.txt 
+cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd ../../../tensorrt_sharedMem2/samples/trtexec && make -j4 
+echo '0' | sudo tee /tmp/shared_mem.txt
 python3 build_engine.py
 mkdir multi_dnn_execution && python3 run_multiple_dnn.py
 ```

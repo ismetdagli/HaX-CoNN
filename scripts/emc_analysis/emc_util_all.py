@@ -2,48 +2,40 @@
 This script manages all of the inputs and collects the output of 
 EMC utilization data. 
 """
+import json
+from pathlib import Path
+from collections import defaultdict
+import re
 
-import subprocess
-import yaml
-import os
-
-
-def emc_single_run(script_path, input_arg):
-    try:
-        result = subprocess.run(
-            ["sudo", script_path, input_arg],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            universal_newlines=True,
-            check=True,
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        print(f"Error occurred running {script_path}: {e}")
-        return None
+def get_max_emc_value(file_path):
+    with open(file_path, 'r') as file:
+        values = [int(line.strip('%\n')) for line in file.readlines()]
+    return f"{max(values)}%" if values else "0%"
 
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
-single_run_path = os.path.join(script_dir, "emc_single_run.sh")
-root_path = os.path.join(script_dir, "../../")
+def parse_emc_filename(filename):
+    match = re.match(r'conv(\d+)_kernel(\d+)', filename)
+    if match:
+        return int(match.group(1)), int(match.group(2))
+    return None, None
 
+script_dir = Path(__file__).resolve().parent
+emc_data_dir = script_dir.parent.parent / "build/convolution_characterization_plans/times/"
+emc_files = emc_data_dir.glob('*.txt')
 
-emc_results = {}
+emc_results = defaultdict(dict)
 
-# Iterate over the conv and kernel values
-for conv in range(1, 6):
-    emc_results[f"conv{conv}"] = {}
-    for kernel in range(1, 6):
-        input_arg = (
-            f"build/convolution_characterization_plans/conv{conv}_kernel{kernel}.plan"
-        )
-        output = emc_single_run(single_run_path, root_path + input_arg)
-        if output is not None:
-            emc_results[f"conv{conv}"][f"kernel{kernel}"] = output
-            print(f"Saved result {output} in conv {conv} and kernel {kernel}")
+for file_path in emc_files:
+    conv_num, kernel_num = parse_emc_filename(file_path.stem)
+    if conv_num is not None and kernel_num is not None:
+        emc_results[f"conv{conv_num}"][f"kernel{kernel_num}"] = get_max_emc_value(file_path)
 
-# Write the results to a YAML file
-with open(root_path + "output/emc_results.yaml", "w") as file:
-    yaml.dump(emc_results, file, default_flow_style=False)
+# Sort the results
+sorted_emc_results = {conv: dict(sorted(kernels.items())) for conv, kernels in sorted(emc_results.items())}
 
-print("EMC utilization data collected and saved to output/emc_results.yaml.")
+json_output_path = script_dir.parent.parent / "output" / "emc_results.json"
+with json_output_path.open('w') as json_file:
+    json.dump(sorted_emc_results, json_file, indent=4)
+
+print(f"EMC utilization data collected and saved to {json_output_path}.")
+

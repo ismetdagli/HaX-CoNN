@@ -442,7 +442,7 @@ void inferenceLoop(IterationStreams& iStreams, const TimePoint& cpuStart, const 
     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
     // shm = (char*) shmat(shmid,(void*)0,0); // shmat to join to shared memory
     struct stat statbuf;
-    int fd = open("/home/ismetdagli/temp/shared_mem.txt", O_RDWR,S_IRUSR | S_IWUSR);
+    int fd = open("/tmp/shared_mem.txt", O_RDWR,S_IRUSR | S_IWUSR);
     fstat(fd, &statbuf);
     char *shm = (char*) mmap(
         /* addr= */ NULL,

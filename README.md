@@ -7,7 +7,7 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 1. Checklist(meta information)
 * Hardware: Jetson Xavier AGX 32 GB
-* Software easy installation: Jetpack 4.5
+* Software easy installation: Jetpack 4.5.1
 * Software details: #TODO_ISMET
 
 
@@ -60,15 +60,18 @@ The script will provide you the maximum EMC usage during the engine's run.
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories
-* build the directories
+* build the directories & write 0 to a tmp shared file.
 * built googlenet only gpu and dla engines
 * run the multiple dnn
 #TODO_ISMET UPDATE THE SHM FILE, CHANGE THE NAME, assign to 0 in run_multiple.py
 ```bash
-cp /usr/src/tensorrt tensorrt_sharedMem1 && cp /usr/src/tensorrt tensorrt_sharedMem2
+cp -r /usr/src/tensorrt tensorrt_sharedMem1 && cp -r /usr/src/tensorrt tensorrt_sharedMem2
 cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp  && cp modified_tensorrts/sampleInference2.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp 
 cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd tensorrt_sharedMem2/samples/trtexec && make -j4 
-python3
+echo '0' > /tmp/shared_mem.txt 
+python3 build_engine.py
 mkdir multi_dnn_execution && python3 run_multiple_dnn.py
 ```
 
+#TODOS:
+Citation file

@@ -74,7 +74,7 @@ t1 = threading.Thread(
         "multi_dnn_execution_logs",
         1,
         network_name_2,
-        "/home/ismetdagli/tensorrt_sharedMem1/bin/trtexec",
+        "tensorrt_sharedMem1/bin/trtexec",
         count,
     ),
 )
@@ -89,7 +89,7 @@ t2 = threading.Thread(
         "multi_dnn_execution_logs",
         2,
         network_name,
-        "/home/ismetdagli/tensorrt_sharedMem2/bin/trtexec",
+        "tensorrt_sharedMem2/bin/trtexec",
         count,
     ),
 )

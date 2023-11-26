@@ -2,3 +2,4 @@
 *.engine
 
 build/
+__pycache__/

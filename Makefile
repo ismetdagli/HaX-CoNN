@@ -27,25 +27,25 @@ profiles: $(TR_TIME_SENTINEL)
 
 
 # EMC Analysis
+PROTOTXT_DIR  := convolution_characterization_prototxts
 EMC_PLANS_DIR := build/convolution_characterization_plans
 EMC_TIMES_DIR := $(EMC_PLANS_DIR)/times
 
-EMC_SENTINEL  := $(EMC_PLANS_DIR)/.sentinel
-SRC_FILES := $(wildcard convolution_characterization_prototxts/*.prototxt)
-EMC_PLANS := $(patsubst convolution_characterization_prototxts/%.prototxt,$(EMC_PLANS_DIR)/%.plan,$(SRC_FILES))
+SRC_FILES := $(wildcard $(PROTOTXT_DIR)/*.prototxt)
+EMC_PLANS := $(patsubst $(PROTOTXT_DIR)/%.prototxt,$(EMC_PLANS_DIR)/%.plan,$(SRC_FILES))
 EMC_TIMES := $(patsubst $(EMC_PLANS_DIR)/%.plan,$(EMC_TIMES_DIR)/%.txt,$(EMC_PLANS))
 
 
-$(EMC_SENTINEL):
-	python3 scripts/emc_analysis/engine_build_convolution_characterization.py
-	mkdir -p $(EMC_PLANS_DIR) && touch $(EMC_SENTINEL)
+$(EMC_PLANS_DIR)/%.plan: $(PROTOTXT_DIR)/%.prototxt
+	mkdir -p $(EMC_PLANS_DIR)
+	python3 src/build_engine.py --prototxt $< --output $@ --starts_gpu True
 
-$(EMC_TIMES_DIR)/%.txt: $(EMC_SENTINEL)
+$(EMC_TIMES_DIR)/%.txt: $(EMC_PLANS_DIR)/%.plan
 	mkdir -p $(EMC_TIMES_DIR)
-	sh scripts/emc_analysis/emc_single_run.sh $(EMC_PLANS_DIR)/$*.plan $@
+	sh scripts/emc_analysis/emc_single_run.sh $< $@
 
 
-output/emc_results.json: $(EMC_SENTINEL) $(EMC_TIMES)
+output/emc_results.json: $(EMC_TIMES)
 	sudo python3 scripts/emc_analysis/emc_util_all.py
 
 .PHONY: emc

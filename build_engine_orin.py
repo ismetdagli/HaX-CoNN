@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger("EngineBuilder").setLevel(logging.INFO)
 log = logging.getLogger("EngineBuilder")
 
+
 class EngineCalibrator(trt.IInt8EntropyCalibrator2):
     """
     Implements the INT8 Entropy Calibrator 2.
@@ -60,7 +61,11 @@ class EngineCalibrator(trt.IInt8EntropyCalibrator2):
             return None
         try:
             batch, _ = next(self.batch_generator)
-            log.info("Calibrating image {} / {}".format(self.image_batcher.image_index, self.image_batcher.num_images))
+            log.info(
+                "Calibrating image {} / {}".format(
+                    self.image_batcher.image_index, self.image_batcher.num_images
+                )
+            )
             cuda.memcpy_htod(self.batch_allocation, np.ascontiguousarray(batch))
             return [int(self.batch_allocation)]
         except StopIteration:
@@ -89,7 +94,9 @@ class EngineCalibrator(trt.IInt8EntropyCalibrator2):
             f.write(cache)
 
 
-def build_engine_caffe(model_file, deploy_file,runs_on_gpu,trans_layer,calibration_files):
+def build_engine_caffe(
+    model_file, deploy_file, runs_on_gpu, trans_layer, calibration_files
+):
     with trt.Builder(
         TRT_LOGGER
     ) as builder, builder.create_network() as network, builder.create_builder_config() as config, trt.CaffeParser() as parser:
@@ -103,7 +110,7 @@ def build_engine_caffe(model_file, deploy_file,runs_on_gpu,trans_layer,calibrati
         # config.flags = 1 << int(trt.BuilderFlag.FP16)
         # config.int8_calibrator = calibration_files
         config.DLA_core = 0
-        config.flags = (config.flags | 1 << int(trt.BuilderFlag.GPU_FALLBACK))
+        config.flags = config.flags | 1 << int(trt.BuilderFlag.GPU_FALLBACK)
         # config.flags = (config.flags | 1 << int(trt.BuilderFlag.FP16))
 
         builder.max_batch_size = 1
@@ -115,41 +122,43 @@ def build_engine_caffe(model_file, deploy_file,runs_on_gpu,trans_layer,calibrati
             dtype=trt.float32,
         )
 
-        #CHANGE THIS FOR GPU
+        # CHANGE THIS FOR GPU
         if runs_on_gpu:
-            device_type=trt.DeviceType.GPU
+            device_type = trt.DeviceType.GPU
         else:
-            device_type=trt.DeviceType.DLA
+            device_type = trt.DeviceType.DLA
 
         for i, layer in enumerate(network):
             config.set_device_type(layer, trt.DeviceType.GPU)
-            if runs_on_gpu :
-                config.set_device_type(layer, trt.DeviceType.DLA)  #DLA
-                if (i <= trans_layer) :
-                    config.set_device_type(layer, trt.DeviceType.GPU)  
+            if runs_on_gpu:
+                config.set_device_type(layer, trt.DeviceType.DLA)  # DLA
+                if i <= trans_layer:
+                    config.set_device_type(layer, trt.DeviceType.GPU)
                 # if i==latestLayer:
                 #     network.mark_output(network.get_layer(network.num_layers-1).get_output(0))
             # if i==latestLayer:
             #     network.mark_output(model_tensors.find(layer.name))
             else:
-                config.set_device_type(layer, trt.DeviceType.GPU) 
-                if (i <= trans_layer) :
-                    config.set_device_type(layer, trt.DeviceType.DLA) #DLA
+                config.set_device_type(layer, trt.DeviceType.GPU)
+                if i <= trans_layer:
+                    config.set_device_type(layer, trt.DeviceType.DLA)  # DLA
                 # if i==latestLayer:
                 #     network.mark_output(network.get_layer(network.num_layers-1).get_output(0))
-                    # network.mark_output(model_tensors.find(layer.name))  
+                # network.mark_output(model_tensors.find(layer.name))
                 # if i==output_layer:
                 #     # print(output_layer)
                 #     network.mark_output(model_tensors.find(layer.name))
 
         # network.mark_output(model_tensors.find("prob"))
         # return 0
-        network.mark_output(network.get_layer(network.num_layers-1).get_output(0))
+        network.mark_output(network.get_layer(network.num_layers - 1).get_output(0))
         return builder.build_serialized_network(network, config)
+
 
 def save_engine(serialized_engine, save_file):
     with open(save_file, "wb") as f:
-        f.write(serialized_engine) 
+        f.write(serialized_engine)
+
 
 if __name__ == "__main__":
     # calibration_files="calibrator_networks/vgg19_calibration"
@@ -166,22 +175,24 @@ if __name__ == "__main__":
     #     if serialized_engine is not None:
     #         save_engine(serialized_engine, "vgg19_dla/vgg19_dla_"+str(trans_layer)+".engine")
 
-
-    calibration_files="calibrator_networks/googlenet_calibration"
-    nn_protoxt_path = "prototxts/resNet-101_deploy.prototxt" # This variable must be modified for the correct PATH.
-
+    calibration_files = "calibrator_networks/googlenet_calibration"
+    nn_protoxt_path = "prototxts/resNet-101_deploy.prototxt"  # This variable must be modified for the correct PATH.
 
     count = 0
     batch = 1
     transition = -1
     prototxt = "prototxt_input_files/googlenet.prototxt"
-    serialized_engine = serialized_engine = build_engine_caffe(None, nn_protoxt_path,True,transition,calibration_files)
+    serialized_engine = serialized_engine = build_engine_caffe(
+        None, nn_protoxt_path, True, transition, calibration_files
+    )
     save_engine(
         serialized_engine,
         str("google_only_gpu.plan"),
     )
     transition = 141
-    serialized_engine = serialized_engine = build_engine_caffe(None, nn_protoxt_path,False,transition,calibration_files)
+    serialized_engine = serialized_engine = build_engine_caffe(
+        None, nn_protoxt_path, False, transition, calibration_files
+    )
     save_engine(
         serialized_engine,
         str("google_only_dla.plan"),

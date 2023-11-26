@@ -95,9 +95,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def print_configuration_summary(
-    prototxt_path, output, starts_gpu, transition, verbose
-):
+def print_configuration_summary(prototxt_path, output, starts_gpu, transition, verbose):
     print("Configuration Summary:")
     print(f"Prototxt File: {prototxt_path}")
     print(f"Output Directory: {output}")

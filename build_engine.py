@@ -8,6 +8,7 @@ the transition cost of that layer.
 """
 import tensorrt as trt
 import sys, os
+
 # from natsort import natsorted
 import time
 from pathlib import Path
@@ -65,13 +66,13 @@ def build_engine_caffe(model_file, deploy_file, trans_layer, runs_on_gpu, batch)
             if runs_on_gpu:  # stars on GPU
                 config.set_device_type(layer, trt.DeviceType.GPU)
                 if i < trans_layer:
-                    config.set_device_type(layer, trt.DeviceType.DLA) 
+                    config.set_device_type(layer, trt.DeviceType.DLA)
                 if i == latestLayer:
                     network.mark_output(
                         network.get_layer(network.num_layers - 1).get_output(0)
                     )
-            else: # Stars on DLA
-                config.set_device_type(layer, trt.DeviceType.DLA)  
+            else:  # Stars on DLA
+                config.set_device_type(layer, trt.DeviceType.DLA)
                 if i < trans_layer:
                     config.set_device_type(layer, trt.DeviceType.GPU)
                 if i == latestLayer:
@@ -91,14 +92,14 @@ def save_engine(serialized_engine, save_file):
 if __name__ == "__main__":
     count = 0
     batch = 1
-    transition = -1 # ALL LAYERS ON DLA
+    transition = -1  # ALL LAYERS ON DLA
     prototxt = "prototxt_input_files/googlenet.prototxt"
     serialized_engine = build_engine_caffe(None, prototxt, transition, True, batch)
     save_engine(
         serialized_engine.serialize(),
         str("google_only_gpu.plan"),
     )
-    transition = 141 # ALL LAYERS ON GPU
+    transition = 141  # ALL LAYERS ON GPU
     serialized_engine = build_engine_caffe(None, prototxt, transition, False, batch)
     save_engine(
         serialized_engine.serialize(),

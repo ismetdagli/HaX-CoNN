@@ -22,13 +22,25 @@ python3 collect_data_single_layers.py
 ```
 Note: `+` sign demonstrates the layers are merged. `||` demonstrates outputs of the layers will be concataned (as concatanation layer). `{}` demonstrates that DLA fuses the layers and profiling of all layers are treated as one layer(basically, this is a profiling limitation in DLA architectures).
 
+To generate filtered layer timing information in json:
+```bash
+python3 scripts/layer_analysis/layer_gpu_util.py --profile <profile-path>
+```
+.e.g.
+```bash
+python3 scripts/layer_analysis/layer_gpu_util.py --profile build/googlenet_transition_plans/profiles/googlenet_dla_transition_at_24.profile
+```
+
 ## Transition time profiling: 
 The easiest way to profile the layer's transition cost is to generate transition per layer engines. ([TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#abstract) refers to executable DNN files, we follow the same terms to prevent any confusion)
 ```bash
 python3 build_transition_time_engines.py
 ```
 
-
+Makefile generates all the engines in every transition layer. To create your own engine:
+```bash
+python3 src/build_engine.py --prototxt <prototxt-path> --starts_gpu True --output <output-path> --transition <transition> --verbose
+```
 
 ## EMC utilization can be profiled running the command below. 
 Figure 3 is calculated running the commands below.

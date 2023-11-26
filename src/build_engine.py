@@ -96,11 +96,11 @@ def parse_arguments():
 
 
 def print_configuration_summary(
-    prototxt_path, output_dir, starts_gpu, transition, verbose
+    prototxt_path, output, starts_gpu, transition, verbose
 ):
     print("Configuration Summary:")
     print(f"Prototxt File: {prototxt_path}")
-    print(f"Output Directory: {output_dir}")
+    print(f"Output Directory: {output}")
     print(f"Starts on GPU: {starts_gpu}")
     if transition == -1:
         print(f"Transition Layer not specified")
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     if args.verbose:
         print_configuration_summary(
             prototxt_path=args.prototxt,
-            output_dir=args.output_dir,
+            output=args.output,
             starts_gpu=args.starts_gpu,
             transition=args.transition,
             verbose=args.verbose,
@@ -133,3 +133,4 @@ if __name__ == "__main__":
     )
     if engine:
         save_engine(engine, args.output)
+        print(f"Saved Engine: {args.output}")

@@ -15,6 +15,12 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 First and foremost, this is a empirical study. We are open sourcing all the details how we collected data. The data collected through profiling has been encoded to script.  
 
+```bash
+cd HaX-CoNN/
+export PYTHONPATH="$(pwd):$PYTHONPATH"
+make
+```
+
 ## Layer profiling: 
 This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use mean data as the average of X number of iterations   #TODO_ISMET
 ```bash
@@ -40,6 +46,13 @@ python3 build_transition_time_engines.py
 Makefile generates all the engines in every transition layer. To create your own engine:
 ```bash
 python3 src/build_engine.py --prototxt <prototxt-path> --starts_gpu True --output <output-path> --transition <transition> --verbose
+/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=<profile-path> --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=<engine-path> > <log-path>
+```
+e.g.
+```bash
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu False --output build/googlenet_transition_plans/googlenet_dla_transition_at_141.plan --transition 141 --verbose
+
+/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_0.log
 ```
 
 ## EMC utilization can be profiled running the command below. 
@@ -81,7 +94,8 @@ cp -r /usr/src/tensorrt tensorrt_sharedMem1 && cp -r /usr/src/tensorrt tensorrt_
 cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp  && cp modified_tensorrts/sampleInference2.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp 
 cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd ../../../tensorrt_sharedMem2/samples/trtexec && make -j4 
 echo '0' | sudo tee /tmp/shared_mem.txt
-python3 build_engine.py
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu True --output google_only_gpu.plan
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu False --output google_only_dla.plan
 mkdir multi_dnn_execution_logs && python3 run_multiple_dnn.py
 ```
 

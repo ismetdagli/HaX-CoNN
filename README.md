@@ -8,7 +8,7 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 1. Checklist(meta information)
 * Hardware: Jetson Xavier AGX 32 GB
 * Software easy installation: Jetpack 4.5.1
-* Software details: #TODO_ISMET
+* Software details of Jetpack 4.5.1 includes: #TODO_ISMET
 
 
 # Experimental Setup
@@ -70,7 +70,7 @@ cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sa
 cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd ../../../tensorrt_sharedMem2/samples/trtexec && make -j4 
 echo '0' | sudo tee /tmp/shared_mem.txt
 python3 build_engine.py
-mkdir multi_dnn_execution && python3 run_multiple_dnn.py
+mkdir multi_dnn_execution_logs && python3 run_multiple_dnn.py
 ```
 
 #TODOS:

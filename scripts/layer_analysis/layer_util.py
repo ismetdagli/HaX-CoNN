@@ -17,7 +17,7 @@ def parse_profile(profile_path, real_layers):
         if "name" in entry and "averageMs" in entry:
             # Split fused or concatenated layer names
             layer_components = split_layer_names(entry["name"])
-            #filtered_layers = filter_real_layers(layer_components, real_layers)
+            # filtered_layers = filter_real_layers(layer_components, real_layers)
             if not isLayerReal(layer_components, real_layers):
                 print(layer_components)
                 continue

@@ -31,7 +31,9 @@ class CustomAlgorithmSelector(trt.IAlgorithmSelector):
         return list(range(len(choices)))
 
 
-def build_engine_caffe(model_file, deploy_file, transition, runs_on_gpu, batch, verbose=False):
+def build_engine_caffe(
+    model_file, deploy_file, transition, runs_on_gpu, batch, verbose=False
+):
     with trt.Builder(
         TRT_LOGGER
     ) as builder, builder.create_network() as network, builder.create_builder_config() as config, trt.CaffeParser() as parser:
@@ -48,7 +50,7 @@ def build_engine_caffe(model_file, deploy_file, transition, runs_on_gpu, batch, 
             network=network,
             dtype=trt.float16,
         )
-        
+
         latestLayer = network.num_layers - 1
 
         if verbose:
@@ -92,10 +94,11 @@ def save_engine(serialized_engine, save_file):
     with open(save_file, "wb") as f:
         f.write(serialized_engine)
 
+
 script_dir = Path(__file__).resolve().parent
 root_path = script_dir.parent.parent
-prototxt = root_path/"prototxt_input_files/googlenet.prototxt"
-output_dir_path = root_path/"build/googlenet_transition_plans/"
+prototxt = root_path / "prototxt_input_files/googlenet.prototxt"
+output_dir_path = root_path / "build/googlenet_transition_plans/"
 Path(output_dir_path).mkdir(parents=True, exist_ok=True)
 
 
@@ -104,26 +107,34 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Engine Building Script")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()
-    if(not args.verbose):
+    if not args.verbose:
         print("For more information run the script with --verbose option.")
 
     count = 0
     batch = 1
     transition = -1
     for transition in {0, 10, 24, 38, 53, 67, 81, 95, 109, 124, 141}:
-        serialized_engine = build_engine_caffe(None, str(prototxt), transition, True, batch, args.verbose)
+        serialized_engine = build_engine_caffe(
+            None, str(prototxt), transition, True, batch, args.verbose
+        )
         if serialized_engine is not None:
             # Optimize path then create string
-            output_file = str( output_dir_path / f"googlenet_gpu_transition_at_{transition}.plan")
+            output_file = str(
+                output_dir_path / f"googlenet_gpu_transition_at_{transition}.plan"
+            )
             save_engine(
                 serialized_engine.serialize(),
                 output_file,
             )
             print("Saved engine " + output_file)
     for transition in {0, 10, 24, 38, 53, 67, 81, 95, 109, 124, 141}:
-        serialized_engine = build_engine_caffe(None, str(prototxt), transition, True, batch, args.verbose)
+        serialized_engine = build_engine_caffe(
+            None, str(prototxt), transition, True, batch, args.verbose
+        )
         if serialized_engine is not None:
-            output_file = str(output_dir_path / f"googlenet_dla_transition_at_{transition}.plan")
+            output_file = str(
+                output_dir_path / f"googlenet_dla_transition_at_{transition}.plan"
+            )
             save_engine(
                 serialized_engine.serialize(),
                 output_file,

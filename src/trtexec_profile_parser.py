@@ -13,17 +13,19 @@ def filter_real_layers(layer_components, real_layers):
     """Filters out the real layers from the layer components."""
     filtered_layers = []
     for comp in layer_components:
-        if comp in real_layers and 'reformatter' not in comp.lower():
+        if comp in real_layers and "reformatter" not in comp.lower():
             filtered_layers.append(comp)
         else:
             print(f"Filtered out layer: {comp}")  # Debugging print
     return filtered_layers
 
+
 def isLayerReal(layer_components, real_layers):
     for comp in layer_components:
-        if 'reformatter' in comp.lower():
+        if "reformatter" in comp.lower():
             return False
     return True
+
 
 def count_unique_layers(layer_components):
     return len(set(layer_components))

@@ -33,6 +33,8 @@ The command below will install natsort, jetson-stats and z3-solver:
 sudo -H pip3 install -r requirements.txt
 ```
 
+If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+
 
 
 ## Experimental Setup
@@ -168,6 +170,11 @@ Scripts which are specific to EMC analysis are summarised below:
 
 ### Process Overview:
 
+TODO_EYMEN: Eymen, this process overview is great. Especially step 3 gives the comprehensive final result under a script. But step 1 and step 2 have only one engine result scripts. You added "An example build for single engine:" and " An example EMC utilization measurement from single engine:"? can you write a command/script that build every convolution_characterization_prototxts(given below as TODO_EYMEN1:) ? I guess   `emc_single_run.sh` runs .engine, so that should be fine, but we should explicitly say that you need to run this command line for comprehensive evaluation (given below as TODO_EYMEN2)
+ ```bash
+python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --starts_gpu True
+ ```
+
  1.  Engine File Generation: For each Prototxt file in `PROTOTXT_DIR`, a corresponding engine (.plan) file is generated in `EMC_PLANS_DIR` using the script build_engine.py. This script configures and builds a TensorRT engine for each layer configuration described in the Prototxt files.
 
 
@@ -176,13 +183,21 @@ An example build for single engine:
 python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --starts_gpu True
  ```
 
+TODO_EYMEN1: An example build for all convolution engines:
+ ```bash
+
+ ```
+
+
  2.  EMC Utilization Measurement: The script `emc_single_run.sh` is executed for each engine file. It runs the engine and measures the EMC utilization, storing the results in `EMC_TIMES_DIR` (`build/convolution_characterization_plans/times` directory).
 
  An example EMC utilization measurement from single engine:
  ```bash
+mkdir build/convolution_characterization_plans/times
 scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/conv1_kernel1.plan build/convolution_characterization_plans/times/conv1_kernel1.txt
  ```
- The time distribution can be viewed:
+
+ The execution above will print %89 as the max of the emc utilization. The time distribution can be viewed:
  ```bash
 > cat build/convolution_characterization_plans/times/conv1_kernel1.txt
 8%
@@ -198,6 +213,11 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
 89%
 88%
  ```
+
+TODO_EYMEN2: EMC utilization measurement from every engine(for comprehensive evaluation, this run is suggested):
+```bash
+
+```
 
  3.  Results Compilation: Finally, the Python script `emc_util_all.py` compiles all the EMC utilization measurements from `EMC_TIMES_DIR` into a single JSON file, `output/emc_results.json`, by finding the maximum in each time file.
 

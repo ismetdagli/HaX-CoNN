@@ -2,10 +2,13 @@
 
 all: emc transition
 
+# All targets will be protected and won't be deleted
+.SECONDARY:
+
 # Layer and Transition Time Analysis
 # Layer analysis of DLA makes use of transitioning engines unlike GPU.
 
-TRANSITIONS := -1 0 10 24 38 53 67 81 95 109 124 141
+TRANSITIONS := -1 10 24 38 53 67 81 95 109 124 141
 PROTOTXT := prototxt_input_files/googlenet.prototxt
 
 
@@ -31,7 +34,8 @@ $(TR_TIME_PLANS_DIR)/googlenet_dla_transition_at_%.plan:
 $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLANS_DIR)/%.plan
 	mkdir -p $(TR_TIME_PROFILES_DIR) $(TR_TIME_PROF_LOGS_DIR)
 	/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile \
-	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$< > $(TR_TIME_PROF_LOGS_DIR)/$*.log
+	--exportProfile=$(TR_TIME_PROFILES_DIR)/$*.profile --avgRuns=1  \
+	--warmUp=5000 --duration=0 --loadEngine=$< > $(TR_TIME_PROF_LOGS_DIR)/$*.log
 
 # Layer Analysis Specifics
 #(TODO gpu analyzer and dla parser)

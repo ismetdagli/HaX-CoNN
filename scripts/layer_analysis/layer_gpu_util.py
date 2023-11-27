@@ -58,7 +58,7 @@ def main():
     root_path = script_dir.parent.parent
     prototxt_path = root_path / "prototxt_input_files/googlenet.prototxt"
     # profile_dir = root_path/"build/googlenet_transition_plans/profiles/"
-    output_dir = root_path / "build/layer_times/"
+    output_dir = root_path / "build/googlenet_transition_plans/layer_times/"
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     real_layers = parse_prototxt(prototxt_path)

@@ -22,10 +22,11 @@ def parse_emc_filename(filename):
 
 
 script_dir = Path(__file__).resolve().parent
-emc_data_dir = (
-    script_dir.parent.parent / "build/convolution_characterization_plans/times/"
-)
+root_path = script_dir.parent.parent
+emc_data_dir = root_path / "build/convolution_characterization_plans/times/"
 emc_files = emc_data_dir.glob("*.txt")
+output_dir = root_path / "output/"
+output_dir.mkdir(parents=True, exist_ok=True)
 
 emc_results = defaultdict(dict)
 
@@ -41,7 +42,7 @@ sorted_emc_results = {
     conv: dict(sorted(kernels.items())) for conv, kernels in sorted(emc_results.items())
 }
 
-json_output_path = script_dir.parent.parent / "output" / "emc_results.json"
+json_output_path = output_dir / "emc_results.json"
 with json_output_path.open("w") as json_file:
     json.dump(sorted_emc_results, json_file, indent=4)
 

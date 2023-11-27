@@ -1,1 +1,3 @@
 natsort
+jetson-stats
+z3-solver

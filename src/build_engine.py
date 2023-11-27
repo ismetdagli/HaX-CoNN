@@ -89,7 +89,7 @@ def parse_arguments():
         "--transition",
         type=int,
         default=-1,
-        help="Layer index where the transition occurs",
+        help="Layer index where the transition occurs. Omit the option if a single device will be used.",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     return parser.parse_args()

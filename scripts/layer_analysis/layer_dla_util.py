@@ -2,66 +2,72 @@
 In contrast with gpu parsing we only need to sum the execution
 times of {} layers here.
 """
+import re
 import json
 from pathlib import Path
 import argparse
 
-from src.trtexec_profile_parser import *
-from src.prototxt_parser import parse_prototxt
-
-
-def parse_profile(profile_path, real_layers):
+def parse_profile_for_dla(profile_path):
     with open(profile_path, "r") as file:
         profile_data = json.load(file)
 
-    layers_info = []
+    total_dla_time = 0
+    dla_regex = r'\{.*?\}'  # Regex pattern to find substrings enclosed in braces
 
     for entry in profile_data:
-        if "name" in entry and "averageMs" in entry:
-            # Count {} here
+        if 'name' in entry and 'averageMs' in entry:
+            layer_name = entry['name']
+            if re.search(dla_regex, layer_name):  # Check if the layer name matches the regex pattern
+                time = entry['averageMs']
+                total_dla_time += time
+                print(f"Time {time} for {layer_name[:40]}...{layer_name[-40:]}\n in profile {profile_path}")
 
-    return layers_info
+    return total_dla_time
 
+def process_all_dla_profiles(profiles_dir):
+    profiles_dir = Path(profiles_dir)
+    dla_times = {}
 
-def verify_layers(prototxt_layers, profile_layers):
-    missing_layers = prototxt_layers - profile_layers
-    if missing_layers:
-        print("Missing layers from profile data:", missing_layers)
-        return False
-    return True
+    for profile_file in profiles_dir.glob("googlenet_dla_transition_at_*.profile"):
+        profile_name = profile_file.stem
+        total_dla_time = parse_profile_for_dla(profile_file)
+        transition_number = int(profile_name.split('_')[-1])
+        dla_times[transition_number] = {"total_time": total_dla_time, "diff_from_prev": 0}
+
+    # Sort the keys based on transition number and compute differences
+    sorted_keys = sorted(dla_times.keys())
+    for i in range(1, len(sorted_keys)):
+        prev_key = sorted_keys[i - 1]
+        curr_key = sorted_keys[i]
+        time_diff = dla_times[curr_key]["total_time"] - dla_times[prev_key]["total_time"]
+        dla_times[curr_key]["diff_from_prev"] = time_diff
+
+    # Convert the sorted keys back to the original profile format
+    sorted_dla_times = {f"googlenet_dla_transition_at_{key}": dla_times[key] for key in sorted_keys}
+
+    return sorted_dla_times
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Parse TRTExec profile JSON for layer timing information."
-    )
-    parser.add_argument(
-        "--profile", help="Path to the TRTExec profile JSON file", required=True
-    )
+    parser = argparse.ArgumentParser(description="Process all DLA profile JSON files.")
+    parser.add_argument('--profiles_dir', help='Directory containing DLA profile JSON files', required=True)
     args = parser.parse_args()
 
     script_dir = Path(__file__).resolve().parent
     root_path = script_dir.parent.parent
-    prototxt_path = root_path / "prototxt_input_files/googlenet.prototxt"
-    # profile_dir = root_path/"build/googlenet_transition_plans/profiles/"
-    output_dir = root_path / "build/layer_times/"
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    output_dir = root_path / "output/"
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    real_layers = parse_prototxt(prototxt_path)
-    layers_info, profile_layer_names = parse_profile(args.profile, real_layers)
-    if verify_layers(real_layers, profile_layer_names):
-        profile_name = Path(args.profile).stem
-        output_file_name = f"{profile_name}_filtered.json"
-        output_file = output_dir / output_file_name
+    dla_times = process_all_dla_profiles(args.profiles_dir)
 
-        # Write the filtered layer information to the output file
-        with open(output_file, "w") as file:
-            json.dump(layers_info, file, indent=4)
+    output_file_name = "dla_compute_times.json"
+    output_file = output_dir / output_file_name
 
-        print(f"Layer timing information saved to {output_file}")
-    else:
-        print("Layer information from prototxt and profile do not match!")
+    # Save DLA timing information
+    with open(output_file, "w") as file:
+        json.dump(dla_times, file, indent=4)
 
+    print(f"DLA timing information saved to {output_file}")
 
 if __name__ == "__main__":
     main()

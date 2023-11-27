@@ -65,9 +65,8 @@ The builder script `src/build_engine.py` can be used to serve TensorRT engines w
 
 ```bash
 > python3 src/build_engine.py -h
-usage: build_engine.py [-h] --prototxt PROTOTXT --output OUTPUT
-                       [--starts_gpu STARTS_GPU] [--transition TRANSITION]
-                       [--verbose]
+usage: build_engine.py [-h] --prototxt PROTOTXT --output OUTPUT --start
+                       {gpu,dla} [--transition TRANSITION] [--verbose]
 
 Build a TensorRT engine from a Caffe prototxt file.
 
@@ -75,9 +74,7 @@ optional arguments:
   -h, --help            show this help message and exit
   --prototxt PROTOTXT   Path to the input Caffe prototxt file
   --output OUTPUT       Output path to save the output engine
-  --starts_gpu STARTS_GPU
-                        Whether the network starts on GPU (True) or DLA
-                        (False)
+  --start {gpu,dla}     Specify whether to start on GPU or DLA
   --transition TRANSITION
                         Layer index where the transition occurs. Omit the
                         option if a single device will be used.
@@ -171,14 +168,14 @@ Example builds for single engine:
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
 --output build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan \
---starts_gpu True \
+--start gpu \
 --transition 24 \
 --verbose
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
 --output build/googlenet_transition_plans/googlenet_dla_transition_at_24.plan \
---starts_gpu False \
+--start dla \
 --transition 24 \
 --verbose
 ```
@@ -190,7 +187,7 @@ python3 src/build_engine.py \
 Makefile generates all the engines in every transition layer. An example is provided below:
 ```bash
 python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt \
---starts_gpu False --output build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan \
+--starts gpu --output build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan \
 --transition 141 --verbose
 
 /usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile \
@@ -279,7 +276,7 @@ Scripts which are specific to EMC analysis are summarised below:
 
 TODO_EYMEN: Eymen, this process overview is great. Especially step 3 gives the comprehensive final result under a script. But step 1 and step 2 have only one engine result scripts. You added "An example build for single engine:" and " An example EMC utilization measurement from single engine:"? can you write a command/script that build every convolution_characterization_prototxts(given below as TODO_EYMEN1:) ? I guess   `emc_single_run.sh` runs .engine, so that should be fine, but we should explicitly say that you need to run this command line for comprehensive evaluation (given below as TODO_EYMEN2)
  ```bash
-python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --starts_gpu True
+python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
  ```
 
  1.  Engine File Generation: For each Prototxt file in `PROTOTXT_DIR`, a corresponding engine (.plan) file is generated in `EMC_PLANS_DIR` using the script build_engine.py. This script configures and builds a TensorRT engine for each layer configuration described in the Prototxt files.
@@ -287,7 +284,7 @@ python3 src/build_engine.py --prototxt convolution_characterization_prototxts/co
 
 An example build for single engine:
  ```bash
-python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --starts_gpu True
+python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
  ```
 
 TODO_EYMEN1: An example build for all convolution engines:
@@ -361,8 +358,8 @@ cp -r /usr/src/tensorrt tensorrt_sharedMem1 && cp -r /usr/src/tensorrt tensorrt_
 cp modified_tensorrts/sampleInference1.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp  && cp modified_tensorrts/sampleInference2.cpp tensorrt_sharedMem1/samples/common/sampleInference.cpp 
 cd tensorrt_sharedMem1/samples/trtexec && make -j4 & cd ../../../tensorrt_sharedMem2/samples/trtexec && make -j4 
 echo '0' | sudo tee /tmp/shared_mem.txt
-python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu True --output google_only_gpu.plan
-python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu False --output google_only_dla.plan
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --start gpu --output google_only_gpu.plan
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --start dla --output google_only_dla.plan
 mkdir multi_dnn_execution_logs && python3 run_multiple_dnn.py
 ```
 

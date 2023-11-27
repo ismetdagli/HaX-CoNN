@@ -18,10 +18,10 @@ LOGS_DLA  := $(patsubstr $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%
 
 
 $(TR_TIME_PLANS_DIR)/googlenet_gpu_transition_at_%.plan:
-	python3 src/build_engine.py --prototxt $(PROTOTXT) --starts_gpu True --output $@ --transition $* --verbose
+	python3 src/build_engine.py --prototxt $(PROTOTXT) --start gpu --output $@ --transition $* --verbose
 
 $(TR_TIME_PLANS_DIR)/googlenet_dla_transition_at_%.plan:
-	python3 src/build_engine.py --prototxt $(PROTOTXT) --starts_gpu False --output $@ --transition $* --verbose
+	python3 src/build_engine.py --prototxt $(PROTOTXT) --start dla --output $@ --transition $* --verbose
 
 
 $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLANS_DIR)/%.plan
@@ -52,7 +52,7 @@ EMC_TIMES := $(patsubst $(EMC_PLANS_DIR)/%.plan,$(EMC_TIMES_DIR)/%.txt,$(EMC_PLA
 
 $(EMC_PLANS_DIR)/%.plan: $(PROTOTXT_DIR)/%.prototxt
 	mkdir -p $(EMC_PLANS_DIR)
-	python3 src/build_engine.py --prototxt $< --output $@ --starts_gpu True
+	python3 src/build_engine.py --prototxt $< --output $@ --start gpu
 
 $(EMC_TIMES_DIR)/%.txt: $(EMC_PLANS_DIR)/%.plan
 	mkdir -p $(EMC_TIMES_DIR)

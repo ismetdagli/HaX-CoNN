@@ -80,10 +80,10 @@ def parse_arguments():
         help="Output path to save the output engine",
     )
     parser.add_argument(
-        "--starts_gpu",
-        type=bool,
-        default=True,
-        help="Whether the network starts on GPU (True) or DLA (False)",
+        "--start",
+        choices=["gpu", "dla"],
+        required=True,
+        help="Specify whether to start on GPU or DLA",
     )
     parser.add_argument(
         "--transition",
@@ -95,11 +95,11 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def print_configuration_summary(prototxt_path, output, starts_gpu, transition, verbose):
+def print_configuration_summary(prototxt_path, output, starts_at, transition, verbose):
     print("Configuration Summary:")
     print(f"Prototxt File: {prototxt_path}")
     print(f"Output Directory: {output}")
-    print(f"Starts on GPU: {starts_gpu}")
+    print(f"Starts on: {starts_at}")
     if transition == -1:
         print(f"Transition Layer not specified")
     else:
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         print_configuration_summary(
             prototxt_path=args.prototxt,
             output=args.output,
-            starts_gpu=args.starts_gpu,
+            starts_at=args.start,
             transition=args.transition,
             verbose=args.verbose,
         )
@@ -122,10 +122,17 @@ if __name__ == "__main__":
     # Ensure output directory exists
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
 
+    if args.start == "gpu":
+        starts_gpu = True
+    elif args.start == "dla":
+        starts_gpu = False
+    else:
+        raise ValueError("Unreachable, set start to gpu or dla {args.start}")
+
     engine = build_engine_caffe(
         deploy_file=args.prototxt,
         transition=args.transition,
-        starts_gpu=args.starts_gpu,
+        starts_gpu=starts_gpu,
         batch=1,
         verbose=args.verbose,
     )

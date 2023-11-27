@@ -16,8 +16,8 @@ PLANS_DLA := $(foreach trans,$(TRANSITIONS),$(TR_TIME_PLANS_DIR)/googlenet_dla_t
 
 TR_TIME_PROFILES_DIR := $(TR_TIME_PLANS_DIR)/profiles
 TR_TIME_PROF_LOGS_DIR := $(TR_TIME_PLANS_DIR)/profile_logs
-LOGS_GPU  := $(patsubstr $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_GPU))
-LOGS_DLA  := $(patsubstr $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_DLA))
+LOGS_GPU  := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_GPU))
+LOGS_DLA  := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_DLA))
 
 
 
@@ -31,7 +31,7 @@ $(TR_TIME_PLANS_DIR)/googlenet_dla_transition_at_%.plan:
 $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLANS_DIR)/%.plan
 	mkdir -p $(TR_TIME_PROFILES_DIR) $(TR_TIME_PROF_LOGS_DIR)
 	/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile \
-	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$< > $$log_file
+	--exportProfile=$@ --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=$< > $(TR_TIME_PROF_LOGS_DIR)/$*.log
 
 # Layer Analysis Specifics
 #(TODO gpu analyzer and dla parser)

@@ -26,10 +26,12 @@ The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://dev
 
 We assume installation through JetPack is followed. Upon it, run the script below to install python dependencies.
 
-TODO: write a script that install these
 pip: sudo apt install -y python3-pip
-stats: sudo pip3 install -U jetson-stats
-Z3: pip3 install z3-solver
+
+The command below will install natsort, jetson-stats and z3-solver:
+```bash
+sudo -H pip3 install -r requirements.txt
+```
 
 
 

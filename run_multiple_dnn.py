@@ -1,10 +1,7 @@
-import glob
 import subprocess
 import threading
 from datetime import datetime
 from pathlib import Path
-
-# from natsort import natsorted
 import time
 
 

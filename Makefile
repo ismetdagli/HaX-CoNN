@@ -1,3 +1,7 @@
+# The first rule should be all
+
+all: emc transition
+
 # Layer and Transition Time Analysis
 # Layer analysis of DLA makes use of transitioning engines unlike GPU.
 
@@ -66,7 +70,6 @@ output/emc_results.json: $(EMC_TIMES)
 .PHONY: emc
 emc: output/emc_results.json
 
-all: emc transition
 
 clean:
 	rm -rf output/* build/*

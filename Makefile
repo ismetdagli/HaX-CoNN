@@ -52,6 +52,7 @@ $(EMC_TIMES_DIR)/%.txt: $(EMC_PLANS_DIR)/%.plan
 
 
 output/emc_results.json: $(EMC_TIMES)
+	mkdir -p output
 	sudo python3 scripts/emc_analysis/emc_util_all.py
 
 .PHONY: emc

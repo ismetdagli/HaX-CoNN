@@ -85,6 +85,26 @@ optional arguments:
 ```
 
 ## Layer profiling: 
+
+Input File:
+
+ -  Prototxt File: Specified in `PROTOTXT` (`prototxt_input_files/googlenet.prototxt`). This file describes the architecture of the GoogleNet model.
+
+Intermediate Files:
+
+ -  GPU Engine Plan File: Located in `build/googlenet_gpu_plans/` directory. TensorRT engine file for the GoogleNet model running only on GPU:
+ -  Profile Output File of GPU: In `TR_TIME_PROFILES_DIR` (inside `build/googlenet_transition_plans/profiles`). These files contain detailed execution profiles for each engine plan.
+ -  DLA Engine Plan Files: Located in `TR_TIME_PLANS_DIR` (`build/googlenet_transition_plans` directory). These are the TensorRT engine files for the GoogleNet model with transitions at different layers:
+        DLA Engine Plans (`PLANS_DLA`): For running the model initially on DLA. These are used for DLA layer analysis
+ -  Profile Output Files: In `TR_TIME_PROFILES_DIR` (inside `build/googlenet_transition_plans/profiles`). These files contain detailed execution profiles for each engine plan.
+
+Output Files:
+
+ -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
+
+
+
+
 This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use *mean* data as the average of X number of iterations iteration is passed as argument to our trtexec binary file. We generally use 1000 iteration to mitigate if any unexpected noise occurs.
 
 
@@ -116,34 +136,121 @@ Layer group     GPU(ms)   DLA(ms)
 
 
 ## Transition time profiling: 
-The easiest way to profile the layer's transition cost is to generate transition per layer engines. ([TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#abstract) refers to executable DNN files, we follow the same terms to prevent any confusion)
+
+#### File Summary
+
+Input File:
+
+ -  Prototxt File: Specified in `PROTOTXT` (`prototxt_input_files/googlenet.prototxt`). This file describes the architecture of the GoogleNet model used for transition time analysis.
+
+Intermediate Files:
+
+ -  Engine Plan Files: Located in `TR_TIME_PLANS_DIR` (`build/googlenet_transition_plans` directory). These are the TensorRT engine files for the GoogleNet model with transitions at different layers, including:
+        GPU Engine Plans (`PLANS_GPU`): For running the model initially on GPU.
+        DLA Engine Plans (`PLANS_DLA`): For running the model initially on DLA.
+ -  Profile Output Files: In `TR_TIME_PROFILES_DIR` (inside `build/googlenet_transition_plans/profiles`). These files contain detailed execution profiles for each engine plan.
+ -  Profile Log Files: In `TR_TIME_PROF_LOGS_DIR` (inside `build/googlenet_transition_plans/profile_logs`). These logs include console outputs from the profiling process.
+
+Output Files:
+
+ -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
+
+#### Script Summary
+Scripts which are specific to Transition analysis are summarised below:
+
+- `python3 scripts/transition_analysis/transition_util.py`
+
+### Process Overview:
+
+ 1. Engine File Generation:
+ The build_engine.py script is used to generate engine files for both GPU and DLA executions based on the GoogleNet model defined in the Prototxt file.
+ Two sets of engine files with different transition layers are generated at this step.
+
+Example builds for single engine:
 ```bash
-python3 build_transition_time_engines.py
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/googlenet.prototxt \
+--output build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan \
+--starts_gpu True \
+--transition 24 \
+--verbose
+
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/googlenet.prototxt \
+--output build/googlenet_transition_plans/googlenet_dla_transition_at_24.plan \
+--starts_gpu False \
+--transition 24 \
+--verbose
 ```
 
-Makefile generates all the engines in every transition layer. To create your own engine:
+ 2. Profile and Log Generation:
+    Using trtexec, the model is run with each engine file, and detailed performance profiles are collected.
+    These profiles are saved as intermediate files in TR_TIME_PROFILES_DIR, accompanied by logs in TR_TIME_PROF_LOGS_DIR.
+
+Makefile generates all the engines in every transition layer. An example is provided below:
 ```bash
-python3 src/build_engine.py --prototxt <prototxt-path> --starts_gpu True --output <output-path> --transition <transition> --verbose
-/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=<profile-path> --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=<engine-path> > <log-path>
+python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt \
+--starts_gpu False --output build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan \
+--transition 141 --verbose
+
+/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile \
+--avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_0.log
 ```
-e.g.
+The transition analysis makes use of mean compute values. You can view the logs to see the mean values:
 ```bash
-python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt --starts_gpu False --output build/googlenet_transition_plans/googlenet_dla_transition_at_141.plan --transition 141 --verbose
-
-/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_0.log
+> cat build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_109.log | grep -C 4 mean
+[11/26/2023-13:46:01] [I] Average on 1 runs - GPU latency: 2.62305 ms - Host latency: 2.68164 ms (end to end 2.69336 ms, enqueue 2.63281 ms)
+[11/26/2023-13:46:01] [I] Host Latency
+[11/26/2023-13:46:01] [I] min: 2.38086 ms (end to end 2.3877 ms)
+[11/26/2023-13:46:01] [I] max: 7.18164 ms (end to end 7.19727 ms)
+[11/26/2023-13:46:01] [I] mean: 2.56869 ms (end to end 2.57815 ms)
+[11/26/2023-13:46:01] [I] median: 2.50391 ms (end to end 2.51367 ms)
+[11/26/2023-13:46:01] [I] percentile: 3.17871 ms at 99% (end to end 3.19629 ms at 99%)
+[11/26/2023-13:46:01] [I] throughput: 383.698 qps
+[11/26/2023-13:46:01] [I] walltime: 26.0622 s
+--
+[11/26/2023-13:46:01] [I] median: 2.46094 ms
+[11/26/2023-13:46:01] [I] GPU Compute
+[11/26/2023-13:46:01] [I] min: 2.33887 ms
+[11/26/2023-13:46:01] [I] max: 7.11914 ms
+[11/26/2023-13:46:01] [I] mean: 2.51739 ms
+[11/26/2023-13:46:01] [I] median: 2.45142 ms
+[11/26/2023-13:46:01] [I] percentile: 3.10742 ms at 99%
+[11/26/2023-13:46:01] [I] total compute time: 25.1739 s
+[11/26/2023-13:46:01] [I] 
 ```
 
-#TODO_EYMEN: Similar to above, We need to add a script/command here showing that we are generating the layer's transition cost time. The command should generate an output file as this:
+3. Results Compilation
 
-Layer group     Transition from GPU to DLA
-0-9                         x         
-10-24                       x         
+The final python script parses the mean values, processes the difference between baseline value and compiles all of the data into a single json:
 
-25-38                       x         
-39-52                       x         
-.
-.
-.
+```bash
+python3 scripts/transition_time_analysis/transition_util.py
+```
+
+You can view the transition cost analysis results in `output/transition_results.json`
+
+```bash
+> cat output/transition_results.json                         
+{
+    "googlenet_dla_transition_at_-1": {
+        "mean_time": 1.9701,
+        "transition_cost": 0.0
+    },
+    "googlenet_dla_transition_at_0": {
+        "mean_time": 4.07455,
+        "transition_cost": 2.10445
+    },
+    "googlenet_dla_transition_at_10": {
+        "mean_time": 3.11484,
+        "transition_cost": 1.14474
+    },
+    "googlenet_dla_transition_at_24": {
+        "mean_time": 3.05384,
+        "transition_cost": 1.08374
+    },
+    ...
+```
 
 ## EMC Analysis 
 

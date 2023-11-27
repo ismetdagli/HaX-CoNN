@@ -371,5 +371,17 @@ Give a reference to the code with execution time, transition time and memory use
 
 
 
+
+#Overhead Analysis
+
+#TODO_Ismet-OR-Eymen
+-Build AlexNet DLA engine.
+-Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
+-Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
+-Then, run z3 solver in an infinite loop and run the same executions of AlexnetDLA + GPU(any network)
+
+Compare the results of executions(Alexnet ) with z3 and without z3. 
+
+
 #TODOS:
 Citation file

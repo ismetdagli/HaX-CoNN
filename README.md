@@ -239,5 +239,13 @@ python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt -
 mkdir multi_dnn_execution_logs && python3 run_multiple_dnn.py
 ```
 
+#Todo_ismet:
+
+Add z3 solver code.
+
+Give a reference to the code with execution time, transition time and memory use
+
+
+
 #TODOS:
 Citation file

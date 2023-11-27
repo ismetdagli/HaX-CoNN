@@ -8,11 +8,7 @@ the transition cost of that layer.
 """
 import tensorrt as trt
 import sys, os
-
-# from natsort import natsorted
-import time
 from pathlib import Path
-import glob
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 

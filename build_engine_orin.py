@@ -5,7 +5,6 @@ import tensorrt as trt
 import sys, os
 import logging
 from pathlib import Path
-import numpy as np
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 

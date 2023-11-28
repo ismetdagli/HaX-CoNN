@@ -39,6 +39,10 @@ If you are using different python3 versions than default python3 version coming 
 
 Note: Creating a docker or a VM is infeasible due to large size/access to the required hardware (DLA) etc. The authors provide remote access as explained below. 
 
+5. Publicly availability
+
+This code is publicly available under zenodo [in this link](INSERT_LINK_ISMET_TODO) 
+
 ### If the reviewer opts to access remotely to our edge devices:
 
 We target NVIDIA Jetson boards since it has DLA and GPU. Moreover, DLA can be only programmed via TensorRT. For this reason, this artifact requires access to NVIDIA Xavier AGX and AGX Orin boards. So, as an remote access, we request reviewers to use AnyDesk. We understand reviewer's busy schedule and the remote access will be open to the reviewer anytime during the review progress. If the reviewer may face difficulties of connecting to the device(not common but may occur for first timers), the authors are kindly requested to connect with authors.
@@ -75,11 +79,11 @@ Average time of Resnet101 on DLA and Googlenet on GPU: 14.3
 Average time of the schedule found by HaX-CoNN: 7.9
 Overall improvement over best-baseline: 57.3%
 
-#Note: The values might slightly be different ~(1%) since this is an empirical study.
+
 ```
 
 
-
+Note: The values might slightly be different ~(1%) since this is an empirical study. This artifact does not claim 100% match of the results with the reports. Minimal changes may occur (which are normally less than a couple of percentage). 
 
 ## Experimental Setup in Detail (Step by step instructions)
 
@@ -458,8 +462,10 @@ input: Run the command line with profiling data
 output: schedule to run for those DNNs
 
 #### Reusability on Orin AGX
-We target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 (unlike Xavier AGX )
-GoogleNet ResNet101 #COMPLETE_HERE_ISMET_TODO
+For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
+Moreover, we use INT8 setting unlike FP16 in Xavier AGX settings. Even though these changes seems easy enough, using a new devices with many different chan For the sake of simplicity, profiling data has been preprocessed and the functions are adapted for new TensorRT version. (There has been changes in the function name in TensorRT's API). Plus, we have integrated the calibration for FP16 to INT8. 
+
+
 
 ### Multi DNN, HaX-CoNN results
 

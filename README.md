@@ -45,7 +45,6 @@ The Getting Started Guide should contain setup instructions (including, for exam
 ```bash
 chmod +x starter_guide.sh
 ./starter_guide.sh
-# python3 starter_guide_experiment.py
 
 ```
 

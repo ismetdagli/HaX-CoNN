@@ -9,7 +9,7 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 1. Check-list (artifact meta information)
 * Hardware: NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jetson Orin AGX 32 GB
-* Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX
+* Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
 * Architecture: aarch64 
 * Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8.10, TensorRT 8.4.0, CUDA 11.2
 * Binary: Binary files are large. So, generating binary files are neccesary by using scripts in this artifact.
@@ -22,7 +22,7 @@ We performed our experiments on an NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jet
 
 3. Software dependencies
 
-The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
+The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [Jetpack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
 
 4. Installation 
 
@@ -114,6 +114,21 @@ optional arguments:
                         option if a single device will be used.
   --verbose             Enable verbose output
 ```
+
+
+.e.g.
+```bash
+mkdir temp
+#prototxt input files are given for each target DNN.
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/googlenet.prototxt \
+--output temp/googlenet_gpu.plan \
+--start gpu \
+--transition 0 \
+--verbose
+```
+
+The output of file is a input file that will be used as an input to TensorRT (trtexec) binary file. While building engines/plans, TensorRT applies JIT optimizations that optimizes the kernel execution.   
 
 ### Step 2: Layer profiling: 
 
@@ -359,7 +374,7 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
  ```bash
  python3 scripts/emc_util_all.py
  ```
- View the output: (TODO_ISMET: We will give a reference to figure 3 in the paper)
+ View the output: 
  ```bash
  > cat output/emc_results.json
 {
@@ -374,6 +389,8 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
         "kernel1": "77%",
     ...
  ```
+
+Reference from paper: The outputs in Json file demonstrates very similar pattern in the Figure 3. The effect of varying with input and filter size for a convolution layer is illustrated in Figure 3.)
 
 ### Step 5: Memory Throughput Profiling
 
@@ -440,6 +457,10 @@ Z3 should by like this
 input: Run the command line with profiling data
 output: schedule to run for those DNNs
 
+#### Reusability on Orin AGX
+We target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 (unlike Xavier AGX )
+GoogleNet ResNet101 #COMPLETE_HERE_ISMET_TODO
+
 ### Multi DNN, HaX-CoNN results
 
 
@@ -459,5 +480,3 @@ Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comp
 average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)
 
 
-#TODOS:
-Citation file

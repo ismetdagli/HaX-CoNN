@@ -372,7 +372,7 @@ cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem2/
 
 cp ./modified_tensorrts/sampleInference1.cpp ./tensorrt_sharedMem1/samples/common/sampleInference.cpp
-cp ./modified_tensorrts/sampleInference2.cpp ./tensorrt_sharedMem1/samples/common/sampleInference.cpp
+cp ./modified_tensorrts/sampleInference2.cpp ./tensorrt_sharedMem2/samples/common/sampleInference.cpp
 
 cd ./tensorrt_sharedMem1/samples/trtexec/
 make -j4

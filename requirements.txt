@@ -1,3 +1,4 @@
-natsort
 jetson-stats
+natsort
+tensorrt
 z3-solver

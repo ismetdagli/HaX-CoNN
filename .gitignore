@@ -3,6 +3,7 @@ tensorrt_sharedMem*
 multi_dnn_execution
 multi_dnn_execution_logs
 starter_guide_logs
+nsight_compute_logs
 
 
 #TensorRT files

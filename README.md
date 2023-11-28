@@ -55,16 +55,6 @@ chmod +x starter_guide.sh
 
 This is a empirical study. We are listing the details how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to built some of the necessary binaries to collect data
 
-TODO_EYMEN: Eymen, you need to explain what has been built after make file ()
-My understanding is this: (please modify/elaborate/update etc. to make this instruction clear and detailed)
-1- Built googlenet 22 tensorrt binary file running only GPU and DLA. The first 11 binary uses only GPU and the next 11 binary uses DLA. (Line 17)
-2- We collect iterate through binary files (.plan/.engine) to collect total execution time (line 23). (Refer to "Transition time profiling" section below for further details )
-
-3- QUESTION_EYMEN:Do we run such things? We built 25 convolution layer engines varying input sizes and filter (kernel) sizes. We measure external memory controller (EMC) utilization while running these engines of convolution layers. 
-4- QUESTION_EYMEN: Do we run EMC profiling here?
-
-
-
 NOTE: Running make takes ~1 hours on Xavier AGX. 
 
 ```bash
@@ -171,6 +161,13 @@ Scripts which are specific to Transition analysis are summarised below:
 - `python3 scripts/transition_analysis/transition_util.py`
 
 ### Process Overview:
+
+To build all necessary engines, measure their transition costs and save the output run the following. You can view the final results in the `output/emc_results.json` file.
+
+```bash
+make emc
+cat output/transition_results.json
+```
 
  1. Engine File Generation:
  The build_engine.py script is used to generate engine files for both GPU and DLA executions based on the GoogleNet model defined in the Prototxt file.
@@ -287,24 +284,19 @@ Scripts which are specific to EMC analysis are summarised below:
 
 ### Process Overview:
 
-TODO_EYMEN: Eymen, this process overview is great. Especially step 3 gives the comprehensive final result under a script. But step 1 and step 2 have only one engine result scripts. You added "An example build for single engine:" and " An example EMC utilization measurement from single engine:"? can you write a command/script that build every convolution_characterization_prototxts(given below as TODO_EYMEN1:) ? I guess   `emc_single_run.sh` runs .engine, so that should be fine, but we should explicitly say that you need to run this command line for comprehensive evaluation (given below as TODO_EYMEN2)
- ```bash
-python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
- ```
+To build all necessary engines, measure their EMC utilizations and save the output run the following. You can view the final results in the `output/emc_results.json` file.
+
+```bash
+make emc
+cat output/emc_results.json
+```
 
  1.  Engine File Generation: For each Prototxt file in `PROTOTXT_DIR`, a corresponding engine (.plan) file is generated in `EMC_PLANS_DIR` using the script build_engine.py. This script configures and builds a TensorRT engine for each layer configuration described in the Prototxt files.
-
 
 An example build for single engine:
  ```bash
 python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
  ```
-
-TODO_EYMEN1: An example build for all convolution engines:
- ```bash
-
- ```
-
 
  2.  EMC Utilization Measurement: The script `emc_single_run.sh` is executed for each engine file. It runs the engine and measures the EMC utilization, storing the results in `EMC_TIMES_DIR` (`build/convolution_characterization_plans/times` directory).
 
@@ -330,11 +322,6 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
 89%
 88%
  ```
-
-TODO_EYMEN2: EMC utilization measurement from every engine(for comprehensive evaluation, this run is suggested):
-```bash
-
-```
 
  3.  Results Compilation: Finally, the Python script `emc_util_all.py` compiles all the EMC utilization measurements from `EMC_TIMES_DIR` into a single JSON file, `output/emc_results.json`, by finding the maximum in each time file.
 

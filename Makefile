@@ -8,7 +8,8 @@ all: emc transition
 # Layer and Transition Time Analysis
 # Layer analysis of DLA makes use of transitioning engines unlike GPU.
 
-TRANSITIONS := -1 10 24 38 53 67 81 95 109 124 141
+# Do not use 141 instead make use of -1 transition for single device run
+TRANSITIONS := -1 10 25 39 53 67 81 95 110 124
 PROTOTXT := prototxt_input_files/googlenet.prototxt
 
 

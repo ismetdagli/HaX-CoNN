@@ -36,8 +36,23 @@ sudo -H pip3 install -r requirements.txt
 If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
 
 
+## Starter Guide:
 
-## Experimental Setup
+Citation from PPoPP submission page: How should starter guide be, read below (this writing will be removed, using as reference)
+
+The Getting Started Guide should contain setup instructions (including, for example, a pointer to the VM player software, its version, passwords if needed, etc.) and basic testing of your artifact that you expect a reviewer to be able to complete in 30 minutes. Reviewers will follow all the steps in the guide during an initial kick-the-tires phase. The Getting Started Guide should be as simple as possible, and yet it should stress the key elements of your artifact. Anyone who has followed the Getting Started Guide should have no technical difficulties with the rest of your artifact. In this step, you may want to include a single high-level “runme.sh” script that automatically compiles your artifact, runs it (printing some interesting events to the console), collects data (e.g., performance data), and produces files such as graphs or charts similar to the ones used in your paper.
+
+```bash
+chmod +x starter_guide.sh
+./starter_guide.sh
+# python3 starter_guide_experiment.py
+
+```
+
+
+
+
+## Experimental Setup in Detail (Step by step instructions)
 
 This is a empirical study. We are listing the details how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to built some of the necessary binaries to collect data
 

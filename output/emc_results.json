@@ -1,0 +1,37 @@
+{
+    "conv1": {
+        "kernel1": "89%",
+        "kernel2": "77%",
+        "kernel3": "70%",
+        "kernel4": "56%",
+        "kernel5": "48%"
+    },
+    "conv2": {
+        "kernel1": "78%",
+        "kernel2": "74%",
+        "kernel3": "67%",
+        "kernel4": "74%",
+        "kernel5": "47%"
+    },
+    "conv3": {
+        "kernel1": "54%",
+        "kernel2": "67%",
+        "kernel3": "60%",
+        "kernel4": "52%",
+        "kernel5": "44%"
+    },
+    "conv4": {
+        "kernel1": "46%",
+        "kernel2": "57%",
+        "kernel3": "50%",
+        "kernel4": "42%",
+        "kernel5": "35%"
+    },
+    "conv5": {
+        "kernel1": "34%",
+        "kernel2": "39%",
+        "kernel3": "24%",
+        "kernel4": "29%",
+        "kernel5": "24%"
+    }
+}

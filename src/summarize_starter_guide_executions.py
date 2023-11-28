@@ -20,7 +20,7 @@ for line in Lines:
     if "resnet101_only_gpu_googlenet_only_gpu" in line:
         resnet_average_time = index_mean(line)
 exec_time=googlenet_average_time+resnet_average_time
-print("Average time of using only GPU: ", exec_time )
+print("Average time of using only GPU:", round(exec_time,1) )
 
 
 for line in Lines:
@@ -31,7 +31,7 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 
 exec_time2=googlenet_average_time+resnet_average_time
-print("Average time of Resnet101 on GPU and Googlenet on DLA: ",exec_time2 )
+print("Average time of Resnet101 on GPU and Googlenet on DLA:",round(exec_time2,1) )
 
 
 for line in Lines:
@@ -42,7 +42,7 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 
 exec_time3=googlenet_average_time+resnet_average_time
-print("Average time of Resnet101 on DLA and Googlenet on GPU: ", exec_time3 )
+print("Average time of Resnet101 on DLA and Googlenet on GPU:", round(exec_time3,1) )
     
 
 
@@ -54,9 +54,9 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by HaX-CoNN: ",hax_conn_exec )
+print("Average time of the schedule found by HaX-CoNN:",round(hax_conn_exec,1))
 
-print("Overall improvement over best-baseline: ", (min(exec_time,exec_time2,exec_time3)/hax_conn_exec-1)*100,"%")
+print("Overall improvement over best-baseline: "+str(round((min(exec_time,exec_time2,exec_time3)/hax_conn_exec-1)*100,2))+"%")
 
 
 

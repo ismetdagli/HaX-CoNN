@@ -5,11 +5,13 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 ## Description
 
+### If the reviewer has access to edge devices:
+
 1. Check-list (artifact meta information)
 * Hardware: NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jetson Orin AGX 32 GB
-* Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX
+* Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
 * Architecture: aarch64 
-* Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8, TensorRT 8.4.0, CUDA 11.2
+* Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8.10, TensorRT 8.4.0, CUDA 11.2
 * Binary: Binary files are large. So, generating binary files are neccesary by using scripts in this artifact.
 * Output: Profiling data (execution time, transition time, memory use) for both layers and neural networks. The end results is the improved execution time/throughput. 
 * Experiment workflow: Python and bash scripts
@@ -20,7 +22,7 @@ We performed our experiments on an NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jet
 
 3. Software dependencies
 
-The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
+The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [Jetpack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
 
 4. Installation 
 
@@ -33,19 +35,47 @@ The command below will install natsort, jetson-stats and z3-solver:
 sudo -H pip3 install -r requirements.txt
 ```
 
-If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8.10 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+
+Note: Creating a docker or a VM is infeasible due to large size/access to the required hardware (DLA) etc. The authors provide remote access as explained below. 
+
+### If the reviewer opts to access remotely to our edge devices:
+
+We target NVIDIA Jetson boards since it has DLA and GPU. Moreover, DLA can be only programmed via TensorRT. For this reason, this artifact requires access to NVIDIA Xavier AGX and AGX Orin boards. So, as an remote access, we request reviewers to use AnyDesk. We understand reviewer's busy schedule and the remote access will be open to the reviewer anytime during the review progress. If the reviewer may face difficulties of connecting to the device(not common but may occur for first timers), the authors are kindly requested to connect with authors.
+
+AnyDesk id: TODO_ISMET
+AnyDesk password: TODO_ISMET
+
+Needed software for remote access: AnyDesk
+
+Login information to Xavier AGX and AGX Orin are in the edge_account_info.txt in the desktop (visible after connection)
 
 
 ## Starter Guide:
 
-Citation from PPoPP submission page: How should starter guide be, read below (this writing will be removed, using as reference)
+This is a starter guide of an example motivated in our paper. Basically, the system needs to run ResNet101 and GoogleNet. The system can either run both DNNs on GPU, or select the map among GPU and DLA. These mappings are done in DNN-level. What we propose is to distribute the layers among GPU and DLA in layer-level. There are four steps in this script:
 
-The Getting Started Guide should contain setup instructions (including, for example, a pointer to the VM player software, its version, passwords if needed, etc.) and basic testing of your artifact that you expect a reviewer to be able to complete in 30 minutes. Reviewers will follow all the steps in the guide during an initial kick-the-tires phase. The Getting Started Guide should be as simple as possible, and yet it should stress the key elements of your artifact. Anyone who has followed the Getting Started Guide should have no technical difficulties with the rest of your artifact. In this step, you may want to include a single high-level “runme.sh” script that automatically compiles your artifact, runs it (printing some interesting events to the console), collects data (e.g., performance data), and produces files such as graphs or charts similar to the ones used in your paper.
+Step 1: We build necessary engines to run Googlenet and Resnet on GPU and DLA.
+Step 2: We build our modified TensorRT implementation.
+Step 3: We collect profiling data for four different scenario explained above.
+Step 4: We report the execution time 
 
 ```bash
 chmod +x starter_guide.sh
+#This may take 10-20 minutes on Xavier AGX.
 ./starter_guide.sh
 
+```
+```bash
+#Expected Output
+Final Step: Summary of experiments
+Average time of using only GPU: 12.6
+Average time of Resnet101 on GPU and Googlenet on DLA: 12.4
+Average time of Resnet101 on DLA and Googlenet on GPU: 14.3
+Average time of the schedule found by HaX-CoNN: 7.9
+Overall improvement over best-baseline: 57.3%
+
+#Note: The values might slightly be different ~(1%) since this is an empirical study.
 ```
 
 
@@ -54,16 +84,6 @@ chmod +x starter_guide.sh
 ## Experimental Setup in Detail (Step by step instructions)
 
 This is a empirical study. We are listing the details how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to built some of the necessary binaries to collect data
-
-TODO_EYMEN: Eymen, you need to explain what has been built after make file ()
-My understanding is this: (please modify/elaborate/update etc. to make this instruction clear and detailed)
-1- Built googlenet 22 tensorrt binary file running only GPU and DLA. The first 11 binary uses only GPU and the next 11 binary uses DLA. (Line 17)
-2- We collect iterate through binary files (.plan/.engine) to collect total execution time (line 23). (Refer to "Transition time profiling" section below for further details )
-
-3- QUESTION_EYMEN:Do we run such things? We built 25 convolution layer engines varying input sizes and filter (kernel) sizes. We measure external memory controller (EMC) utilization while running these engines of convolution layers. 
-4- QUESTION_EYMEN: Do we run EMC profiling here?
-
-
 
 NOTE: Running make takes ~1 hours on Xavier AGX. 
 
@@ -95,7 +115,22 @@ optional arguments:
   --verbose             Enable verbose output
 ```
 
-## Step 2: Layer profiling: 
+
+.e.g.
+```bash
+mkdir temp
+#prototxt input files are given for each target DNN.
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/googlenet.prototxt \
+--output temp/googlenet_gpu.plan \
+--start gpu \
+--transition 0 \
+--verbose
+```
+
+The output of file is a input file that will be used as an input to TensorRT (trtexec) binary file. While building engines/plans, TensorRT applies JIT optimizations that optimizes the kernel execution.   
+
+### Step 2: Layer profiling: 
 
 Input File:
 
@@ -108,13 +143,12 @@ Intermediate Files:
  -  DLA Engine Plan Files: Located in `TR_TIME_PLANS_DIR` (`build/googlenet_transition_plans` directory). These are the TensorRT engine files for the GoogleNet model with transitions at different layers:
         DLA Engine Plans (`PLANS_DLA`): For running the model initially on DLA. These are used for DLA layer analysis
  -  Profile Output Files: In `TR_TIME_PROFILES_DIR` (inside `build/googlenet_transition_plans/profiles`). These files contain detailed execution profiles for each engine plan.
+ -  Filtered GPU Profile: In `build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json`, GPU's filtered profile data resides. This file is heavily filtered from the original profile giving information about the name, execution time and layer count in the fused layer. 
+ -  DLA Profile Results: In `output/dla_compute_times.json`, every transition engine is run and their DLA layer execution information is summed and saved in this file.
 
 Output Files:
 
- -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
-
-
-
+ -  Layer Analysis Results JSON: The file `output/layer_results.json` is the final output. It contains the layer profiling for GPU and DLA. 
 
 This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use *mean* data as the average of X number of iterations iteration is passed as argument to our trtexec binary file. We generally use 1000 iteration to mitigate if any unexpected noise occurs.
 
@@ -146,7 +180,7 @@ Layer group     GPU(ms)   DLA(ms)
 .
 
 
-## Step 3: Transition time profiling: 
+### Step 3: Transition time profiling: 
 
 #### File Summary
 
@@ -164,7 +198,7 @@ Intermediate Files:
 
 Output Files:
 
- -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
+ -  Transition Cost JSON: The file `output/transition_results.json` is the final output. It contains the mean execution times and their transition costs for each convolution layer configuration. This data is gathered by running the engine files and profiling.
 
 #### Script Summary
 Scripts which are specific to Transition analysis are summarised below:
@@ -172,6 +206,13 @@ Scripts which are specific to Transition analysis are summarised below:
 - `python3 scripts/transition_analysis/transition_util.py`
 
 ### Process Overview:
+
+To build all necessary engines, measure their transition costs and save the output run the following. You can view the final results in the `output/emc_results.json` file.
+
+```bash
+make emc
+cat output/transition_results.json
+```
 
  1. Engine File Generation:
  The build_engine.py script is used to generate engine files for both GPU and DLA executions based on the GoogleNet model defined in the Prototxt file.
@@ -263,7 +304,7 @@ You can view the transition cost analysis results in `output/transition_results.
     ...
 ```
 
-## Step 4: EMC Analysis 
+### Step 4: EMC Analysis 
 
 #### File Summary
 
@@ -288,24 +329,19 @@ Scripts which are specific to EMC analysis are summarised below:
 
 ### Process Overview:
 
-TODO_EYMEN: Eymen, this process overview is great. Especially step 3 gives the comprehensive final result under a script. But step 1 and step 2 have only one engine result scripts. You added "An example build for single engine:" and " An example EMC utilization measurement from single engine:"? can you write a command/script that build every convolution_characterization_prototxts(given below as TODO_EYMEN1:) ? I guess   `emc_single_run.sh` runs .engine, so that should be fine, but we should explicitly say that you need to run this command line for comprehensive evaluation (given below as TODO_EYMEN2)
- ```bash
-python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
- ```
+To build all necessary engines, measure their EMC utilizations and save the output run the following. You can view the final results in the `output/emc_results.json` file.
+
+```bash
+make emc
+cat output/emc_results.json
+```
 
  1.  Engine File Generation: For each Prototxt file in `PROTOTXT_DIR`, a corresponding engine (.plan) file is generated in `EMC_PLANS_DIR` using the script build_engine.py. This script configures and builds a TensorRT engine for each layer configuration described in the Prototxt files.
-
 
 An example build for single engine:
  ```bash
 python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
  ```
-
-TODO_EYMEN1: An example build for all convolution engines:
- ```bash
-
- ```
-
 
  2.  EMC Utilization Measurement: The script `emc_single_run.sh` is executed for each engine file. It runs the engine and measures the EMC utilization, storing the results in `EMC_TIMES_DIR` (`build/convolution_characterization_plans/times` directory).
 
@@ -332,18 +368,13 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
 88%
  ```
 
-TODO_EYMEN2: EMC utilization measurement from every engine(for comprehensive evaluation, this run is suggested):
-```bash
-
-```
-
  3.  Results Compilation: Finally, the Python script `emc_util_all.py` compiles all the EMC utilization measurements from `EMC_TIMES_DIR` into a single JSON file, `output/emc_results.json`, by finding the maximum in each time file.
 
  Running the script:
  ```bash
  python3 scripts/emc_util_all.py
  ```
- View the output: (TODO_ISMET: We will give a reference to figure 3 in the paper)
+ View the output: 
  ```bash
  > cat output/emc_results.json
 {
@@ -359,7 +390,24 @@ TODO_EYMEN2: EMC utilization measurement from every engine(for comprehensive eva
     ...
  ```
 
-## Step 5: Synchronous multiple DNN execution
+Reference from paper: The outputs in Json file demonstrates very similar pattern in the Figure 3. The effect of varying with input and filter size for a convolution layer is illustrated in Figure 3.)
+
+### Step 5: Memory Throughput Profiling
+
+This step targets to profile memory throughput. 
+
+```bash
+mkdir nsight_compute_logs
+#Note: This prompt requests sudo privilege. Takes a couple of minutes to run
+python3 src/nsight_compute.py
+```
+
+This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of hour to match the layers and their instructions. We leave this script here for a reference but also add an input file. For the ones who are interested in, we propose to follow this strategy in summary below. This gives the memory throughput of a layer. We use a recorded memory throughput data in z3 solvers below. #TODO_ISMET
+For group layer:  (memory throughput of a layer) * (duration of a layer in the group) / (duration of all layers in the group).   
+
+we can't profile memory throughput of DLA since Nsight compute does not allow to use DLA. So, the profiling data we have obtained in EMC analysis can be linearly converted by using each layer group's EMC GPU and DLA utilization.
+
+### Step 6: Synchronous multiple DNN execution
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories
@@ -382,14 +430,13 @@ cd ./tensorrt_sharedMem2/samples/trtexec/
 make -j4
 cd ../../../
 
-echo '0' | sudo tee /tmp/shared_mem.txt
-
 python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start gpu --output ./google_only_gpu.plan
 python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start dla --output ./google_only_dla.plan
 
 mkdir ./multi_dnn_execution_logs/
 
-python3 ./run_multiple_dnn.py
+#Run the python code to check TensorRT binaries working fine.
+python3 ./starter_guide_experiment.py
 ```
 
 #Todo_ismet:
@@ -399,9 +446,25 @@ Add z3 solver code.
 Give a reference to the code with execution time, transition time and memory use
 
 
+### Single DNN, HaX-CoNN results #TODO_ISMET
+
+Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. 
+Right now, by using profiling data, we create a schedule 
+
+Run z3 to find the single dnn schedule:
+
+Z3 should by like this
+input: Run the command line with profiling data
+output: schedule to run for those DNNs
+
+#### Reusability on Orin AGX
+We target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 (unlike Xavier AGX )
+GoogleNet ResNet101 #COMPLETE_HERE_ISMET_TODO
+
+### Multi DNN, HaX-CoNN results
 
 
-#Overhead Analysis
+### Overhead Analysis
 
 #TODO_Ismet-OR-Eymen
 
@@ -417,5 +480,3 @@ Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comp
 average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)
 
 
-#TODOS:
-Citation file

@@ -48,6 +48,7 @@ python3 src/build_engine.py \
 --verbose
 
 
+printf '\n\n\n'
 echo "Step 2: creating TensorRT binaries"
 
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
@@ -67,13 +68,15 @@ cd ../../../
 # mkdir temp
 
 
+printf '\n\n\n'
 echo "Step 3: Executions start"
 python3 starter_guide_experiment.py
 cd starter_guide_logs
 grep -r " mean: " * | grep -v "end to end" >> mean_results_of_executions.txt
 cd ..
 
-echo "Step 4: Summary of experiments"
+printf '\n\n\n'
+echo "Final Step: Summary of experiments"
 python3 src/summarize_starter_guide_executions.py
 
 cd ..

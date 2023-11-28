@@ -23,6 +23,7 @@ TR_TIME_PROF_LOGS_DIR := $(TR_TIME_PLANS_DIR)/profile_logs
 LOGS_GPU  := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_GPU))
 LOGS_DLA  := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.log, $(PLANS_DLA))
 
+PROFILES_DLA := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROFILES_DIR)/%.profile, $(PLANS_DLA))
 
 
 $(TR_TIME_PLANS_DIR)/googlenet_gpu_transition_at_%.plan:
@@ -39,7 +40,22 @@ $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLAN
 	--warmUp=5000 --duration=0 --loadEngine=$< > $(TR_TIME_PROF_LOGS_DIR)/$*.log
 
 # Layer Analysis Specifics
-#(TODO gpu analyzer and dla parser)
+
+## GPU Layer Analysis
+build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json: build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_-1.profile
+	python3 scripts/layer_analysis/layer_gpu_util.py --profile build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_-1.profile
+
+## DLA Layer Analysis
+output/dla_compute_times.json: $(PROFILES_DLA)
+	python3 scripts/layer_analysis/layer_dla_util.py --profiles_dir build/googlenet_transition_plans/profiles
+
+## Collecting Layer Analysis Results
+output/layer_results.json: build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json output/dla_compute_times.json
+	python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json --output output/layer_results.json
+
+.PHONY: layer
+layer : output/layer_results.json
+
 
 # Transition Analysis Specifics
 output/transition_results.json: $(LOGS_GPU) $(LOGS_DLA)

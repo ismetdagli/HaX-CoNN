@@ -404,12 +404,17 @@ Give a reference to the code with execution time, transition time and memory use
 #Overhead Analysis
 
 #TODO_Ismet-OR-Eymen
--Build AlexNet DLA engine.
--Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
--Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
--Then, run z3 solver in an infinite loop and run the same executions of AlexnetDLA + GPU(any network)
 
-Compare the results of executions(Alexnet ) with z3 and without z3. 
+-Build AlexNet DLA engine.
+
+-Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
+
+-Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
+
+-Then, run z3 solver(src/dummy_z3_solver) in an infinite loop and run the same executions of AlexnetDLA + GPU(any network). Note: while(True) at Line 128 on z3_solver helps to run in an infinite loop. You can define a automated stopping mechanism to stop the code after all executions done. (not necessary but optional. If we leave as it is, it should not be an issue)
+
+Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comparison example: 
+average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)
 
 
 #TODOS:

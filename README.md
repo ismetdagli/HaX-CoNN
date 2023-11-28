@@ -472,15 +472,35 @@ Moreover, we use INT8 setting unlike FP16 in Xavier AGX settings. Even though th
 
 ### Overhead Analysis
 
-#TODO_Ismet-OR-Eymen
+#TODO\_Ismet-OR-Eymen
 
--Build AlexNet DLA engine.
+Before starting make sure:
+```bash
+chmod +x scripts/run_all_plan.sh scripts/run_forever.sh
+mkdir -p build/overhead_gpu/logs build/overhead/alexnet_dla
+```
+- Build AlexNet DLA engine.
 
--Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
+```bash
+python3 src/build_engine.py --prototxt prototxt_input_files/alexnet.prototxt --output build/overhead/alexnet_dla.plan --start dla
+```
 
--Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
+- Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
 
--Then, run z3 solver(src/dummy_z3_solver) in an infinite loop and run the same executions of AlexnetDLA + GPU(any network). Note: while(True) at Line 128 on z3_solver helps to run in an infinite loop. You can define a automated stopping mechanism to stop the code after all executions done. (not necessary but optional. If we leave as it is, it should not be an issue)
+```bash
+python3 src/build_engine.py --prototxt prototxt_input_files/ --output build/overhead_gpu --start gpu
+```
+
+- Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
+
+```bash
+./scripts/run_forever.sh build/overhead/alexnet_dla.plan build/overhead/alexnet_dla/ &
+./scripts/run_all_plan.sh build/overhead_gpu build/overhead_gpu/logs
+
+pkill run_forever.sh
+```
+
+- Then, run z3 solver(src/dummy_z3_solver) in an infinite loop and run the same executions of AlexnetDLA + GPU(any network). Note: while(True) at Line 128 on z3_solver helps to run in an infinite loop. You can define a automated stopping mechanism to stop the code after all executions done. (not necessary but optional. If we leave as it is, it should not be an issue)
 
 Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comparison example: 
 average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)

@@ -22,7 +22,7 @@ We performed our experiments on an NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jet
 
 3. Software dependencies
 
-The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
+The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested. 
 
 4. Installation 
 
@@ -37,6 +37,7 @@ sudo -H pip3 install -r requirements.txt
 
 If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8.10 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
 
+Note: Creating a docker or a VM is infeasible due to large size/access to the required hardware (DLA) etc. The authors provide remote access as explained below. 
 
 ### If the reviewer opts to remote access to our edge devices:
 
@@ -47,17 +48,34 @@ AnyDesk password: TODO_ISMET
 
 Needed software for remote access: AnyDesk
 
+Login information to Xavier AGX and AGX Orin are in the edge_account_info.txt in the desktop (visible after connection)
+
 
 ## Starter Guide:
 
-Citation from PPoPP submission page: How should starter guide be, read below (this writing will be removed, using as reference)
+This is a starter guide of an example motivated in our paper. Basically, the system needs to run ResNet101 and GoogleNet. The system can either run both DNNs on GPU, or select the map among GPU and DLA. These mappings are done in DNN-level. What we propose is to distribute the layers among GPU and DLA in layer-level. There are four steps in this script:
 
-The Getting Started Guide should contain setup instructions (including, for example, a pointer to the VM player software, its version, passwords if needed, etc.) and basic testing of your artifact that you expect a reviewer to be able to complete in 30 minutes. Reviewers will follow all the steps in the guide during an initial kick-the-tires phase. The Getting Started Guide should be as simple as possible, and yet it should stress the key elements of your artifact. Anyone who has followed the Getting Started Guide should have no technical difficulties with the rest of your artifact. In this step, you may want to include a single high-level “runme.sh” script that automatically compiles your artifact, runs it (printing some interesting events to the console), collects data (e.g., performance data), and produces files such as graphs or charts similar to the ones used in your paper.
+Step 1: We build necessary engines to run Googlenet and Resnet on GPU and DLA.
+Step 2: We build our modified TensorRT implementation.
+Step 3: We collect profiling data for four different scenario explained above.
+Step 4: We report the execution time 
 
 ```bash
 chmod +x starter_guide.sh
+#This may take 10-20 minutes on Xavier AGX.
 ./starter_guide.sh
 
+```
+```bash
+#Expected Output
+Final Step: Summary of experiments
+Average time of using only GPU: 12.6
+Average time of Resnet101 on GPU and Googlenet on DLA: 12.4
+Average time of Resnet101 on DLA and Googlenet on GPU: 14.3
+Average time of the schedule found by HaX-CoNN: 7.9
+Overall improvement over best-baseline: 57.3%
+
+#Note: The values might slightly be different ~(1%) since this is an empirical study.
 ```
 
 
@@ -97,7 +115,7 @@ optional arguments:
   --verbose             Enable verbose output
 ```
 
-## Step 2: Layer profiling: 
+### Step 2: Layer profiling: 
 
 Input File:
 
@@ -147,7 +165,7 @@ Layer group     GPU(ms)   DLA(ms)
 .
 
 
-## Step 3: Transition time profiling: 
+### Step 3: Transition time profiling: 
 
 #### File Summary
 
@@ -271,7 +289,7 @@ You can view the transition cost analysis results in `output/transition_results.
     ...
 ```
 
-## Step 4: EMC Analysis 
+### Step 4: EMC Analysis 
 
 #### File Summary
 
@@ -357,7 +375,7 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
     ...
  ```
 
-## Step 5: Synchronous multiple DNN execution
+### Step 5: Synchronous multiple DNN execution
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories
@@ -397,6 +415,18 @@ Add z3 solver code.
 Give a reference to the code with execution time, transition time and memory use
 
 
+### Single DNN, HaX-CoNN results #TODO_ISMET
+
+Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. 
+Right now, by using profiling data, we create a schedule 
+
+Run z3 to find the single dnn schedule:
+
+Z3 should by like this
+input: Run the command line with profiling data
+output: schedule to run for those DNNs
+
+### Multi DNN, HaX-CoNN results
 
 
 #Overhead Analysis

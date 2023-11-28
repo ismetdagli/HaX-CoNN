@@ -1,0 +1,245 @@
+&&&& RUNNING TensorRT.trtexec # /usr/src/tensorrt/bin/trtexec --iterations=1 --dumpProfile --avgRuns=1 --warmUp=0 --duration=0 --loadEngine=starter_guide_logs/googlenet_only_gpu.plan
+[11/28/2023-09:35:36] [I] === Model Options ===
+[11/28/2023-09:35:36] [I] Format: *
+[11/28/2023-09:35:36] [I] Model: 
+[11/28/2023-09:35:36] [I] Output:
+[11/28/2023-09:35:36] [I] === Build Options ===
+[11/28/2023-09:35:36] [I] Max batch: 1
+[11/28/2023-09:35:36] [I] Workspace: 16 MB
+[11/28/2023-09:35:36] [I] minTiming: 1
+[11/28/2023-09:35:36] [I] avgTiming: 8
+[11/28/2023-09:35:36] [I] Precision: FP32
+[11/28/2023-09:35:36] [I] Calibration: 
+[11/28/2023-09:35:36] [I] Safe mode: Disabled
+[11/28/2023-09:35:36] [I] Save engine: 
+[11/28/2023-09:35:36] [I] Load engine: starter_guide_logs/googlenet_only_gpu.plan
+[11/28/2023-09:35:36] [I] Builder Cache: Enabled
+[11/28/2023-09:35:36] [I] NVTX verbosity: 0
+[11/28/2023-09:35:36] [I] Inputs format: fp32:CHW
+[11/28/2023-09:35:36] [I] Outputs format: fp32:CHW
+[11/28/2023-09:35:36] [I] Input build shapes: model
+[11/28/2023-09:35:36] [I] Input calibration shapes: model
+[11/28/2023-09:35:36] [I] === System Options ===
+[11/28/2023-09:35:36] [I] Device: 0
+[11/28/2023-09:35:36] [I] DLACore: 
+[11/28/2023-09:35:36] [I] Plugins:
+[11/28/2023-09:35:36] [I] === Inference Options ===
+[11/28/2023-09:35:36] [I] Batch: 1
+[11/28/2023-09:35:36] [I] Input inference shapes: model
+[11/28/2023-09:35:36] [I] Iterations: 1
+[11/28/2023-09:35:36] [I] Duration: 0s (+ 0ms warm up)
+[11/28/2023-09:35:36] [I] Sleep time: 0ms
+[11/28/2023-09:35:36] [I] Streams: 1
+[11/28/2023-09:35:36] [I] ExposeDMA: Disabled
+[11/28/2023-09:35:36] [I] Spin-wait: Disabled
+[11/28/2023-09:35:36] [I] Multithreading: Disabled
+[11/28/2023-09:35:36] [I] CUDA Graph: Disabled
+[11/28/2023-09:35:36] [I] Skip inference: Disabled
+[11/28/2023-09:35:36] [I] Inputs:
+[11/28/2023-09:35:36] [I] === Reporting Options ===
+[11/28/2023-09:35:36] [I] Verbose: Disabled
+[11/28/2023-09:35:36] [I] Averages: 1 inferences
+[11/28/2023-09:35:36] [I] Percentile: 99
+[11/28/2023-09:35:36] [I] Dump output: Disabled
+[11/28/2023-09:35:36] [I] Profile: Enabled
+[11/28/2023-09:35:36] [I] Export timing to JSON file: 
+[11/28/2023-09:35:36] [I] Export output to JSON file: 
+[11/28/2023-09:35:36] [I] Export profile to JSON file: 
+[11/28/2023-09:35:36] [I] 
+[11/28/2023-09:35:48] [I] Starting inference threads
+==PROF== Connected to process 1838 (/usr/src/tensorrt/bin/trtexec)
+==PROF== Profiling "nchwTonhwc" - 1: 0%....50%....100% - 51 passes
+==PROF== Profiling "first_layer_fwd_kernel" - 2: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCoalescedC" - 3: 0%....50%....100% - 52 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 4: 0%....50%....100% - 51 passes
+==PROF== Profiling "lrnForward_NChWH2" - 5: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 6: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_ld..." - 7: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_ld..." - 8: 0%....50%....100% - 51 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 9: 0%....50%....100% - 51 passes
+==PROF== Profiling "lrnForward_NChWH2" - 10: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 11: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_RS3_UV1_PQT_kernel" - 12: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 13: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 14: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 15: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x128_l..." - 16: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_ld..." - 17: 0%....50%....100% - 51 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 18: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 19: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 20: 0%....50%....100% - 51 passes
+==PROF== Profiling "copyPackedKernel" - 21: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCoalescedC" - 22: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 23: 0%....50%....100% - 50 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x128_l..." - 24: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x128_l..." - 25: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_ld..." - 26: 0%....50%....100% - 51 passes
+==PROF== Profiling "copyPackedKernel" - 27: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCoalescedC" - 28: 0%....50%....100% - 51 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 29: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 30: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 31: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 32: 0%....50%....100% - 50 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 33: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_fp16x2_hcudnn_winog..." - 34: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 35: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 36: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 37: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 38: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 39: 0%....50%....100% - 50 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 40: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_fp16x2_hcudnn_winog..." - 41: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 42: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 43: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 44: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 45: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 46: 0%....50%....100% - 51 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 47: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_fp16x2_hcudnn_winog..." - 48: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 49: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 50: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 51: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 52: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 53: 0%....50%....100% - 50 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 54: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_fp16x2_hcudnn_winog..." - 55: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 56: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 57: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 58: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchhw2Tonhwc8" - 59: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_h884cudnn_256x64_sl..." - 60: 0%....50%....100% - 51 passes
+==PROF== Profiling "nhwc8Tonchhw2" - 61: 0%....50%....100% - 51 passes
+==PROF== Profiling "trt_volta_fp16x2_hcudnn_winog..." - 62: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 63: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 64: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 65: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 66: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 67: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 68: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 69: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 70: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 71: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 72: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 73: 0%....50%....100% - 51 passes
+==PROF== Profiling "fusedConvolutionReluKernel" - 74: 0%....50%....100% - 51 passes
+==PROF== Profiling "poolCHW_PQT" - 75: 0%....50%....100% - 51 passes
+==PROF== Profiling "volta_h884gemm_64x64_ldg8_tn" - 76: 0%....50%....100% - 51 passes
+==PROF== Profiling "op_generic_tensor_kernel" - 77: 0%....50%....100% - 51 passes
+==PROF== Profiling "nchwTonchw" - 78: 0%....50%....100% - 49 passes
+==PROF== Profiling "softmax_fw_kernel" - 79: 0%....50%....100%[11/28/2023-09:37:18] [I] Warmup completed 0 queries over 0 ms
+[11/28/2023-09:37:18] [I] Timing trace has 1 queries over 90.2209 s
+[11/28/2023-09:37:18] [I] Trace averages of 1 runs:
+[11/28/2023-09:37:18] [I] Average on 1 runs - GPU latency: 90220.7 ms - Host latency: 90220.9 ms (end to end 90220.9 ms, enqueue 90224.4 ms)
+[11/28/2023-09:37:18] [I] Host Latency
+[11/28/2023-09:37:18] [I] min: 90220.9 ms (end to end 90220.9 ms)
+[11/28/2023-09:37:18] [I] max: 90220.9 ms (end to end 90220.9 ms)
+[11/28/2023-09:37:18] [I] mean: 90220.9 ms (end to end 90220.9 ms)
+[11/28/2023-09:37:18] [I] median: 90220.9 ms (end to end 90220.9 ms)
+[11/28/2023-09:37:18] [I] percentile: 90220.9 ms at 99% (end to end 90220.9 ms at 99%)
+[11/28/2023-09:37:18] [I] throughput: 0.0110839 qps
+[11/28/2023-09:37:18] [I] walltime: 90.2209 s
+[11/28/2023-09:37:18] [I] Enqueue Time
+[11/28/2023-09:37:18] [I] min: 90224.4 ms
+[11/28/2023-09:37:18] [I] max: 90224.4 ms
+[11/28/2023-09:37:18] [I] median: 90224.4 ms
+[11/28/2023-09:37:18] [I] GPU Compute
+[11/28/2023-09:37:18] [I] min: 90220.7 ms
+[11/28/2023-09:37:18] [I] max: 90220.7 ms
+[11/28/2023-09:37:18] [I] mean: 90220.7 ms
+[11/28/2023-09:37:18] [I] median: 90220.7 ms
+[11/28/2023-09:37:18] [I] percentile: 90220.7 ms at 99%
+[11/28/2023-09:37:18] [I] total compute time: 90.2207 s
+[11/28/2023-09:37:18] [I] 
+[11/28/2023-09:37:18] [I] === Profile (1 iterations ) ===
+[11/28/2023-09:37:18] [I]                                                                                                                                                                              Layer   Time (ms)   Avg. Time (ms)   Time %
+[11/28/2023-09:37:18] [I]                                                                                                                                  conv1/7x7_s2 + conv1/relu_7x7 input reformatter 0     2491.08          2491.08      2.8
+[11/28/2023-09:37:18] [I]                                                                                                                                                      conv1/7x7_s2 + conv1/relu_7x7     1409.10          1409.10      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                                                                       pool1/3x3_s2     1024.60          1024.60      1.1
+[11/28/2023-09:37:18] [I]                                                                                                                                                    pool1/norm1 input reformatter 0      952.32           952.32      1.1
+[11/28/2023-09:37:18] [I]                                                                                                                                                                        pool1/norm1      969.68           969.68      1.1
+[11/28/2023-09:37:18] [I]                                                                                                                       conv2/3x3_reduce + conv2/relu_3x3_reduce input reformatter 0      870.94           870.94      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                           conv2/3x3_reduce + conv2/relu_3x3_reduce     1527.32          1527.32      1.7
+[11/28/2023-09:37:18] [I]                                                                                                                                                         conv2/3x3 + conv2/relu_3x3     1424.24          1424.24      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                                                    conv2/norm2 input reformatter 0      869.20           869.20      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                        conv2/norm2      873.91           873.91      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                       pool2/3x3_s2     1650.11          1650.11      1.8
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_3a/pool      927.77           927.77      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_3a/pool_proj + inception_3a/relu_pool_proj     1146.93          1146.93      1.3
+[11/28/2023-09:37:18] [I]                                                                                                          inception_3a/pool_proj + inception_3a/relu_pool_proj output reformatter 0      866.53           866.53      1.0
+[11/28/2023-09:37:18] [I]   inception_3a/1x1 + inception_3a/relu_1x1 || inception_3a/3x3_reduce + inception_3a/relu_3x3_reduce || inception_3a/5x5_reduce + inception_3a/relu_5x5_reduce input reformatter 0      868.08           868.08      1.0
+[11/28/2023-09:37:18] [I]                       inception_3a/1x1 + inception_3a/relu_1x1 || inception_3a/3x3_reduce + inception_3a/relu_3x3_reduce || inception_3a/5x5_reduce + inception_3a/relu_5x5_reduce     1399.25          1399.25      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_3a/3x3 + inception_3a/relu_3x3     1325.92          1325.92      1.5
+[11/28/2023-09:37:18] [I]                                                                                                                       inception_3a/5x5 + inception_3a/relu_5x5 input reformatter 0      857.38           857.38      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_3a/5x5 + inception_3a/relu_5x5     1203.55          1203.55      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                      inception_3a/5x5 + inception_3a/relu_5x5 output reformatter 0      868.75           868.75      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_3a/1x1 copy      980.48           980.48      1.1
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_3b/pool      739.66           739.66      0.8
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_3b/pool_proj + inception_3b/relu_pool_proj     1291.02          1291.02      1.4
+[11/28/2023-09:37:18] [I]                       inception_3b/3x3_reduce + inception_3b/relu_3x3_reduce || inception_3b/1x1 + inception_3b/relu_1x1 || inception_3b/5x5_reduce + inception_3b/relu_5x5_reduce     1292.67          1292.67      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_3b/3x3 + inception_3b/relu_3x3     1262.73          1262.73      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_3b/5x5 + inception_3b/relu_5x5     1387.94          1387.94      1.5
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_3b/1x1 copy      924.67           924.67      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                       pool3/3x3_s2      835.77           835.77      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                              inception_4a/pool input reformatter 0      877.98           877.98      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_4a/pool     1325.41          1325.41      1.5
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_4a/pool_proj + inception_4a/relu_pool_proj     1195.33          1195.33      1.3
+[11/28/2023-09:37:18] [I]                       inception_4a/1x1 + inception_4a/relu_1x1 || inception_4a/3x3_reduce + inception_4a/relu_3x3_reduce || inception_4a/5x5_reduce + inception_4a/relu_5x5_reduce     1145.28          1145.28      1.3
+[11/28/2023-09:37:18] [I]  inception_4a/1x1 + inception_4a/relu_1x1 || inception_4a/3x3_reduce + inception_4a/relu_3x3_reduce || inception_4a/5x5_reduce + inception_4a/relu_5x5_reduce output reformatter 0      862.43           862.43      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4a/3x3 + inception_4a/relu_3x3     1051.86          1051.86      1.2
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4a/5x5 + inception_4a/relu_5x5     1200.75          1200.75      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_4a/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_4b/pool     1290.56          1290.56      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_4b/pool_proj + inception_4b/relu_pool_proj     1111.03          1111.03      1.2
+[11/28/2023-09:37:18] [I]   inception_4b/1x1 + inception_4b/relu_1x1 || inception_4b/3x3_reduce + inception_4b/relu_3x3_reduce || inception_4b/5x5_reduce + inception_4b/relu_5x5_reduce input reformatter 0      846.42           846.42      0.9
+[11/28/2023-09:37:18] [I]                       inception_4b/1x1 + inception_4b/relu_1x1 || inception_4b/3x3_reduce + inception_4b/relu_3x3_reduce || inception_4b/5x5_reduce + inception_4b/relu_5x5_reduce     1141.44          1141.44      1.3
+[11/28/2023-09:37:18] [I]  inception_4b/1x1 + inception_4b/relu_1x1 || inception_4b/3x3_reduce + inception_4b/relu_3x3_reduce || inception_4b/5x5_reduce + inception_4b/relu_5x5_reduce output reformatter 0      782.46           782.46      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4b/3x3 + inception_4b/relu_3x3      538.62           538.62      0.6
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4b/5x5 + inception_4b/relu_5x5      843.45           843.45      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_4b/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_4c/pool     1286.72          1286.72      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_4c/pool_proj + inception_4c/relu_pool_proj     1198.05          1198.05      1.3
+[11/28/2023-09:37:18] [I]   inception_4c/3x3_reduce + inception_4c/relu_3x3_reduce || inception_4c/1x1 + inception_4c/relu_1x1 || inception_4c/5x5_reduce + inception_4c/relu_5x5_reduce input reformatter 0      878.31           878.31      1.0
+[11/28/2023-09:37:18] [I]                       inception_4c/3x3_reduce + inception_4c/relu_3x3_reduce || inception_4c/1x1 + inception_4c/relu_1x1 || inception_4c/5x5_reduce + inception_4c/relu_5x5_reduce     1406.02          1406.02      1.6
+[11/28/2023-09:37:18] [I]  inception_4c/3x3_reduce + inception_4c/relu_3x3_reduce || inception_4c/1x1 + inception_4c/relu_1x1 || inception_4c/5x5_reduce + inception_4c/relu_5x5_reduce output reformatter 0      845.73           845.73      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4c/3x3 + inception_4c/relu_3x3      947.94           947.94      1.1
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4c/5x5 + inception_4c/relu_5x5     1186.89          1186.89      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_4c/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_4d/pool     1439.00          1439.00      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_4d/pool_proj + inception_4d/relu_pool_proj     1098.57          1098.57      1.2
+[11/28/2023-09:37:18] [I]   inception_4d/5x5_reduce + inception_4d/relu_5x5_reduce || inception_4d/3x3_reduce + inception_4d/relu_3x3_reduce || inception_4d/1x1 + inception_4d/relu_1x1 input reformatter 0      846.97           846.97      0.9
+[11/28/2023-09:37:18] [I]                       inception_4d/5x5_reduce + inception_4d/relu_5x5_reduce || inception_4d/3x3_reduce + inception_4d/relu_3x3_reduce || inception_4d/1x1 + inception_4d/relu_1x1     1147.64          1147.64      1.3
+[11/28/2023-09:37:18] [I]  inception_4d/5x5_reduce + inception_4d/relu_5x5_reduce || inception_4d/3x3_reduce + inception_4d/relu_3x3_reduce || inception_4d/1x1 + inception_4d/relu_1x1 output reformatter 0      705.04           705.04      0.8
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4d/3x3 + inception_4d/relu_3x3      816.08           816.08      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4d/5x5 + inception_4d/relu_5x5     1127.88          1127.88      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_4d/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_4e/pool     1257.42          1257.42      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_4e/pool_proj + inception_4e/relu_pool_proj     1197.39          1197.39      1.3
+[11/28/2023-09:37:18] [I]   inception_4e/1x1 + inception_4e/relu_1x1 || inception_4e/5x5_reduce + inception_4e/relu_5x5_reduce || inception_4e/3x3_reduce + inception_4e/relu_3x3_reduce input reformatter 0      706.51           706.51      0.8
+[11/28/2023-09:37:18] [I]                       inception_4e/1x1 + inception_4e/relu_1x1 || inception_4e/5x5_reduce + inception_4e/relu_5x5_reduce || inception_4e/3x3_reduce + inception_4e/relu_3x3_reduce     1219.35          1219.35      1.4
+[11/28/2023-09:37:18] [I]  inception_4e/1x1 + inception_4e/relu_1x1 || inception_4e/5x5_reduce + inception_4e/relu_5x5_reduce || inception_4e/3x3_reduce + inception_4e/relu_3x3_reduce output reformatter 0      862.01           862.01      1.0
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4e/3x3 + inception_4e/relu_3x3      852.13           852.13      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_4e/5x5 + inception_4e/relu_5x5     1447.41          1447.41      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_4e/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                       pool4/3x3_s2     1385.17          1385.17      1.5
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_5a/pool     1461.03          1461.03      1.6
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_5a/pool_proj + inception_5a/relu_pool_proj     1160.75          1160.75      1.3
+[11/28/2023-09:37:18] [I]                       inception_5a/1x1 + inception_5a/relu_1x1 || inception_5a/5x5_reduce + inception_5a/relu_5x5_reduce || inception_5a/3x3_reduce + inception_5a/relu_3x3_reduce     1158.73          1158.73      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_5a/3x3 + inception_5a/relu_3x3     1138.50          1138.50      1.3
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_5a/5x5 + inception_5a/relu_5x5      776.58           776.58      0.9
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_5a/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                  inception_5b/pool     1383.80          1383.80      1.5
+[11/28/2023-09:37:18] [I]                                                                                                                               inception_5b/pool_proj + inception_5b/relu_pool_proj     1242.08          1242.08      1.4
+[11/28/2023-09:37:18] [I]                       inception_5b/1x1 + inception_5b/relu_1x1 || inception_5b/3x3_reduce + inception_5b/relu_3x3_reduce || inception_5b/5x5_reduce + inception_5b/relu_5x5_reduce     1288.81          1288.81      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_5b/3x3 + inception_5b/relu_3x3     1279.75          1279.75      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                                           inception_5b/5x5 + inception_5b/relu_5x5     1252.85          1252.85      1.4
+[11/28/2023-09:37:18] [I]                                                                                                                                                              inception_5b/1x1 copy        0.01             0.01      0.0
+[11/28/2023-09:37:18] [I]                                                                                                                                                                       pool5/7x7_s1     1605.96          1605.96      1.8
+[11/28/2023-09:37:18] [I]                                                                                                                                                                   loss3/classifier     4004.58          4004.58      4.4
+[11/28/2023-09:37:18] [I]                                                                                                                                                           prob input reformatter 0      566.93           566.93      0.6
+[11/28/2023-09:37:18] [I]                                                                                                                                                                               prob     1585.89          1585.89      1.8
+[11/28/2023-09:37:18] [I]                                                                                                                                                                              Total    90219.15         90219.15    100.0
+[11/28/2023-09:37:18] [I] 
+&&&& PASSED TensorRT.trtexec # /usr/src/tensorrt/bin/trtexec --iterations=1 --dumpProfile --avgRuns=1 --warmUp=0 --duration=0 --loadEngine=starter_guide_logs/googlenet_only_gpu.plan
+ - 49 passes
+==PROF== Disconnected from process 1838
+==PROF== Report:  nsight_compute_googlenet_only_gpu_set_full.report.nsight-cuprof-report

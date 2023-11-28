@@ -22,7 +22,7 @@ We performed our experiments on an NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jet
 
 3. Software dependencies
 
-The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested. 
+The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
 
 4. Installation 
 
@@ -39,7 +39,7 @@ If you are using different python3 versions than default python3 version coming 
 
 Note: Creating a docker or a VM is infeasible due to large size/access to the required hardware (DLA) etc. The authors provide remote access as explained below. 
 
-### If the reviewer opts to remote access to our edge devices:
+### If the reviewer opts to access remotely to our edge devices:
 
 We target NVIDIA Jetson boards since it has DLA and GPU. Moreover, DLA can be only programmed via TensorRT. For this reason, this artifact requires access to NVIDIA Xavier AGX and AGX Orin boards. So, as an remote access, we request reviewers to use AnyDesk. We understand reviewer's busy schedule and the remote access will be open to the reviewer anytime during the review progress. If the reviewer may face difficulties of connecting to the device(not common but may occur for first timers), the authors are kindly requested to connect with authors.
 
@@ -375,7 +375,22 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
     ...
  ```
 
-### Step 5: Synchronous multiple DNN execution
+### Step 5: Memory Throughput Profiling
+
+This step targets to profile memory throughput. 
+
+```bash
+mkdir nsight_compute_logs
+#Note: This prompt requests sudo privilege. Takes a couple of minutes to run
+python3 src/nsight_compute.py
+```
+
+This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of hour to match the layers and their instructions. We leave this script here for a reference but also add an input file. For the ones who are interested in, we propose to follow this strategy in summary below. This gives the memory throughput of a layer. We use a recorded memory throughput data in z3 solvers below. #TODO_ISMET
+For group layer:  (memory throughput of a layer) * (duration of a layer in the group) / (duration of all layers in the group).   
+
+we can't profile memory throughput of DLA since Nsight compute does not allow to use DLA. So, the profiling data we have obtained in EMC analysis can be linearly converted by using each layer group's EMC GPU and DLA utilization.
+
+### Step 6: Synchronous multiple DNN execution
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories
@@ -398,14 +413,13 @@ cd ./tensorrt_sharedMem2/samples/trtexec/
 make -j4
 cd ../../../
 
-echo '0' | sudo tee /tmp/shared_mem.txt
-
 python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start gpu --output ./google_only_gpu.plan
 python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start dla --output ./google_only_dla.plan
 
 mkdir ./multi_dnn_execution_logs/
 
-python3 ./run_multiple_dnn.py
+#Run the python code to check TensorRT binaries working fine.
+python3 ./starter_guide_experiment.py
 ```
 
 #Todo_ismet:
@@ -429,7 +443,7 @@ output: schedule to run for those DNNs
 ### Multi DNN, HaX-CoNN results
 
 
-#Overhead Analysis
+### Overhead Analysis
 
 #TODO_Ismet-OR-Eymen
 

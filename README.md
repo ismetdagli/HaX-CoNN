@@ -5,11 +5,13 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 ## Description
 
+### If the reviewer has access to edge devices:
+
 1. Check-list (artifact meta information)
 * Hardware: NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jetson Orin AGX 32 GB
 * Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [TODO-Jetpack Version](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Orin AGX
 * Architecture: aarch64 
-* Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8, TensorRT 8.4.0, CUDA 11.2
+* Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8.10, TensorRT 8.4.0, CUDA 11.2
 * Binary: Binary files are large. So, generating binary files are neccesary by using scripts in this artifact.
 * Output: Profiling data (execution time, transition time, memory use) for both layers and neural networks. The end results is the improved execution time/throughput. 
 * Experiment workflow: Python and bash scripts
@@ -33,7 +35,17 @@ The command below will install natsort, jetson-stats and z3-solver:
 sudo -H pip3 install -r requirements.txt
 ```
 
-If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8.10 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+
+
+### If the reviewer opts to remote access to our edge devices:
+
+We target NVIDIA Jetson boards since it has DLA and GPU. Moreover, DLA can be only programmed via TensorRT. For this reason, this artifact requires access to NVIDIA Xavier AGX and AGX Orin boards. So, as an remote access, we request reviewers to use AnyDesk. We understand reviewer's busy schedule and the remote access will be open to the reviewer anytime during the review progress. If the reviewer may face difficulties of connecting to the device(not common but may occur for first timers), the authors are kindly requested to connect with authors.
+
+AnyDesk id: TODO_ISMET
+AnyDesk password: TODO_ISMET
+
+Needed software for remote access: AnyDesk
 
 
 ## Starter Guide:

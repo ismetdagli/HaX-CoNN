@@ -4,8 +4,13 @@ multi_dnn_execution
 multi_dnn_execution_logs
 starter_guide_logs
 
+
+#TensorRT files
 *.plan
 *.engine
+
+#Profiling Files, e.g. Nsight Compute
+*nsight-cuprof-report 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

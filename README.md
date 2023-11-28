@@ -108,13 +108,12 @@ Intermediate Files:
  -  DLA Engine Plan Files: Located in `TR_TIME_PLANS_DIR` (`build/googlenet_transition_plans` directory). These are the TensorRT engine files for the GoogleNet model with transitions at different layers:
         DLA Engine Plans (`PLANS_DLA`): For running the model initially on DLA. These are used for DLA layer analysis
  -  Profile Output Files: In `TR_TIME_PROFILES_DIR` (inside `build/googlenet_transition_plans/profiles`). These files contain detailed execution profiles for each engine plan.
+ -  Filtered GPU Profile: In `build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json`, GPU's filtered profile data resides. This file is heavily filtered from the original profile giving information about the name, execution time and layer count in the fused layer. 
+ -  DLA Profile Results: In `output/dla_compute_times.json`, every transition engine is run and their DLA layer execution information is summed and saved in this file.
 
 Output Files:
 
- -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
-
-
-
+ -  Layer Analysis Results JSON: The file `output/layer_results.json` is the final output. It contains the layer profiling for GPU and DLA. 
 
 This creates a text file of a DNN. The line after " [I] GPU Compute" are our target data. We use *mean* data as the average of X number of iterations iteration is passed as argument to our trtexec binary file. We generally use 1000 iteration to mitigate if any unexpected noise occurs.
 
@@ -164,7 +163,7 @@ Intermediate Files:
 
 Output Files:
 
- -  A script should be parsing the filtered jsons and create a final json in output (TODO_ISMET)
+ -  Transition Cost JSON: The file `output/transition_results.json` is the final output. It contains the mean execution times and their transition costs for each convolution layer configuration. This data is gathered by running the engine files and profiling.
 
 #### Script Summary
 Scripts which are specific to Transition analysis are summarised below:

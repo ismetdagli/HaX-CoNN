@@ -65,7 +65,7 @@ My understanding is this: (please modify/elaborate/update etc. to make this inst
 
 
 
-NOTE: Running make takes ~1/2 hours on Xavier AGX. 
+NOTE: Running make takes ~1 hours on Xavier AGX. 
 
 ```bash
 cd HaX-CoNN/
@@ -73,7 +73,7 @@ export PYTHONPATH="$(pwd):$PYTHONPATH"
 make
 ```
 
-### Building Engines
+### Step 1: Building Engines
 
 The builder script `src/build_engine.py` can be used to serve TensorRT engines with varying configurations. Engines can be configured to be run only on gpu or dla or both by setting a transition layer.
 
@@ -95,7 +95,7 @@ optional arguments:
   --verbose             Enable verbose output
 ```
 
-## Layer profiling: 
+## Step 2: Layer profiling: 
 
 Input File:
 
@@ -146,7 +146,7 @@ Layer group     GPU(ms)   DLA(ms)
 .
 
 
-## Transition time profiling: 
+## Step 3: Transition time profiling: 
 
 #### File Summary
 
@@ -263,7 +263,7 @@ You can view the transition cost analysis results in `output/transition_results.
     ...
 ```
 
-## EMC Analysis 
+## Step 4: EMC Analysis 
 
 #### File Summary
 
@@ -359,7 +359,7 @@ TODO_EYMEN2: EMC utilization measurement from every engine(for comprehensive eva
     ...
  ```
 
-## Synchronous multiple DNN execution
+## Step 5: Synchronous multiple DNN execution
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories

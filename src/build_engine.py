@@ -62,19 +62,21 @@ def save_engine(engine, output_file):
         f.write(engine.serialize())
     print(f"Engine saved to {output_file}")
 
+
 def build_engine_for_directory(input_dir, output_dir, starts_gpu, verbose):
     input_dir = Path(input_dir)
     output_dir = Path(output_dir)
 
     for prototxt_file in input_dir.glob("*.prototxt"):
-        output_file = output_dir / prototxt_file.with_suffix('.plan').name
+        output_file = output_dir / prototxt_file.with_suffix(".plan").name
 
+        print(f"Started build of {prototxt_file}")
         engine = build_engine_caffe(
             deploy_file=str(prototxt_file),
             transition=-1,
             starts_gpu=starts_gpu,
             batch=1,
-            verbose=verbose
+            verbose=verbose,
         )
         if engine:
             save_engine(engine, str(output_file))
@@ -149,7 +151,6 @@ if __name__ == "__main__":
     prototxt_path = Path(args.prototxt)
     output_path = Path(args.output)
 
-
     if prototxt_path.is_dir():
         # Handle directory input
         if args.transition != -1:
@@ -159,7 +160,7 @@ if __name__ == "__main__":
             input_dir=prototxt_path,
             output_dir=output_path,
             starts_gpu=starts_gpu,
-            verbose=args.verbose
+            verbose=args.verbose,
         )
     else:
         # Single file processing
@@ -168,8 +169,7 @@ if __name__ == "__main__":
             transition=args.transition,
             starts_gpu=starts_gpu,
             batch=1,
-            verbose=args.verbose
+            verbose=args.verbose,
         )
         if engine:
             save_engine(engine, args.output)
-

@@ -60,9 +60,12 @@ Login information to Xavier AGX and AGX Orin are in the edge_account_info.txt in
 This is a starter guide of an example motivated in our paper. Basically, the system needs to run ResNet101 and GoogleNet. The system can either run both DNNs on GPU, or select the map among GPU and DLA. These mappings are done in DNN-level. What we propose is to distribute the layers among GPU and DLA in layer-level. There are four steps in this script:
 
 Step 1: We build necessary engines to run Googlenet and Resnet on GPU and DLA.
+
 Step 2: We build our modified TensorRT implementation.
+
 Step 3: We collect profiling data for four different scenario explained above.
-Step 4: We report the execution time 
+
+Step 4: We report the execution time upon baselines.
 
 ```bash
 chmod +x starter_guide.sh
@@ -83,13 +86,14 @@ Overall improvement over best-baseline: 57.3%
 ```
 
 
-Note: The values might slightly be different ~(1%) since this is an empirical study. This artifact does not claim 100% match of the results with the reports. Minimal changes may occur (which are normally less than a couple of percentage). 
+Note: The values might slightly be different since this is an empirical study. This artifact does not claim 100% match of the results with the reports. Minimal changes may occur (which are normally less than a couple of percentage). 
+Note 2: While performing our experiments, we are trying to use the most updated JetPack versions. However, as the system get an update, the execution time may slightly affected. This execution time affects profiles/baselines/HaX-CoNN results. The authors did not observe an significant effect on the results until now.
 
 ## Experimental Setup in Detail (Step by step instructions)
 
 This is a empirical study. We are listing the details how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to built some of the necessary binaries to collect data
 
-NOTE: Running make takes ~1 hours on Xavier AGX. 
+NOTE: Even though collecting data per executions takes a couple of seconds, building an engine/plan takes a couple of minutes. This is because TensorRT builder checks and applies possible optimizations to run the kernels efficiently. Even though disabling some of them are partially provided by their APIs, this is not definitely suggested to comprehensively evaluate our work. So, building the binary files and running `make` below takes ~1 hours on Xavier AGX. 
 
 ```bash
 cd HaX-CoNN/
@@ -209,7 +213,7 @@ Scripts which are specific to Transition analysis are summarised below:
 
 - `python3 scripts/transition_analysis/transition_util.py`
 
-### Process Overview:
+#### Process Overview:
 
 To build all necessary engines, measure their transition costs and save the output run the following. You can view the final results in the `output/emc_results.json` file.
 
@@ -331,7 +335,7 @@ Scripts which are specific to EMC analysis are summarised below:
 - `scripts/emc_analysis/emc_single_run.sh <tensorrt-engine-path> <output-path>`
 - `python3 scripts/emc_analysis/emc_util_all.py` 
 
-### Process Overview:
+#### Process Overview:
 
 To build all necessary engines, measure their EMC utilizations and save the output run the following. You can view the final results in the `output/emc_results.json` file.
 
@@ -409,9 +413,22 @@ python3 src/nsight_compute.py
 This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of hour to match the layers and their instructions. We leave this script here for a reference but also add an input file. For the ones who are interested in, we propose to follow this strategy in summary below. This gives the memory throughput of a layer. We use a recorded memory throughput data in z3 solvers below. #TODO_ISMET
 For group layer:  (memory throughput of a layer) * (duration of a layer in the group) / (duration of all layers in the group).   
 
-we can't profile memory throughput of DLA since Nsight compute does not allow to use DLA. So, the profiling data we have obtained in EMC analysis can be linearly converted by using each layer group's EMC GPU and DLA utilization.
+We can't profile memory throughput of DLA since Nsight compute does not allow to use DLA. So, the profiling data we have obtained in EMC analysis can be linearly converted by using each layer group's EMC GPU and DLA utilization.
+
+### Standalone performance
+
+Table 5 summarizes the standalone performance of DNNs. In order to collect data of standalone executions of DNNs, 
+
+#TODO_ISMET Check this if you have more time
+```bash
+
+```
 
 ### Step 6: Synchronous multiple DNN execution
+
+We assume that multiple DNNs starts at the same time. 
+
+This session is also briefly explained under "Neural network synchronization" of Session 4.
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * *replace sampleInference.cpp with the corresponding directories
@@ -470,6 +487,7 @@ Moreover, we use INT8 setting unlike FP16 in Xavier AGX settings. Even though th
 ### Multi DNN, HaX-CoNN results
 
 
+
 ### Overhead Analysis
 
 #TODO\_Ismet-OR-Eymen
@@ -501,6 +519,10 @@ pkill run_forever.sh
 ```
 
 - Then, run z3 solver(src/dummy_z3_solver) in an infinite loop and run the same executions of AlexnetDLA + GPU(any network). Note: while(True) at Line 128 on z3_solver helps to run in an infinite loop. You can define a automated stopping mechanism to stop the code after all executions done. (not necessary but optional. If we leave as it is, it should not be an issue)
+
+```bash
+
+```
 
 Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comparison example: 
 average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)

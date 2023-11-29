@@ -469,27 +469,42 @@ python3 ./starter_guide_experiment.py
 ```
 
 ### Step 7: Z3 Solver execution
-#Todo_ismet:
 
 Add z3 solver code.
 
 Until now, we followed the steps on how to profile and execute DNNs. We profiled execution time of layers, transition time and memory throughput of layers. All these data are used as an input.
 
+Note: slowdown values are found by [PCCS](https://dl.acm.org/doi/abs/10.1145/3466752.3480101) and [Source Code](https://github.com/processorcentricmodel/PCCS). If a user targets to use a different environment, the model needs to be reconstructed. We follow the steps defined by the authors.
+
 ```bash
-python3 z3_solver_multi_dnn.py
+python3 z3_solver_multi_dnn.py > output/schedule_summary.txt
 ```
 
-The expected output from solver is the schedule of NNs.
+The expected output from solver is the schedule of DNNs.
+
+```bash
+> cat output/schedule_summary.txt
+GoogleNet starts on GPU
+GoogleNet applies transition at 81
+Resnet50 starts on DLA
+Resnet50 applies transition at 39
+```
+
+For other DNNs execution scenarios, previous steps needs to be followed and the profile data needs to be given the corresponding files.
 
 
+### Multi DNN, HaX-CoNN results
 
-Give a reference to the code with execution time, transition time and memory use
+Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. Then, we used z3 solver to find the corresponding schedule. Now, to verify the performance of our model, we will execute the corresponding schedules.
+
+For the baselines, we generate GPU executions, GPU&DLA executions, and [H2H](https://dl.acm.org/doi/10.1145/3489517.3530509) and [Herald](https://www.computer.org/csdl/proceedings-article/hpca/2021/223500a071/1t0HUXqfspW). We follow their implementation as given in [source code](https://github.com/xyzxinyizhang/H2H). For Herald, we stop the execution at step 2 (as H2H did in their methodology) and for H2H baseline, we follow the execution for all steps (including step 4). 
+
+For the sake of simplicity of the artifact, we provide the schedules found as an input in baseline.txt. We build the engines, run them and compare the results. 
 
 
 ### Single DNN, HaX-CoNN results #TODO_ISMET
 
-Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. 
-Right now, by using profiling data, we create a schedule 
+Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. Then, we used z3 solver to find the corresponding schedule. Now, to verify the performance of our model, we will execute the corresponding schedules. For the sake of simplicity of the artifact, we provide the schedules found as an input to run  
 
 Run z3 to find the single dnn schedule:
 
@@ -500,10 +515,6 @@ output: schedule to run for those DNNs
 #### Reusability on Orin AGX
 For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
 Moreover, we use INT8 setting unlike FP16 in Xavier AGX settings. Even though these changes seems easy enough, using a new devices with many different chan For the sake of simplicity, profiling data has been preprocessed and the functions are adapted for new TensorRT version. (There has been changes in the function name in TensorRT's API). Plus, we have integrated the calibration for FP16 to INT8. 
-
-
-
-### Multi DNN, HaX-CoNN results
 
 
 

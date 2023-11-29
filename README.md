@@ -1,7 +1,5 @@
 # HaX-CoNN Artifact
-This is artifact of HaX-Conn: Shared Memory-contention-aware Concurrent DNN Execution for Diversely Heterogeneous System-on-Chips. This 
-
-Artifact described here includes the source code for HaX-CoNN GPU and DLA runtimes and the sources for the applications used in our evaluation.
+This is the artifact of HaX-Conn: Shared Memory-contention-aware Concurrent DNN Execution for Diversely Heterogeneous System-on-Chips. The artifact described here includes the source code for HaX-CoNN GPU and DLA runtimes and the sources for the applications used in our evaluation.
 
 ## Description
 
@@ -9,10 +7,10 @@ Artifact described here includes the source code for HaX-CoNN GPU and DLA runtim
 
 1. Check-list (artifact meta information)
 * Hardware: NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jetson Orin AGX 32 GB
-* Software easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
+* Software for easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
 * Architecture: aarch64 
 * Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8.10, TensorRT 8.4.0, CUDA 11.2
-* Binary: Binary files are large. So, generating binary files are neccesary by using scripts in this artifact.
+* Binary: Binary files are large. So, generating them by using scripts in this artifact is necessary.
 * Output: Profiling data (execution time, transition time, memory use) for both layers and neural networks. The end results is the improved execution time/throughput. 
 * Experiment workflow: Python and bash scripts
 
@@ -35,13 +33,13 @@ The command below will install natsort, jetson-stats and z3-solver:
 sudo -H pip3 install -r requirements.txt
 ```
 
-If you are using different python3 versions than default python3 version coming with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8.10 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
+If you are using a different Python 3 version than the default one that comes with JetPack, please modify the default version as 3.6.9 on Xavier AGX and 3.8.10 on Orin AGX by using [update-alternatives](https://hackersandslackers.com/multiple-python-versions-ubuntu-20-04/)
 
 Note: Creating a docker or a VM is infeasible due to large size/access to the required hardware (DLA) etc. The authors provide remote access as explained below. 
 
-5. Publicly availability
+5. Public availability
 
-We keep the most updated version of code under this repository. Please refer to this repository for the most updated version.
+We maintain the most updated version of the code in this repository. Please refer to this repository for the most updated version.
 
 As stated in requirements of green badge definition, this code is publicly available under zenodo [in this link](INSERT_LINK_ISMET_TODO) 
 
@@ -99,7 +97,7 @@ Note 2: While performing our experiments, we are trying to use the most updated 
 
 ## Experimental Setup in Detail (Step by step instructions)
 
-This is a empirical study. We are listing the details how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to built some of the necessary binaries to collect data
+This is an empirical study. We are listing the details on how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to build some of the necessary binaries to collect data.
 
 NOTE: Even though collecting data per executions takes a couple of seconds, building an engine/plan takes a couple of minutes. This is because TensorRT builder checks and applies possible optimizations to run the kernels efficiently. Even though disabling some of them are partially provided by their APIs, this is not definitely suggested to comprehensively evaluate our work. So, building the binary files and running `make` below takes ~1 hours on Xavier AGX. 
 
@@ -184,7 +182,7 @@ To generate filtered layer timing information in json:
 ```bash
 python3 scripts/layer_analysis/layer_gpu_util.py --profile <profile-path>
 ```
-.e.g.
+e.g.
 ```bash
 python3 scripts/layer_analysis/layer_gpu_util.py --profile build/googlenet_transition_plans/profiles/googlenet_dla_transition_at_24.profile
 ```
@@ -360,7 +358,7 @@ cat output/emc_results.json
 
  1.  Engine File Generation: For each Prototxt file in `PROTOTXT_DIR`, a corresponding engine (.plan) file is generated in `EMC_PLANS_DIR` using the script build_engine.py. This script configures and builds a TensorRT engine for each layer configuration described in the Prototxt files.
 
-An example build for single engine:
+An example build for a single engine:
  ```bash
 python3 src/build_engine.py --prototxt convolution_characterization_prototxts/conv1_kernel1.prototxt --output build/convolution_characterization_plans/conv1_kernel1.plan --start gpu
  ```
@@ -439,7 +437,7 @@ DLA's memory throughput for a layer X: (EMC utilization of layer X on DLA / EMC 
 
 We assume that multiple DNNs starts at the same time. 
 
-This session is also briefly explained under "Neural network synchronization" of Session 4.
+This session is also briefly explained in "Neural network synchronization" in Session 4.
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * replace sampleInference.cpp with the corresponding directories
@@ -548,7 +546,7 @@ Until here, we have been collecting profiling data for execution time, transitio
 
 Run z3 to find the single dnn schedule:
 
-Z3 should by like this
+Z3 should be like this
 input: Run the command line with profiling data
 output: schedule to run for those DNNs
 
@@ -576,7 +574,7 @@ python3 src/build_engine.py --prototxt prototxt_input_files/alexnet.prototxt --o
 python3 src/build_engine.py --prototxt prototxt_input_files/ --output build/overhead_gpu --start gpu
 ```
 
-- Run AlexNet DLA with each GPU engines. Collect data for each execution. it should execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
+- Run AlexNet DLA with each GPU engines. Collect data for each execution. it should include the execution of 121 DNNs Example:AlexnetDLA-DenseNetGPU, AlexnetDLA-GoogleNetGPU, AlexNet-InceptionGPU etc.
 
 ```bash
 ./scripts/run_forever.sh build/overhead/alexnet_dla.plan build/overhead/alexnet_dla/ &

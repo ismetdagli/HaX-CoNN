@@ -10,7 +10,7 @@ This is the artifact of HaX-Conn: Shared Memory-contention-aware Concurrent DNN 
 * Software for easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
 * Architecture: aarch64 
 * Software details needed: Xavier AGX uses Python 3.6.9, TensorRT 7.1.3, CUDA 10.2.89  and Orin AGX uses Python 3.8.10, TensorRT 8.4.0, CUDA 11.2
-* Binary: Binary files are large. So, generating them by using scripts in this artifact is necessary.
+* Binary: Binary files are large, so generating them by using scripts in this artifact is necessary.
 * Output: Profiling data (execution time, transition time, memory use) for both layers and neural networks. The end results is the improved execution time/throughput. 
 * Experiment workflow: Python and bash scripts
 
@@ -20,7 +20,7 @@ We performed our experiments on an NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jet
 
 3. Software dependencies
 
-The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [Jetpack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation since DLA can be programmed via only TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/Cuda etc. is not suggested.
+The easiest way to follow our dependencies is to use [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [Jetpack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX.  We mainly use TensorRT as ML framework in our implementation, as DLA can only be programmed via TensorRT. Xavier AGX has TensorRT 7.1.3  and Orin AGX uses TensorRT 8.4.0. It is important to note that manually installing TensorRT/CUDA etc. is not suggested.
 
 4. Installation 
 
@@ -97,7 +97,7 @@ Note 2: While performing our experiments, we are trying to use the most updated 
 
 ## Experimental Setup in Detail (Step by step instructions)
 
-This is an empirical study. We are listing the details on how we collected data. The data collected through profiling has been encoded to scripts. Run the makefile to build some of the necessary binaries to collect data.
+This is an empirical study. We are listing the details on how we collected data. The data collected through profiling has been encoded into scripts. Run the makefile to build some of the necessary binaries to collect data.
 
 NOTE: Even though collecting data per executions takes a couple of seconds, building an engine/plan takes a couple of minutes. This is because TensorRT builder checks and applies possible optimizations to run the kernels efficiently. Even though disabling some of them are partially provided by their APIs, this is not definitely suggested to comprehensively evaluate our work. So, building the binary files and running `make` below takes ~1 hours on Xavier AGX. 
 
@@ -334,7 +334,7 @@ Input Files:
 
 Intermediate Files:
 
- - Engine Plan Files: Located in `EMC_PLANS_DIR` (`build/convolution_characterization_plans` directory). These are the TensorRT engine files (.plan) generated from the input Prototxt files. Each engine file represents a specific convolution layer configuration and is used to measure EMC utilization.
+ - Engine Plan Files: Located in `EMC_PLANS_DIR` (`build/convolution_characterization_plans` directory). These are the TensorRT engine files (.plan) that are generated from the input Prototxt files. Each engine file represents a specific convolution layer configuration and is used to measure EMC utilization.
  - Time Text Files: Located in `EMC_TIMES_DIR` (`build/convolution_characterization_plans/times` directory). These are the EMC utilization percentage distributions saved from the start to the end of engine's run. Every engine has its own time distribution in text format.
 
 Output File:
@@ -442,7 +442,7 @@ This session is also briefly explained in "Neural network synchronization" in Se
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * replace sampleInference.cpp with the corresponding directories
 * build the directories & write 0 to a tmp shared file.
-* built googlenet only gpu and dla engines
+* build googlenet only gpu and dla engines
 * run the multiple dnn
 ```bash
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
@@ -589,7 +589,7 @@ pkill run_forever.sh
 
 ```
 
-Compare the results of executions(each DNN on GPUs) with z3 and without z3. Comparison example: 
+Compare the results of executions (each DNN on GPUs) with and without z3. Comparison example: 
 average exec time of Inception on GPU (when alexnet on DLA + z3 running ) / average exec time of Inception on GPU (when alexnet on DLA + no z3)
 
 

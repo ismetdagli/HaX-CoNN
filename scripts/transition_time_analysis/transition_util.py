@@ -41,7 +41,7 @@ def calculate_differences(results, base_plan_dla, base_plan_gpu):
 def main():
     script_dir = Path(__file__).resolve().parent
     root_path = script_dir.parent.parent
-    logs_dir = root_path / "build/googlenet_transition_plans/profile_logs/"
+    logs_dir = root_path / "build/googlenet_mark_plans/profile_logs/"
     output_dir = root_path / "output/"
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -49,8 +49,8 @@ def main():
     sorted_results = dict(sorted(results.items(), key=lambda item: sort_key_func(item[0])))
 
     # Assuming base plans are the ones with transition_at_-1
-    base_plan_dla = results.get("googlenet_dla_transition_at_-1", "0")
-    base_plan_gpu = results.get("googlenet_gpu_transition_at_-1", "0")
+    base_plan_dla = results.get("googlenet_dla_mark_at_-1", "0")
+    base_plan_gpu = results.get("googlenet_gpu_mark_at_-1", "0")
 
     diffs = calculate_differences(sorted_results, base_plan_dla, base_plan_gpu)
 

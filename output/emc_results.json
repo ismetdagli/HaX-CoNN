@@ -1,37 +1,37 @@
 {
     "conv1": {
-        "kernel1": "89%",
-        "kernel2": "77%",
-        "kernel3": "70%",
-        "kernel4": "56%",
-        "kernel5": "48%"
+        "kernel1": "50%",
+        "kernel2": "43%",
+        "kernel3": "42%",
+        "kernel4": "35%",
+        "kernel5": "32%"
     },
     "conv2": {
-        "kernel1": "78%",
-        "kernel2": "74%",
-        "kernel3": "67%",
-        "kernel4": "74%",
-        "kernel5": "47%"
+        "kernel1": "30%",
+        "kernel2": "25%",
+        "kernel3": "24%",
+        "kernel4": "25%",
+        "kernel5": "21%"
     },
     "conv3": {
-        "kernel1": "54%",
-        "kernel2": "67%",
-        "kernel3": "60%",
-        "kernel4": "52%",
-        "kernel5": "44%"
+        "kernel1": "18%",
+        "kernel2": "14%",
+        "kernel3": "13%",
+        "kernel4": "13%",
+        "kernel5": "12%"
     },
     "conv4": {
-        "kernel1": "46%",
-        "kernel2": "57%",
-        "kernel3": "50%",
-        "kernel4": "42%",
-        "kernel5": "35%"
+        "kernel1": "8%",
+        "kernel2": "7%",
+        "kernel3": "7%",
+        "kernel4": "7%",
+        "kernel5": "7%"
     },
     "conv5": {
-        "kernel1": "34%",
-        "kernel2": "39%",
-        "kernel3": "24%",
-        "kernel4": "29%",
-        "kernel5": "24%"
+        "kernel1": "5%",
+        "kernel2": "5%",
+        "kernel3": "5%",
+        "kernel4": "5%",
+        "kernel5": "5%"
     }
 }

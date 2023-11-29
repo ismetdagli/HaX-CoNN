@@ -9,7 +9,7 @@ all: emc transition
 # Layer analysis of DLA makes use of transitioning engines unlike GPU.
 
 # Do not use 141 instead make use of -1 transition for single device run
-TRANSITIONS := -1 10 25 39 53 67 81 95 110 124
+TRANSITIONS := -1 10 24 39 53 67 81 95 110 124
 PROTOTXT := prototxt_input_files/googlenet.prototxt
 
 
@@ -27,10 +27,10 @@ PROFILES_DLA := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROFILES_DIR)/
 
 
 $(TR_TIME_PLANS_DIR)/googlenet_gpu_transition_at_%.plan:
-	python3 src/build_engine.py --prototxt $(PROTOTXT) --start gpu --output $@ --transition $* --verbose
+	python3 src/build_transition_cost_engines.py --prototxt $(PROTOTXT) --start gpu --output $@ --transition $* --verbose
 
 $(TR_TIME_PLANS_DIR)/googlenet_dla_transition_at_%.plan:
-	python3 src/build_engine.py --prototxt $(PROTOTXT) --start dla --output $@ --transition $* --verbose
+	python3 src/build_transition_cost_engines.py --prototxt $(PROTOTXT) --start dla --output $@ --transition $* --verbose
 
 
 $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLANS_DIR)/%.plan

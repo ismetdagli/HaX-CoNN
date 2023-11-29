@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path
 
 
-def build_engine_caffe(deploy_file, transition, starts_gpu, batch, verbose=False):
+def build_engine_caffe(deploy_file, transition, mark, starts_gpu, batch, verbose=False):
     TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
     with trt.Builder(
@@ -13,7 +13,7 @@ def build_engine_caffe(deploy_file, transition, starts_gpu, batch, verbose=False
         builder.max_batch_size = batch
         configure_builder_config(config)
         parse_model_with_caffe_parser(parser, deploy_file, network)
-        configure_layers(network, config, transition, starts_gpu, verbose)
+        configure_layers(network, config, transition, mark, starts_gpu, verbose)
         return build_and_return_engine(builder, network, config)
 
 
@@ -28,7 +28,7 @@ def parse_model_with_caffe_parser(parser, deploy_file, network):
     parser.parse(deploy=deploy_file, model=None, network=network, dtype=trt.float16)
 
 
-def configure_layers(network, config, transition, starts_gpu, verbose):
+def configure_layers(network, config, transition, mark, starts_gpu, verbose):
     for i in range(network.num_layers):
         layer = network.get_layer(i)
         if verbose:
@@ -45,7 +45,10 @@ def configure_layers(network, config, transition, starts_gpu, verbose):
             print(f"Device is set {device_type}")
         config.set_device_type(layer, device_type)
 
-        if i == network.num_layers - 1 or i == transition:
+        if mark > 0 and i == mark:
+            network.mark_output(layer.get_output(0))
+
+        if i == network.num_layers - 1:
             network.mark_output(layer.get_output(0))
 
 
@@ -74,6 +77,7 @@ def build_engine_for_directory(input_dir, output_dir, starts_gpu, verbose):
         engine = build_engine_caffe(
             deploy_file=str(prototxt_file),
             transition=-1,
+            mark=-1,
             starts_gpu=starts_gpu,
             batch=1,
             verbose=verbose,
@@ -110,11 +114,18 @@ def parse_arguments():
         default=-1,
         help="Layer index where the transition occurs. Omit the option if a single device will be used.",
     )
+    parser.add_argument(
+        "--mark",
+        type=int,
+        default=-1,
+        help="Layer index which is marked for output. Omit the option for all analyses except for transition cost analysis.",
+    )
+
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     return parser.parse_args()
 
 
-def print_configuration_summary(prototxt_path, output, starts_at, transition, verbose):
+def print_configuration_summary(prototxt_path, output, starts_at, transition, mark, verbose):
     print("Configuration Summary:")
     print(f"Prototxt File: {prototxt_path}")
     print(f"Output Directory: {output}")
@@ -123,6 +134,10 @@ def print_configuration_summary(prototxt_path, output, starts_at, transition, ve
         print(f"Transition Layer not specified")
     else:
         print(f"Transition Layer Index: {transition}")
+    if mark == -1:
+        print(f"Mark output layer not specified")
+    else:
+        print(f"Mark Output Layer Index: {mark}")
     print(f"Verbose Output: {verbose}")
     print("-----------------------------------------------------")
 
@@ -135,6 +150,7 @@ if __name__ == "__main__":
             output=args.output,
             starts_at=args.start,
             transition=args.transition,
+            mark=args.mark,
             verbose=args.verbose,
         )
 
@@ -167,6 +183,7 @@ if __name__ == "__main__":
         engine = build_engine_caffe(
             deploy_file=args.prototxt,
             transition=args.transition,
+            mark=args.mark,
             starts_gpu=starts_gpu,
             batch=1,
             verbose=args.verbose,

@@ -116,18 +116,24 @@ The builder script `src/build_engine.py` can be used to serve TensorRT engines w
 ```bash
 > python3 src/build_engine.py -h
 usage: build_engine.py [-h] --prototxt PROTOTXT --output OUTPUT --start
-                       {gpu,dla} [--transition TRANSITION] [--verbose]
+                       {gpu,dla} [--transition TRANSITION] [--mark MARK]
+                       [--verbose]
 
 Build a TensorRT engine from a Caffe prototxt file.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --prototxt PROTOTXT   Path to the input Caffe prototxt file
-  --output OUTPUT       Output path to save the output engine
+  --prototxt PROTOTXT   Path to the input Caffe prototxt file or a directory
+                        for bulk build
+  --output OUTPUT       Output path to save the output engine or directory for
+                        bulk build
   --start {gpu,dla}     Specify whether to start on GPU or DLA
   --transition TRANSITION
                         Layer index where the transition occurs. Omit the
                         option if a single device will be used.
+  --mark MARK           Layer index which is marked for output. Omit the
+                        option for all analyses except for transition cost
+                        analysis.
   --verbose             Enable verbose output
 ```
 
@@ -239,20 +245,20 @@ cat output/transition_results.json
  The build_engine.py script is used to generate engine files for both GPU and DLA executions based on the GoogleNet model defined in the Prototxt file.
  Two sets of engine files with different transition layers are generated at this step.
 
-Example builds for single engine:
+Makefile generates all the engines in every transition layer. Example builds for single engine:
 ```bash
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
 --output build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan \
 --start gpu \
---transition 24 \
+--mark 24 \
 --verbose
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
 --output build/googlenet_transition_plans/googlenet_dla_transition_at_24.plan \
 --start dla \
---transition 24 \
+--mark 24 \
 --verbose
 ```
 
@@ -260,12 +266,7 @@ python3 src/build_engine.py \
     Using trtexec, the model is run with each engine file, and detailed performance profiles are collected.
     These profiles are saved as intermediate files in TR_TIME_PROFILES_DIR, accompanied by logs in TR_TIME_PROF_LOGS_DIR.
 
-Makefile generates all the engines in every transition layer. An example is provided below:
 ```bash
-python3 src/build_engine.py --prototxt prototxt_input_files/googlenet.prototxt \
---starts gpu --output build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan \
---transition 141 --verbose
-
 /usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile \
 --avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_0.log
 ```

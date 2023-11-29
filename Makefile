@@ -26,11 +26,11 @@ LOGS_DLA  := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROF_LOGS_DIR)/%.
 PROFILES_DLA := $(patsubst $(TR_TIME_PLANS_DIR)/%.plan, $(TR_TIME_PROFILES_DIR)/%.profile, $(PLANS_DLA))
 
 
-$(TR_TIME_PLANS_DIR)/googlenet_gpu_transition_at_%.plan:
-	python3 src/build_transition_cost_engines.py --prototxt $(PROTOTXT) --start gpu --output $@ --transition $* --verbose
+$(TR_TIME_PLANS_DIR)/googlenet_gpu_mark_at_%.plan:
+	python3 src/build_engine.py --prototxt $(PROTOTXT) --start gpu --output $@ --mark $* --verbose
 
-$(TR_TIME_PLANS_DIR)/googlenet_dla_transition_at_%.plan:
-	python3 src/build_transition_cost_engines.py --prototxt $(PROTOTXT) --start dla --output $@ --transition $* --verbose
+$(TR_TIME_PLANS_DIR)/googlenet_dla_mark_at_%.plan:
+	python3 src/build_engine.py --prototxt $(PROTOTXT) --start dla --output $@ --mark $* --verbose
 
 
 $(TR_TIME_PROFILES_DIR)/%.profile $(TR_TIME_PROF_LOGS_DIR)/%.log: $(TR_TIME_PLANS_DIR)/%.plan

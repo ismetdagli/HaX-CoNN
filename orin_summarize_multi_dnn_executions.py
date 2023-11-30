@@ -16,7 +16,7 @@ def index_mean(line):
 
 # exit()
 
-print("Summary of Exp1. GoogleNet and ResNet")
+print("Summary of Exp1. GoogleNet and ResNet101")
 googlenet_average_time=0
 resnet_average_time=0
 for line in Lines:

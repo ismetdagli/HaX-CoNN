@@ -14,38 +14,41 @@ print("Summary of Exp1. GoogleNet and ResNet")
 googlenet_average_time=0
 resnet_average_time=0
 for line in Lines:
-    if "googlenet_only_gpu_resnet101_only_gpu" in line:
+    if "googlenet_gpu_only_resnet101_dla_only" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_only_gpu_googlenet_only_gpu" in line:
+    if "resnet101_gpu_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 only_gpu_exec_time=googlenet_average_time+resnet_average_time
 print("Average time of using only GPU:", round(only_gpu_exec_time,1) )
 
-
+googlenet_average_time=0
+resnet_average_time=0
 for line in Lines:
-    if "googlenet_only_dla_resnet101_only_gpu" in line:
+    if "googlenet_dla_only_resnet101_gpu_only" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_only_gpu_googlenet_only_dla" in line:
+    if "resnet101_gpu_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 
 gpu_dla_exec_time=googlenet_average_time+resnet_average_time
 print("Average time of Resnet101 on GPU and Googlenet on DLA:",round(gpu_dla_exec_time,1) )
 
-
+googlenet_average_time=0
+resnet_average_time=0
 for line in Lines:
-    if "googlenet_only_gpu_resnet101_only_dla" in line:
+    if "googlenet_gpu_only_resnet101_dla_only" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_only_dla_googlenet_only_gpu" in line:
+    if "resnet101_dla_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 
 dla_gpu_exec_time=googlenet_average_time+resnet_average_time
 print("Average time of Resnet101 on DLA and Googlenet on GPU:", round(dla_gpu_exec_time,1) )
     
 
-
+googlenet_average_time=0
+resnet_average_time=0
 for line in Lines:
     if "googlenet_dla_transition_at_10_resnet101_gpu_transition_at_4" in line:
         googlenet_average_time = index_mean(line)
@@ -56,7 +59,8 @@ herald_exec=max(googlenet_average_time,resnet_average_time)
 
 print("Average time of the schedule found by Herald:",round(herald_exec,1))
 
-
+googlenet_average_time=0
+resnet_average_time=0
 for line in Lines:
     if "googlenet_dla_transition_at_39_resnet101_gpu_transition_at_101" in line:
         googlenet_average_time = index_mean(line)
@@ -67,12 +71,13 @@ h2h_exec=max(googlenet_average_time,resnet_average_time)
 
 print("Average time of the schedule found by H2H:",round(h2h_exec,1))
 
-
+googlenet_average_time=0
+resnet_average_time=0
 for line in Lines:
-    if "googlenet_gpu_transition_at_80_resnet101_dla_transition_at_24" in line:
+    if "googlenet_gpu_transition_at_80_resnet101_dla_transition_at_3" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_dla_transition_at_24_googlenet_gpu_transition_at_80" in line:
+    if "resnet101_dla_transition_at_3_googlenet_gpu_transition_at_80" in line:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 

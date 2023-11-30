@@ -553,12 +553,12 @@ python3 ./starter_guide_experiment.py
 
 Add z3 solver code.
 
-Until now, we followed the steps on how to profile and execute DNNs. We profiled execution time of layers, transition time and memory throughput of layers. All these data are used as an input.
+Until now, we followed the steps on how to profile and execute DNNs. We profiled execution time of layers, transition time and memory throughput of layers. All these data are used as an input, i.e., $nn_times_acc$, $nn_trans_acc$, and $nn_slowdown_acc$.
 
 > Slowdown values are found by [PCCS](https://dl.acm.org/doi/abs/10.1145/3466752.3480101) and [Source Code](https://github.com/processorcentricmodel/PCCS). If a user targets to use a different environment, the model needs to be reconstructed. We follow the steps defined by the authors.
 
 ```bash
-python3 z3_solver_multi_dnn.py > output/schedule_summary.txt
+python3 src/z3_solver_multi_dnn.py > output/schedule_summary.txt
 ```
 
 The expected output from solver is the schedule of DNNs.
@@ -593,7 +593,13 @@ python3 src/summarize_multi_dnn_executions.py
 Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design
 ```bash
 Summary of Exp4. VGG19 Resnet152
-TODO_ISMET_FILL_HERE
+Average time of using only GPU: 29.1
+Average time of VGG on GPU and Resnet152 on DLA: 24.0
+Average time of VGG on DLA and Resnet152 on GPU: 34.9
+Average time of the schedule found by Herald: 19.0
+Average time of the schedule found by H2H: 14.2
+Average time of the schedule found by HaX-CoNN: 13.8
+Overall improvement over best-baseline: 3.12%
 ```
 
 #### Reusability on Orin AGX
@@ -628,10 +634,22 @@ python3 orin_build_engine.py
 chmod +x orin_collect_data_multidnn_experiment.sh
 ./orin_collect_data_multidnn_experiment.sh
 python3 orin_summarize_multi_dnn_executions.py
+```
 
+Expected output given below:
+```bash
+Summary of Exp1. GoogleNet and ResNet
+Average time of using only GPU: 2.42
+Average time of Resnet101 on DLA and Googlenet on GPU: 2.99
+Average time of the schedule found by Herald: 2.17
+Average time of the schedule found by H2H: 2.06
+Average time of the schedule found by HaX-CoNN: 1.93
+Overall improvement over best-baseline: 6.8%
 ```
 
 Note: These values on Orin AGX may vary what we have reported in the paper (Table 6). The authors believes that the reason for the variation is caused by the different Jetpack settings. We have used Jetpack 5.0.1 as reported in Table 4 and it brings with TensorRT 8.4. The target system for our experiments should have(or have if you can remotely access) 5.1.1, which has TensorRT 8.5.2. More importantly, INT8 and FP16 performances of devices are different.
+
+Note2: As can be seen by comparing Xavier AGX and Orin AGX, the improvement over baselines may vary depending on the characteristics of the hardware(target device) and the DNN set(target applications).
 
 
 ### Step 9: Single DNN, HaX-CoNN results #TODO_ISMET
@@ -642,7 +660,7 @@ Run z3 to find the single dnn schedule:
 
 Z3 should be like this
 input: Run the command line with profiling data
-output: schedule to run for those DNNs
+output: schedule to rfun for those DNNs
 
 
 

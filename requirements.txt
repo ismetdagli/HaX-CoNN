@@ -1,3 +1,4 @@
 jetson-stats
 natsort
 z3-solver
+argparse

@@ -63,24 +63,26 @@ def add_dla_data_to_groups(group_summaries, dla_data):
 
 
 def align_dla_data(group_summaries, dla_data):
+    sorted_dla_keys = sorted([int(key.split('_')[-1]) for key in dla_data.keys() if key != "googlenet_dla_transition_at_-1"])
+
     for group_name in group_summaries:
         # Extract end layer index from the group name
         _, end_str = group_name.split('-')
         end_index = int(end_str)
 
+        # Find the closest DLA transition
+        closest_dla_transition = min([key for key in sorted_dla_keys if end_index <= key], default=-1)
+        dla_key = f"googlenet_gpu_transition_at_{closest_dla_transition}"
 
-        # Find the matching DLA data
-        dla_key = f"googlenet_dla_transition_at_{end_index + 1}"
+        # Assign DLA data
         print(f"Adding dla data to {group_name} with key {dla_key}")
-        print(dla_data)
         if dla_key in dla_data:
             group_summaries[group_name]['dla'] = dla_data[dla_key]
         else:
-            # If no exact match is found in DLA data, handle accordingly
+            # Handle missing DLA data
             group_summaries[group_name]['dla'] = {"total_time": 0, "diff_from_prev": 0}
 
     return group_summaries
-
 
 
 
@@ -97,7 +99,7 @@ def main():
     dla_data = load_json(args.dla_json)
 
     group_summaries = calculate_group_summaries(args.gpu_json, layer_ranges)
-    align_dla_data(group_summaries, dla_data)
+    #align_dla_data(group_summaries, dla_data)
 
     if args.output:
         output_path = Path(args.output)

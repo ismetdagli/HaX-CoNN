@@ -151,6 +151,8 @@ python3 src/build_engine.py \
 
 The output of file will be used as an input file to TensorRT (trtexec) binary file. While building engines/plans, TensorRT applies JIT optimizations that optimizes the kernel execution. Basically, engines/plans stores the optimized execution of target models + weight/layer topology etc. (anything related to DNN inference) 
 
+Until step 6, we settle our examples on GoogleNet. Each DNN has different details and settings that we need to go over. To keep the story flowing and simple, we target on GoogleNet.
+
 ### Step 2: Layer profiling: 
 
 Input File:
@@ -257,13 +259,15 @@ This will create the `output/dla_compute_times.json` file. Here you can see the 
    ...
 ```
 
+Note: This output represents the numbers we have represented DLA column of Table 2 in our paper. The numbers do not %100 match since we represent the normalized numbers (total time throughout DNN execution / total time spent profiling per layer) in the paper. We use normalized value of total profiling. Another major issue is that profiling DLA is very limited (unlike GPU given below). This does not allow us to get layer-wise execution time explicitly.
+
 To process the filtered json for the GPU run the script below.
 
 ```
 python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 ```
 
-GPU results can be seen here. (#TODO dla buraya gelemedi ama bilgi aynı)
+GPU results can be seen here.
 
 ``` 
 > cat output/layer_results.json
@@ -272,10 +276,6 @@ GPU results can be seen here. (#TODO dla buraya gelemedi ama bilgi aynı)
         "gpu": {
             "total_gpu_time_ms": 0.3548035,
             "layer_count": 10
-        },
-        "dla": {
-            "total_time": 2.4803969299999995,
-            "layer_diff": 0.21924036999999963
         }
     },
     "10-24": {
@@ -285,6 +285,7 @@ GPU results can be seen here. (#TODO dla buraya gelemedi ama bilgi aynı)
         },
 	...
 ```
+Note: This output represents the numbers we have represented GPU column of Table 2 in our paper. The numbers do not 100 match since we also did long warmup periods and 1000 iteration to be consistent in our process. The pattern among the numbers are very similar to the ones in our paper. The output here slightly better since we are fully utilizing the device at the maximum power mode (MAXN) unlike default power mode. We believe this use is more convenient to get a better utilization out of system.
 
 ### Step 3: Transition time profiling: 
 
@@ -390,10 +391,6 @@ You can view the transition cost analysis results in `output/transition_results.
         "mean_time": 1.9701,
         "transition_cost": 0.0
     },
-    "googlenet_dla_transition_at_0": {
-        "mean_time": 4.07455,
-        "transition_cost": 2.10445
-    },
     "googlenet_dla_transition_at_10": {
         "mean_time": 3.11484,
         "transition_cost": 1.14474
@@ -491,7 +488,7 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
     ...
  ```
 
-Reference from paper: The outputs in Json file demonstrates very similar pattern in the Figure 3. The effect of varying with input and filter size for a convolution layer is illustrated in Figure 3.)
+Reference from paper: The outputs in Json file demonstrates very similar pattern in the Figure 3. Input and filter size for a convolution layer is illustrated in Figure 3 and encoded into json file in this artifact(output/emc_results.json). Besides, using maxn power mode helped us to get more EMC utilization (5-10% average increase)
 
 ### Step 5: Memory Throughput Profiling
 
@@ -503,9 +500,9 @@ mkdir nsight_compute_logs
 python3 src/nsight_compute.py
 ```
 
-This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of effort to match the layers and their instructions. We leave this script here for a reference. 
+This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of effort to match the layers and their instructions. We leave this script here for a reference.
 
-For the ones who are interested in, we suggest to follow this strategy explained as a summary below. This gives the memory throughput of a layer. We use a recorded memory throughput data in z3 solvers below.
+More in detail, we suggest to follow this strategy explained as a summary below. This gives the memory throughput of a layer. We use a recorded memory throughput data in z3 solvers below. Memory throughput of this layer groups are represented in the last column of Table 2. Since we are targetting to assign at the layer at the layers by using groups, we are calculating the cumulative average as given below.
 
 To calculate a memory throughput of a layer group:  (memory throughput of a layer) * (duration of a layer in the group) / (duration of all layers in the group).   
 

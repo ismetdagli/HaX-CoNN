@@ -3,8 +3,6 @@ This is the artifact of HaX-Conn: Shared Memory-contention-aware Concurrent DNN 
 
 ## Description
 
-### If the reviewer has access to edge devices:
-
 1. Check-list (artifact meta information)
 * Hardware: NVIDIA Jetson Xavier AGX 32 GB and NVIDIA Jetson Orin AGX 32 GB
 * Software for easy installation: [Jetpack 4.5.1](https://developer.nvidia.com/embedded/jetpack-sdk-451-archive) on Xavier AGX and [JetPack 5.1.1](https://developer.nvidia.com/embedded/jetpack-sdk-511) on Orin AGX
@@ -41,7 +39,8 @@ If you are using a different Python 3 version than the default one that comes wi
 
 We maintain the most updated version of the code in this repository. Please refer to this repository for the most updated version.
 
-As stated in requirements of green badge definition, this code is publicly available under zenodo [in this link](INSERT_LINK_ISMET_TODO) 
+As stated in requirements of green badge definition, this code is publicly available under zenodo [in this link](INSERT_LINK_ISMET_TODO)
+
 
 ### If the reviewer opts to access remotely to our edge devices:
 
@@ -651,15 +650,16 @@ Note2: As can be seen by comparing Xavier AGX and Orin AGX, the improvement over
 
 ### Step 9: Single DNN, HaX-CoNN results #TODO_ISMET
 
-Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. Then, we used z3 solver to find the corresponding schedule. Now, to verify the performance of our model, we will execute the corresponding schedules. For the sake of simplicity of the artifact, we provide the schedules found as an input to run  
-
-Run z3 to find the single dnn schedule:
-
-Z3 should be like this
-input: Run the command line with profiling data
-output: schedule to rfun for those DNNs
+Similar to step 8, we can evaluate the performance of HaX-CoNN for single DNNs. Figure 5 in the paper also illustrates this. As an example, we demonstrate the performance of Resnet152 by using the commands below. The target value is not millisecond but throughput(FPS), which demonstrates characteristically very similar pattern for minimizing average latency. We are using GPU only, GPU&DLA and [Mensa](https://ieeexplore.ieee.org/document/9563028) as baselines. We have used Orin AGX in Figure 5 but Xavier AGX for ResNet152 demonstrate a similar performance as well.
 
 
+```bash
+chmod +x baseline_engine_building_single_dnn.sh
+chmod +x collect_data_singlednn_experiment.sh
+./baseline_engine_building_single_dnn.sh
+./collect_data_singlednn_experiment.sh
+python3 src/summarize_single_dnn_executions.py
+```
 
 
 ### Step 10: Overhead Analysis

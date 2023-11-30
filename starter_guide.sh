@@ -7,7 +7,7 @@ echo "Step 1: Building engines"
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet101.prototxt \
---output starter_guide_logs/resnet101_dla_transition_at_24.plan \
+--output starter_guide_logs/resnet101_dla_transition_at_3.plan \
 --start dla \
 --transition 3 \
 --verbose

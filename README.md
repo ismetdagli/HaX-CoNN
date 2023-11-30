@@ -584,17 +584,28 @@ For the sake of simplicity of the artifact, we provide the schedules previously 
 
 ```bash
 chmod +x baseline_engine_building.sh
-bash baseline_engine_building.sh
+chmod +x collect_data_multidnn_experiment.sh
+./baseline_engine_building.sh
+./collect_data_multidnn_experiment.sh
+python3 src/summarize_multi_dnn_executions.py
 ```
 
+Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design
+```bash
+Summary of Exp4. VGG19 Resnet152
+TODO_ISMET_FILL_HERE
+```
 
 #### Reusability on Orin AGX
 For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
-Moreover, we use INT8 setting unlike FP16 in Xavier AGX settings. Even though these changes seems easy enough, using a new devices with many different chan For the sake of simplicity, profiling data has been preprocessed and the functions are adapted for new TensorRT version. (There has been changes in the function name in TensorRT's API). Plus, we have integrated the calibration for FP16 to INT8. 
+Moreover, in order to add another dimension for reusability, we proposa to use INT8 setting, whereas we use FP16 in Xavier AGX settings. Even though these changes seems easy enough, using a new devices with a different setting could be a good candidate for the reusability bagde. [A recent paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9638444) titled as "Performance Evaluation of INT8 Quantized Inference on Mobile GPUs" evaluates and characterizes the importance of difference between INT8 and FP16. 
+
+For the sake of simplicity during reviewing process, profiling data has been preprocessed and the functions are adapted for new TensorRT version. (There has been changes in the function name in TensorRT's API). Plus, we have integrated the calibration files for DNNs from FP16 to INT8. 
+
+
+Follow the steps to build tensorrt binary files. Since the version is different, sampleInference is given in a different file (sampleInference$Number_orinagx.cpp) Also, building engine file is different too(src/build_engine_orin.py). For the sake of easiness of the reviewer, we add the commands to run below for Orin AGX.
 
 To run the experiments, please login Orin AGX(credentials given in desktop)
-
-Follow the steps to build tensorrt binary files. Since the version is different, sampleInference is given in a different file (sampleInference$Number_orinagx.cpp) Also, building engine file is different too(src/build_engine_orin.py). For the sake of easiness of the reviewer, we add the commands to run below for Orin AGX 
 
 ```bash
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
@@ -611,14 +622,16 @@ cd ./tensorrt_sharedMem2/samples/trtexec/
 make -j4
 cd ../../../
 
-python3 ./src/build_engine_orin.py --prototxt ./prototxt_input_files/googlenet.prototxt --start gpu --output ./google_only_gpu.plan
-python3 ./src/build_engine_orin.py --prototxt ./prototxt_input_files/googlenet.prototxt --start dla --output ./google_only_dla.plan
 
-mkdir ./multi_dnn_execution_logs/
+mkdir baseline_engines
+python3 orin_build_engine.py
+chmod +x orin_collect_data_multidnn_experiment.sh
+./orin_collect_data_multidnn_experiment.sh
+python3 orin_summarize_multi_dnn_executions.py
 
-#Run the python code to check TensorRT binaries working fine.
-TODO_ISMET script_to_collect_data
 ```
+
+Note: These values on Orin AGX may vary what we have reported in the paper (Table 6). The authors believes that the reason for the variation is caused by the different Jetpack settings. We have used Jetpack 5.0.1 as reported in Table 4 and it brings with TensorRT 8.4. The target system for our experiments should have(or have if you can remotely access) 5.1.1, which has TensorRT 8.5.2. More importantly, INT8 and FP16 performances of devices are different.
 
 
 ### Step 9: Single DNN, HaX-CoNN results #TODO_ISMET

@@ -1,0 +1,273 @@
+TRT-8400-EntropyCalibration2
+data: 3c010a01
+(Unnamed Layer* 0) [Convolution]_output: 3c88edfc
+conv1/7x7_s2: 3c88edfc
+pool1/3x3_s2: 3c88edfc
+pool1/norm1: 3c88edfc
+(Unnamed Layer* 4) [Convolution]_output: 3c88edfc
+conv2/3x3_reduce: 3c88edfc
+(Unnamed Layer* 6) [Convolution]_output: 3c88edfc
+conv2/3x3: 3c88edfc
+conv2/norm2: 3c88edfc
+pool2/3x3_s2: 3c88edfc
+(Unnamed Layer* 10) [Convolution]_output: 3c88edfc
+inception_3a/1x1: 3c88edfc
+(Unnamed Layer* 12) [Convolution]_output: 3c88edfc
+inception_3a/3x3_reduce: 3c88edfc
+(Unnamed Layer* 14) [Convolution]_output: 3c88edfc
+inception_3a/3x3: 3c88edfc
+(Unnamed Layer* 16) [Convolution]_output: 3c88edfc
+inception_3a/5x5_reduce: 3c88edfc
+(Unnamed Layer* 18) [Convolution]_output: 3c88edfc
+inception_3a/5x5: 3c88edfc
+inception_3a/pool: 3c88edfc
+(Unnamed Layer* 21) [Convolution]_output: 3c88edfc
+inception_3a/pool_proj: 3c88edfc
+inception_3a/output: 3c88edfc
+(Unnamed Layer* 24) [Convolution]_output: 3c88edfc
+inception_3b/1x1: 3c88edfc
+(Unnamed Layer* 26) [Convolution]_output: 3c88edfc
+inception_3b/3x3_reduce: 3c88edfc
+(Unnamed Layer* 28) [Convolution]_output: 3c88edfc
+inception_3b/3x3: 3c88edfc
+(Unnamed Layer* 30) [Convolution]_output: 3c88edfc
+inception_3b/5x5_reduce: 3c88edfc
+(Unnamed Layer* 32) [Convolution]_output: 3c88edfc
+inception_3b/5x5: 3c88edfc
+inception_3b/pool: 3c88edfc
+(Unnamed Layer* 35) [Convolution]_output: 3c88edfc
+inception_3b/pool_proj: 3c88edfc
+inception_3b/output: 3c88edfc
+pool3/3x3_s2: 3c88edfc
+(Unnamed Layer* 39) [Convolution]_output: 3c88edfc
+inception_4a/1x1: 3c88edfc
+(Unnamed Layer* 41) [Convolution]_output: 3c88edfc
+inception_4a/3x3_reduce: 3c88edfc
+(Unnamed Layer* 43) [Convolution]_output: 3c88edfc
+inception_4a/3x3: 3c88edfc
+(Unnamed Layer* 45) [Convolution]_output: 3c88edfc
+inception_4a/5x5_reduce: 3c88edfc
+(Unnamed Layer* 47) [Convolution]_output: 3c88edfc
+inception_4a/5x5: 3c88edfc
+inception_4a/pool: 3c88edfc
+(Unnamed Layer* 50) [Convolution]_output: 3c88edfc
+inception_4a/pool_proj: 3c88edfc
+inception_4a/output: 3c88edfc
+(Unnamed Layer* 53) [Convolution]_output: 3c88edfc
+inception_4b/1x1: 3c88edfc
+(Unnamed Layer* 55) [Convolution]_output: 3c88edfc
+inception_4b/3x3_reduce: 3c88edfc
+(Unnamed Layer* 57) [Convolution]_output: 3c88edfc
+inception_4b/3x3: 3c88edfc
+(Unnamed Layer* 59) [Convolution]_output: 3c88edfc
+inception_4b/5x5_reduce: 3c88edfc
+(Unnamed Layer* 61) [Convolution]_output: 3c88edfc
+inception_4b/5x5: 3c88edfc
+inception_4b/pool: 3c88edfc
+(Unnamed Layer* 64) [Convolution]_output: 3c88edfc
+inception_4b/pool_proj: 3c88edfc
+inception_4b/output: 3c88edfc
+(Unnamed Layer* 67) [Convolution]_output: 3c88edfc
+inception_4c/1x1: 3c88edfc
+(Unnamed Layer* 69) [Convolution]_output: 3c88edfc
+inception_4c/3x3_reduce: 3c88edfc
+(Unnamed Layer* 71) [Convolution]_output: 3c88edfc
+inception_4c/3x3: 3c88edfc
+(Unnamed Layer* 73) [Convolution]_output: 3c88edfc
+inception_4c/5x5_reduce: 3c88edfc
+(Unnamed Layer* 75) [Convolution]_output: 3c88edfc
+inception_4c/5x5: 3c88edfc
+inception_4c/pool: 3c88edfc
+(Unnamed Layer* 78) [Convolution]_output: 3c88edfc
+inception_4c/pool_proj: 3c88edfc
+inception_4c/output: 3c88edfc
+(Unnamed Layer* 81) [Convolution]_output: 3c88edfc
+inception_4d/1x1: 3c88edfc
+(Unnamed Layer* 83) [Convolution]_output: 3c88edfc
+inception_4d/3x3_reduce: 3c88edfc
+(Unnamed Layer* 85) [Convolution]_output: 3c88edfc
+inception_4d/3x3: 3c88edfc
+(Unnamed Layer* 87) [Convolution]_output: 3c88edfc
+inception_4d/5x5_reduce: 3c88edfc
+(Unnamed Layer* 89) [Convolution]_output: 3c88edfc
+inception_4d/5x5: 3c88edfc
+inception_4d/pool: 3c88edfc
+(Unnamed Layer* 92) [Convolution]_output: 3c88edfc
+inception_4d/pool_proj: 3c88edfc
+inception_4d/output: 3c88edfc
+(Unnamed Layer* 95) [Convolution]_output: 3c88edfc
+inception_4e/1x1: 3c88edfc
+(Unnamed Layer* 97) [Convolution]_output: 3c88edfc
+inception_4e/3x3_reduce: 3c88edfc
+(Unnamed Layer* 99) [Convolution]_output: 3c88edfc
+inception_4e/3x3: 3c88edfc
+(Unnamed Layer* 101) [Convolution]_output: 3c88edfc
+inception_4e/5x5_reduce: 3c88edfc
+(Unnamed Layer* 103) [Convolution]_output: 3c88edfc
+inception_4e/5x5: 3c88edfc
+inception_4e/pool: 3c88edfc
+(Unnamed Layer* 106) [Convolution]_output: 3c88edfc
+inception_4e/pool_proj: 3c88edfc
+inception_4e/output: 3c88edfc
+pool4/3x3_s2: 3c88edfc
+(Unnamed Layer* 110) [Convolution]_output: 3c88edfc
+inception_5a/1x1: 3c88edfc
+(Unnamed Layer* 112) [Convolution]_output: 3c88edfc
+inception_5a/3x3_reduce: 3c88edfc
+(Unnamed Layer* 114) [Convolution]_output: 3c88edfc
+inception_5a/3x3: 3c88edfc
+(Unnamed Layer* 116) [Convolution]_output: 3c88edfc
+inception_5a/5x5_reduce: 3c88edfc
+(Unnamed Layer* 118) [Convolution]_output: 3c88edfc
+inception_5a/5x5: 3c88edfc
+inception_5a/pool: 3c88edfc
+(Unnamed Layer* 121) [Convolution]_output: 3c88edfc
+inception_5a/pool_proj: 3c88edfc
+inception_5a/output: 3c88edfc
+(Unnamed Layer* 124) [Convolution]_output: 3c88edfc
+inception_5b/1x1: 3c88edfc
+(Unnamed Layer* 126) [Convolution]_output: 3c88edfc
+inception_5b/3x3_reduce: 3c88edfc
+(Unnamed Layer* 128) [Convolution]_output: 3c88edfc
+inception_5b/3x3: 3c88edfc
+(Unnamed Layer* 130) [Convolution]_output: 3c88edfc
+inception_5b/5x5_reduce: 3c88edfc
+(Unnamed Layer* 132) [Convolution]_output: 3c88edfc
+inception_5b/5x5: 3c88edfc
+inception_5b/pool: 3c88edfc
+(Unnamed Layer* 135) [Convolution]_output: 3c88edfc
+inception_5b/pool_proj: 3c88edfc
+inception_5b/output: 3c88edfc
+pool5/7x7_s1: 3c88edfc
+loss3/classifier: 3c88edfc
+prob: 3c88edfc
+conv1/7x7_s2: 3c88edfc
+conv1/relu_7x7: 3c88edfc
+pool1/3x3_s2: 3c88edfc
+pool1/norm1: 3c88edfc
+conv2/3x3_reduce: 3c88edfc
+conv2/relu_3x3_reduce: 3c88edfc
+conv2/3x3: 3c88edfc
+conv2/relu_3x3: 3c88edfc
+conv2/norm2: 3c88edfc
+pool2/3x3_s2: 3c88edfc
+inception_3a/1x1: 3c88edfc
+inception_3a/relu_1x1: 3c88edfc
+inception_3a/3x3_reduce: 3c88edfc
+inception_3a/relu_3x3_reduce: 3c88edfc
+inception_3a/3x3: 3c88edfc
+inception_3a/relu_3x3: 3c88edfc
+inception_3a/5x5_reduce: 3c88edfc
+inception_3a/relu_5x5_reduce: 3c88edfc
+inception_3a/5x5: 3c88edfc
+inception_3a/relu_5x5: 3c88edfc
+inception_3a/pool: 3c88edfc
+inception_3a/pool_proj: 3c88edfc
+inception_3a/relu_pool_proj: 3c88edfc
+inception_3a/output: 3c88edfc
+inception_3b/1x1: 3c88edfc
+inception_3b/relu_1x1: 3c88edfc
+inception_3b/3x3_reduce: 3c88edfc
+inception_3b/relu_3x3_reduce: 3c88edfc
+inception_3b/3x3: 3c88edfc
+inception_3b/relu_3x3: 3c88edfc
+inception_3b/5x5_reduce: 3c88edfc
+inception_3b/relu_5x5_reduce: 3c88edfc
+inception_3b/5x5: 3c88edfc
+inception_3b/relu_5x5: 3c88edfc
+inception_3b/pool: 3c88edfc
+inception_3b/pool_proj: 3c88edfc
+inception_3b/relu_pool_proj: 3c88edfc
+inception_3b/output: 3c88edfc
+pool3/3x3_s2: 3c88edfc
+inception_4a/1x1: 3c88edfc
+inception_4a/relu_1x1: 3c88edfc
+inception_4a/3x3_reduce: 3c88edfc
+inception_4a/relu_3x3_reduce: 3c88edfc
+inception_4a/3x3: 3c88edfc
+inception_4a/relu_3x3: 3c88edfc
+inception_4a/5x5_reduce: 3c88edfc
+inception_4a/relu_5x5_reduce: 3c88edfc
+inception_4a/5x5: 3c88edfc
+inception_4a/relu_5x5: 3c88edfc
+inception_4a/pool: 3c88edfc
+inception_4a/pool_proj: 3c88edfc
+inception_4a/relu_pool_proj: 3c88edfc
+inception_4a/output: 3c88edfc
+inception_4b/1x1: 3c88edfc
+inception_4b/relu_1x1: 3c88edfc
+inception_4b/3x3_reduce: 3c88edfc
+inception_4b/relu_3x3_reduce: 3c88edfc
+inception_4b/3x3: 3c88edfc
+inception_4b/relu_3x3: 3c88edfc
+inception_4b/5x5_reduce: 3c88edfc
+inception_4b/relu_5x5_reduce: 3c88edfc
+inception_4b/5x5: 3c88edfc
+inception_4b/relu_5x5: 3c88edfc
+inception_4b/pool: 3c88edfc
+inception_4b/pool_proj: 3c88edfc
+inception_4b/relu_pool_proj: 3c88edfc
+inception_4b/output: 3c88edfc
+inception_4c/1x1: 3c88edfc
+inception_4c/relu_1x1: 3c88edfc
+inception_4c/3x3_reduce: 3c88edfc
+inception_4c/relu_3x3_reduce: 3c88edfc
+inception_4c/3x3: 3c88edfc
+inception_4c/relu_3x3: 3c88edfc
+inception_4c/5x5_reduce: 3c88edfc
+inception_4c/relu_5x5_reduce: 3c88edfc
+inception_4c/5x5: 3c88edfc
+inception_4c/relu_5x5: 3c88edfc
+inception_4c/pool: 3c88edfc
+inception_4c/pool_proj: 3c88edfc
+inception_4c/relu_pool_proj: 3c88edfc
+inception_4c/output: 3c88edfc
+inception_4d/1x1: 3c88edfc
+inception_4d/relu_1x1: 3c88edfc
+inception_4d/3x3_reduce: 3c88edfc
+inception_4d/relu_3x3_reduce: 3c88edfc
+inception_4d/3x3: 3c88edfc
+inception_4d/relu_3x3: 3c88edfc
+inception_4d/5x5_reduce: 3c88edfc
+inception_4d/relu_5x5_reduce: 3c88edfc
+inception_4d/5x5: 3c88edfc
+inception_4d/relu_5x5: 3c88edfc
+inception_4d/pool: 3c88edfc
+inception_4d/pool_proj: 3c88edfc
+inception_4d/relu_pool_proj: 3c88edfc
+inception_4d/output: 3c88edfc
+inception_4e/1x1: 3c88edfc
+inception_4e/relu_1x1: 3c88edfc
+inception_4e/3x3_reduce: 3c88edfc
+inception_4e/relu_3x3_reduce: 3c88edfc
+inception_4e/3x3: 3c88edfc
+inception_4e/relu_3x3: 3c88edfc
+inception_4e/5x5_reduce: 3c88edfc
+inception_4e/relu_5x5_reduce: 3c88edfc
+inception_4e/5x5: 3c88edfc
+inception_4e/relu_5x5: 3c88edfc
+inception_4e/pool: 3c88edfc
+inception_4e/pool_proj: 3c88edfc
+inception_4e/relu_pool_proj: 3c88edfc
+inception_4e/output: 3c88edfc
+pool4/3x3_s2: 3c88edfc
+inception_5a/1x1: 3c88edfc
+inception_5a/relu_1x1: 3c88edfc
+inception_5a/3x3_reduce: 3c88edfc
+inception_5a/relu_3x3_reduce: 3c88edfc
+inception_5a/3x3: 3c88edfc
+inception_5a/relu_3x3: 3c88edfc
+inception_5a/5x5_reduce: 3c88edfc
+inception_5a/relu_5x5_reduce: 3c88edfc
+inception_5a/5x5: 3c88edfc
+inception_5a/relu_5x5: 3c88edfc
+inception_5a/pool: 3c88edfc
+inception_5a/pool_proj: 3c88edfc
+inception_5a/relu_pool_proj: 3c88edfc
+inception_5a/output: 3c88edfc
+inception_5b/1x1: 3c88edfc
+inception_5b/relu_1x1: 3c88edfc
+inception_5b/3x3_reduce: 3c88edfc
+inception_5b/relu_3x3_reduce: 3c88edfc
+inception_5b/3x3: 3c88edfc
+inception_5b/relu_3x3: 3c88edfc

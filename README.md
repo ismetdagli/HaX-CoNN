@@ -513,15 +513,13 @@ DLA's memory throughput for a layer X: (EMC utilization of layer X on DLA / EMC 
 
 ### Step 6: Synchronous multiple DNN execution
 
-We assume that multiple DNNs starts at the same time. 
-
-This session is also briefly explained in "Neural network synchronization" in Session 4.
+This session enables to synchronously run DNNs briefly explained in "Neural network synchronization" in Session 4.
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * replace sampleInference.cpp with the corresponding directories
 * build the directories & write 0 to a tmp shared file.
 * build googlenet only gpu and dla engines
-* run the multiple dnn
+* run the multiple DNN
 ```bash
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
 cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem2/
@@ -543,22 +541,22 @@ python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.protot
 mkdir ./multi_dnn_execution_logs/
 
 #Run the python code to check TensorRT binaries working fine.
-python3 ./starter_guide_experiment.py
+python3 ./run_multiple_dnn.py
 ```
 
 ### Step 7: Z3 Solver execution
 
-Add z3 solver code.
-
-Until now, we followed the steps on how to profile and execute DNNs. We profiled execution time of layers, transition time and memory throughput of layers. All these data are used as an input, i.e., $nn_times_acc$, $nn_trans_acc$, and $nn_slowdown_acc$.
+Until now, we followed the steps on how to profile and execute DNNs. We profiled execution time of layers, transition time and memory throughput of layers. All these data are used as an input, i.e., nn_times_acc, nn_trans_acc, and nn_slowdown_acc.
 
 > Slowdown values are found by [PCCS](https://dl.acm.org/doi/abs/10.1145/3466752.3480101) and [Source Code](https://github.com/processorcentricmodel/PCCS). If a user targets to use a different environment, the model needs to be reconstructed. We follow the steps defined by the authors.
+
+The code implements the model given in Section 3.5. To run the model:
 
 ```bash
 python3 src/z3_solver_multi_dnn.py > output/schedule_summary.txt
 ```
 
-The expected output from solver is the schedule of DNNs.
+The expected output from the solver is the schedule of DNNs.
 
 ```bash
 > cat output/schedule_summary.txt
@@ -573,11 +571,11 @@ For other DNNs execution scenarios, previous steps needs to be followed and the 
 
 ### Step 8: Multi DNN, HaX-CoNN results
 
-Until here, we have been collecting profiling data for execution time, transition time and memory throughput in layer-level. Then, we used z3 solver to find the corresponding schedule. Now, to verify the performance of our model, we will execute the corresponding schedules.
+After collecting profile data, we use z3 solver to find the corresponding schedule. Now, to verify the performance of our model, we will execute the corresponding schedules.
 
 For the baselines, we generate GPU executions, GPU&DLA executions, and [H2H](https://dl.acm.org/doi/10.1145/3489517.3530509) and [Herald](https://www.computer.org/csdl/proceedings-article/hpca/2021/223500a071/1t0HUXqfspW). We follow their implementation as given in [source code](https://github.com/xyzxinyizhang/H2H). For Herald, we stop the execution at step 2 (as H2H did in their methodology) and for H2H baseline, we follow the execution for all steps (including step 4). 
 
-For the sake of simplicity of the artifact, we provide the schedules previously found as an input in baseline.txt. We build the engines, run them and compare the results. To run the experiment, run the script below:
+For the sake of simplicity of the artifact, we provide the schedules previously found in our python file. We build the engines, run them and compare the results. To run the experiment, run the script below (Summary of experiments are printed at the last step):
 
 ```bash
 chmod +x baseline_engine_building.sh
@@ -587,8 +585,9 @@ chmod +x collect_data_multidnn_experiment.sh
 python3 src/summarize_multi_dnn_executions.py
 ```
 
-Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design
+Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design. 
 ```bash
+#EXPECTED OUTPUT for Exp 4.
 Summary of Exp4. VGG19 Resnet152
 Average time of using only GPU: 29.1
 Average time of VGG on GPU and Resnet152 on DLA: 24.0
@@ -598,6 +597,7 @@ Average time of the schedule found by H2H: 14.2
 Average time of the schedule found by HaX-CoNN: 13.8
 Overall improvement over best-baseline: 3.12%
 ```
+For more comprehensive experiments, please check out 
 
 #### Reusability on Orin AGX
 For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
@@ -664,7 +664,6 @@ output: schedule to rfun for those DNNs
 
 ### Step 10: Overhead Analysis
 
-#TODO\_Ismet-OR-Eymen
 
 Before starting make sure:
 ```bash

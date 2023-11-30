@@ -1,3 +1,0 @@
-baseline DNN1 starts_gpu transition DNN2 starts_gpu transition
-gpu googlenet gpu -1 
-

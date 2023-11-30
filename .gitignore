@@ -15,6 +15,7 @@ baseline_engines/
 
 #Profiling Files, e.g. Nsight Compute
 *nsight-cuprof-report 
+mean_results_of_executions.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

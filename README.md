@@ -236,17 +236,23 @@ This will create the `output/dla_compute_times.json` file. Here you can see the 
 ```
 > cat output/dla_compute_times.json 
 {
-    "googlenet_gpu_transition_at_124": {
-        "total_time": 0.41019136900000003,
-        "layer_diff": 0
+    "0-9": {
+        "gpu": {
+            "total_gpu_time_ms": 0.3548035,
+            "layer_count": 10
+        }
     },
-    "googlenet_gpu_transition_at_110": {
-        "total_time": 0.62014587,
-        "layer_diff": 0.20995450099999996
+    "10-24": {
+        "gpu": {
+            "total_gpu_time_ms": 0.15014499,
+            "layer_count": 15
+        }
     },
-    "googlenet_gpu_transition_at_95": {
-        "total_time": 0.945640773,
-        "layer_diff": 0.32549490300000006
+    "25-38": {
+        "gpu": {
+            "total_gpu_time_ms": 0.2066831,
+            "layer_count": 14
+        }
     },
    ...
 ```

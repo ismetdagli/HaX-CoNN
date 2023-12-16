@@ -2,7 +2,7 @@
 
 mkdir baseline_singlednn_engine_logs
 
-printf "\n\n Experiment 1: GoogleNet and ResNet data profiling\n"
+printf "\n\nExperiment 1: GoogleNet and ResNet data profiling\n"
 #GPU Baseline experiment
 python3 run_single_dnn_experiments.py --plan1=baseline_engines/resnet152_gpu_only1.plan --plan2=baseline_engines/resnet152_gpu_only.plan
 
@@ -20,8 +20,8 @@ cd baseline_singlednn_engine_logs
 grep -r " mean: " * | grep -v "end to end" > mean_results_of_executions.txt
 
 cd ..
-printf '\n\n\n'
+printf '\n\n'
 
-printf "Final Step: Summary of experiments\n"
+printf "Final Step: run src/summarize_single_dnn_executions.py for the summary of experiments\n"
 
 

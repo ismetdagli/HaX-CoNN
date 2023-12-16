@@ -1,22 +1,17 @@
 from z3 import *
 
 # Execution times for each layer group on each accelerators
-# run for alexnet and googlenet
+# run for googlenet and alexnet
 nn1_times_acc1 = [0.35, 0.15, 0.20, 0.11, 0.12, 0.13, 0.15, 0.19, 0.12, 0.20]
 nn1_times_acc2 = [0.75, 0.34, 0.45, 0.37, 0.31, 0.33, 0.31, 0.35, 0.27, 0.36]
-nn2_times_acc1 = [0.14, 0.11, 0.39, 0.58, 1.4, 0.9, 0.75, 0.52, 0.59, 0.07] 
-nn2_times_acc2 = [0,28, 0.15, 1.99, 1.73, 2.8, 1.9, 1.41, 0.99, 1.14, 0.15] 
-
-
-# #ResNet: Execution times for each layer on each accelerator
-# nn1_times_acc1 = [0.14, 0.11, 0.39, 0.58, 1.4, 0.9, 0.75, 0.52, 0.59, 0.07] 
-# nn1_times_acc2 = [0,28, 0.15, 1.99, 1.73, 2.8, 1.9, 1.41, 0.99, 1.14, 0.15] 
+nn2_times_acc1 = [0.15, 0.06, 0.22, 0.08, 0.16, 0.70, 0.32, 0.10] 
+nn2_times_acc2 = [0.41, 0.20, 0.45, 0.22, 0.41, 1.91, 0.68, 0.13]
 
 # #Alexnet: Execution times for each layer on each accelerator
 # nn2_times_acc1 = [0.15, 0.06, 0.22, 0.08, 0.16, 0.70, 0.32, 0.10] 
 # nn2_times_acc2 = [0.41, 0.20, 0.45, 0.22, 0.41, 1.91, 0.68, 0.13]
 
-#GoogleNet
+# GoogleNet
 # nn1_times_acc1 = [0.35, 0.15, 0.20, 0.11, 0.12, 0.13, 0.15, 0.19, 0.12, 0.20]
 # nn1_times_acc2 = [0.75, 0.34, 0.45, 0.37, 0.31, 0.33, 0.31, 0.35, 0.27, 0.36]
 
@@ -65,7 +60,7 @@ def trans_cost_nn2(layer_index):
         return trans_cost_layer
     return 0
 
-#Slowdown on GPU
+#Slowdown on GPU, values are found by PCCS on Xavier AGX
 def slowdown_acc1(index_of_layer,nn_slowdown_acc1):
     if nn_slowdown_acc1[index_of_layer] < 38.1:
         return 100/(100-(nn_slowdown_acc1[index_of_layer] *4.9/127.5))
@@ -76,7 +71,7 @@ def slowdown_acc1(index_of_layer,nn_slowdown_acc1):
     else:
         return 100/(100-(nn_slowdown_acc1[index_of_layer]-41.9)*1.11)
 
-#Slowdown on GPU
+#Slowdown on DLA, values are found by PCCS on Xavier AGX
 def slowdown_acc2(index_of_layer,nn_slowdown_acc2):
     if nn_slowdown_acc2[index_of_layer] < 27.9:
         return 100/(100-(nn_slowdown_acc2[index_of_layer]))
@@ -137,21 +132,20 @@ if opt.check() == sat:
     m = opt.model()
     for i in range(nn1_layers):
         acc = 1 if is_true(m[acc_decision_nn1[i]]) else 2
-        print(f'NN1 Layer {i+1}, Accelerator {acc}, Start Time: {convert(str(m[start_nn1[i]]))}')
+        # print(f'NN1 Layer {i+1}, Accelerator {acc}, Start Time: {convert(str(m[start_nn1[i]]))}')
     for i in range(nn2_layers):
         acc = 1 if is_true(m[acc_decision_nn2[i]]) else 2
-        print(f'NN2 Layer {i+1}, Accelerator {acc}, Start Time: {convert(str(m[start_nn2[i]]))}')
-        # print(f'NN2 Layer {i+1}, Accelerator {acc}, Start Time: {m[start_nn2[i]]}')
+        # print(f'NN2 Layer {i+1}, Accelerator {acc}, Start Time: {convert(str(m[start_nn2[i]]))}')
     
     result=sorted ([(d, m[d]) for d in m], key = lambda x: str(x[0]))   
-    print ("\n \nResult:",result) #"Check: "
+    # print ("\n \nResult:",result) #"Check: "
 else:
     print("No feasible solution found")
 
 
-#This is written to mark the layer groups. The index of each layer group is represented the index of the layer in the prototxt
-layer_group_nn1=[0,1, 3, 5, 7, 9, 11,14,16, 18]
-layer_group_nn2=[0,10,25,39,52,66,81,94,110,124]
+#The numbers represents the first layers of layer groups. The index of each layer group is represented the index of the layer in the prototxt
+layer_group_nn1=[0,10,25,39,52,66,81,94,110,124]
+layer_group_nn2=[0,2, 3, 5, 7, 9, 11,14,16, 18]
 
 # Solving the optimization problem
 if opt.check() == sat:
@@ -161,20 +155,20 @@ if opt.check() == sat:
     for i in range(nn1_layers):
         acc = "GPU" if is_true(m[acc_decision_nn1[i]]) else "DLA"
         if i == 0:
-            print(f'NN1 starts on {acc}')
+            print(f'GoogleNet starts on {acc}')
         else:
             if previous_acc != acc:
-                print(f'NN1 applies transition at {layer_group_nn1[i]}')
+                print(f'GoogleNet applies transition at layer {layer_group_nn1[i]}')
         previous_acc=acc
     
     previous_acc=""
     for i in range(nn2_layers):
         acc = "GPU" if is_true(m[acc_decision_nn2[i]]) else "DLA"
         if i == 0:
-            print(f'NN2 starts on {acc}')
+            print(f'AlexNet starts on {acc}')
         else:
             if previous_acc != acc:
-                print(f'NN2 applies transition at {layer_group_nn2[i]}')
+                print(f'AlexNet applies transition at layer {layer_group_nn2[i]}')
         previous_acc=acc
 else:
     print("No feasible solution found")

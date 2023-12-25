@@ -108,4 +108,4 @@ print("Resnet101 on DLA and Googlenet on GPU starts")
 Run_plans("starter_guide_logs/googlenet_only_dla.plan","starter_guide_logs/resnet101_only_gpu.plan")
 
 print("Schedule found by HaX-CoNN starts")
-Run_plans("starter_guide_logs/googlenet_gpu_transition_at_80.plan","starter_guide_logs/resnet101_dla_transition_at_24.plan")
+Run_plans("starter_guide_logs/googlenet_gpu_transition_at_80.plan","starter_guide_logs/resnet101_dla_transition_at_3.plan")

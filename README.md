@@ -72,8 +72,8 @@ Final Step: Summary of experiments
 Average time of using only GPU: 12.6
 Average time of Resnet101 on GPU and Googlenet on DLA: 12.4
 Average time of Resnet101 on DLA and Googlenet on GPU: 14.3
-Average time of the schedule found by HaX-CoNN: 7.9
-Overall improvement over best-baseline: 57.3%
+Average time of the schedule found by HaX-CoNN: 10.3
+Overall improvement over best-baseline: 20.6%
 ```
 
 

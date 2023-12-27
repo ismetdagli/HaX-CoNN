@@ -28,7 +28,8 @@ def process_all_dla_profiles(profiles_dir):
     profiles_dir = Path(profiles_dir)
     dla_times = {}
 
-    baseline_dla = parse_profile_for_dla(profiles_dir / "googlenet_dla_transition_at_-1.profile")
+    # (device)_transition_at_-1 means running only on (device)
+    baseline_dla = parse_profile_for_dla(profiles_dir / "googlenet_gpu_transition_at_-1.profile")
 
     # Process GPU transition profiles
     for profile_file in profiles_dir.glob("googlenet_gpu_transition_at_*.profile"):

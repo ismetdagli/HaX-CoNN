@@ -1,0 +1,82 @@
+{
+    "googlenet_dla_mark_at_-1": {
+        "mean_time": 3.6564,
+        "transition_cost": 0.0
+    },
+    "googlenet_dla_mark_at_10": {
+        "mean_time": 3.72991,
+        "transition_cost": 0.07351
+    },
+    "googlenet_dla_mark_at_24": {
+        "mean_time": 3.7204,
+        "transition_cost": 0.064
+    },
+    "googlenet_dla_mark_at_38": {
+        "mean_time": 3.72357,
+        "transition_cost": 0.06717
+    },
+    "googlenet_dla_mark_at_53": {
+        "mean_time": 3.71252,
+        "transition_cost": 0.05612
+    },
+    "googlenet_dla_mark_at_67": {
+        "mean_time": 3.70484,
+        "transition_cost": 0.04844
+    },
+    "googlenet_dla_mark_at_81": {
+        "mean_time": 3.70303,
+        "transition_cost": 0.04663
+    },
+    "googlenet_dla_mark_at_95": {
+        "mean_time": 3.70164,
+        "transition_cost": 0.04524
+    },
+    "googlenet_dla_mark_at_110": {
+        "mean_time": 3.70268,
+        "transition_cost": 0.04628
+    },
+    "googlenet_dla_mark_at_124": {
+        "mean_time": 3.70688,
+        "transition_cost": 0.05048
+    },
+    "googlenet_gpu_mark_at_-1": {
+        "mean_time": 1.95913,
+        "transition_cost": 0.0
+    },
+    "googlenet_gpu_mark_at_10": {
+        "mean_time": 1.97899,
+        "transition_cost": 0.01986
+    },
+    "googlenet_gpu_mark_at_24": {
+        "mean_time": 1.98716,
+        "transition_cost": 0.02803
+    },
+    "googlenet_gpu_mark_at_38": {
+        "mean_time": 1.96883,
+        "transition_cost": 0.0097
+    },
+    "googlenet_gpu_mark_at_53": {
+        "mean_time": 1.9998,
+        "transition_cost": 0.04067
+    },
+    "googlenet_gpu_mark_at_67": {
+        "mean_time": 1.98703,
+        "transition_cost": 0.0279
+    },
+    "googlenet_gpu_mark_at_81": {
+        "mean_time": 1.99532,
+        "transition_cost": 0.03619
+    },
+    "googlenet_gpu_mark_at_95": {
+        "mean_time": 1.99632,
+        "transition_cost": 0.03719
+    },
+    "googlenet_gpu_mark_at_110": {
+        "mean_time": 1.98685,
+        "transition_cost": 0.02772
+    },
+    "googlenet_gpu_mark_at_124": {
+        "mean_time": 2.00189,
+        "transition_cost": 0.04276
+    }
+}

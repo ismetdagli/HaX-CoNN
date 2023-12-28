@@ -159,7 +159,7 @@ export PYTHONPATH="$(pwd):$PYTHONPATH"
 mkdir output
 python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 
-# Summary given below:
+# Summary of last lines given below:
 # {
 # ...
 #     "124-140": {
@@ -169,6 +169,9 @@ python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_tran
 #         }
 #     }
 # }
+
+#Expected output given below in detail for further comparison. (This file contains pre-collected data by authors)
+cat output_expected/layer_results.json
 ```
 
 
@@ -332,7 +335,7 @@ Different DNNs may generate more inconsistencies among devices/versions etc. Thi
 
 #### Summary
 
-This step explains how layers are profiled. Summary of comprehensive profiling result can be obtained by running the command below:
+This step explains how transition times are collect. Summary of comprehensive profiling result can be obtained by running the command below:
 
 ```bash
 make layer
@@ -344,6 +347,9 @@ cat output/transition_results.json
 #     "mean_time": 1.98731,
 #     "transition_cost": 0.0245
 # }
+
+#Expected output given below in detail for further comparison
+cat output_expected/transition_results.json
 ```
 
 #### Details
@@ -483,7 +489,7 @@ Note: We list the transition costs here as similar to Table 2 transition cost co
 
 #### Summary
 
-This step explains how layers are profiled. Summary of comprehensive profiling result can be obtained by running the command below:
+This step explains how emc utilizations are collected. Summary of comprehensive profiling result can be obtained by running the command below:
 
 ```bash
 make emc
@@ -494,6 +500,9 @@ cat output/emc_results.json
 #        "kernel1": "89%",
 #    ...
 # }
+
+#Expected output given below in detail for further comparison
+cat output_expected/emc_results.json
 ```
 
 #### Details
@@ -602,7 +611,7 @@ DLA's memory throughput for a layer X: (EMC utilization of layer X on DLA / EMC 
 
 ### Step 6: Synchronous multiple DNN execution
 
-This session enables to synchronously run DNNs briefly explained in "Neural network synchronization" in Session 4.
+So far. we have run DNNs standalone to collect layer profiling. This section enables to run DNNs simultaneously  This session enables to synchronously run DNNs briefly explained in "Neural network synchronization" in Session 4.
 
 * create two distinct copies of the original Tensorrt directory to an empty directories
 * replace sampleInference.cpp with the corresponding directories
@@ -610,27 +619,13 @@ This session enables to synchronously run DNNs briefly explained in "Neural netw
 * build googlenet only gpu and dla engines
 * run the multiple DNN
 ```bash
-cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
-cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem2/
+chmod +x sync_multi_dnn_exec.sh
+./sync_multi_dnn_exec.sh
 
-cp ./modified_tensorrts/sampleInference1.cpp ./tensorrt_sharedMem1/samples/common/sampleInference.cpp
-cp ./modified_tensorrts/sampleInference2.cpp ./tensorrt_sharedMem2/samples/common/sampleInference.cpp
+# Expected Output
+# [12/28/2023-06:36:24] [I] mean: 4.67762 ms # this is DLA exec
+# [12/28/2023-06:36:21] [I] mean: 3.30332 ms # this is GPU exec
 
-cd ./tensorrt_sharedMem1/samples/trtexec/
-make -j4
-cd ../../../
-
-cd ./tensorrt_sharedMem2/samples/trtexec/
-make -j4
-cd ../../../
-
-python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start gpu --output ./google_only_gpu.plan
-python3 ./src/build_engine.py --prototxt ./prototxt_input_files/googlenet.prototxt --start dla --output ./google_only_dla.plan
-
-mkdir ./multi_dnn_execution_logs/
-
-#Run the python code to check TensorRT binaries working fine.
-python3 ./run_multiple_dnn.py
 ```
 
 ### Step 7: Z3 Solver execution
@@ -700,26 +695,8 @@ Follow the steps to build tensorrt binary files. Since the version is different,
 To run the experiments, please login Orin AGX(credentials given in desktop)
 
 ```bash
-cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem1/
-cp -r /usr/src/tensorrt/ ./tensorrt_sharedMem2/
-
-cp ./modified_tensorrts/sampleInference1_orinagx.cpp ./tensorrt_sharedMem1/samples/common/sampleInference.cpp
-cp ./modified_tensorrts/sampleInference2_orinagx.cpp ./tensorrt_sharedMem2/samples/common/sampleInference.cpp
-
-cd ./tensorrt_sharedMem1/samples/trtexec/
-make -j4
-cd ../../../
-
-cd ./tensorrt_sharedMem2/samples/trtexec/
-make -j4
-cd ../../../
-
-
-mkdir baseline_engines
-python3 orin_build_engine.py
-chmod +x orin_collect_data_multidnn_experiment.sh
-./orin_collect_data_multidnn_experiment.sh
-python3 orin_summarize_multi_dnn_executions.py
+chmod +x orin_sync_multi_dnn_exec.sh
+./orin_sync_multi_dnn_exec.sh
 ```
 
 Expected output given below:
@@ -733,9 +710,9 @@ Average time of the schedule found by HaX-CoNN: 1.93
 Overall improvement over best-baseline: 6.8%
 ```
 
-Note: These values on Orin AGX may vary what we have reported in the paper (Table 6). The authors believes that the reason for the variation is caused by the different Jetpack settings. We have used Jetpack 5.0.1 as reported in Table 4 and it brings with TensorRT 8.4. The target system for our experiments should have(or have if you can remotely access) 5.1.1, which has TensorRT 8.5.2. More importantly, INT8 and FP16 performances of devices are different.
+Note: These values on Orin AGX may vary what we have reported in the paper (Table 6). The authors believe that INT8 and FP16 performances of devices are significantly different. Plus, another reason for the variation is caused by the different Jetpack settings. We have used Jetpack 5.0.1 as reported in Table 4 and it brings with TensorRT 8.4. The target system for our experiments should have (or have if you can remotely access) 5.1.1, which has TensorRT 8.5.2.
 
-Note2: As can be seen by comparing Xavier AGX and Orin AGX, the improvement over baselines may vary depending on the characteristics of the hardware(target device) and the DNN set(target applications).
+Note2: As can be observed by comparing Xavier AGX and Orin AGX, the improvement over baselines may vary depending on the characteristics of the hardware(target device) and the DNN set(target applications).
 
 
 ### Step 9: Overhead Analysis
@@ -764,9 +741,10 @@ python3 src/build_engine.py --prototxt prototxt_input_files/ --output build/over
 ./scripts/run_all_plan.sh build/overhead_gpu
 grep -r "                            Total   " alexnet_dla_*.log >> without_contention_alexnet_dla_time.log
 
-#Open two command line. In the first, run run_forever script that constantly searches for the schedules by using z3.
+#IMPORTANT COMMENT: Open two different command lines. 
+#In the first, run run_forever script that constantly searches for the schedules by using z3.
 ./scripts/run_forever.sh
-#In the second 
+#In the second, run DNN pairs similar to above.
 ./scripts/run_all_plan.sh build/overhead_gpu 
 grep -r "                            Total   " alexnet_dla_*.log >> with_contention_alexnet_dla_time.log
 ```

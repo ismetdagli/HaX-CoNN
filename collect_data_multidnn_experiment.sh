@@ -83,9 +83,4 @@ cd baseline_engine_logs
 grep -r " mean: " * | grep -v "end to end" > mean_results_of_executions.txt
 
 cd ..
-printf '\n\n\n'
-
-printf '------------------------------------------------------'
-printf "Final Step: Summary of experiments\n"
-
 

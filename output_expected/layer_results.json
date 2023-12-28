@@ -1,0 +1,62 @@
+{
+    "0-9": {
+        "gpu": {
+            "total_gpu_time_ms": 0.3606033,
+            "layer_count": 10
+        }
+    },
+    "10-24": {
+        "gpu": {
+            "total_gpu_time_ms": 0.14895711000000003,
+            "layer_count": 15
+        }
+    },
+    "25-38": {
+        "gpu": {
+            "total_gpu_time_ms": 0.20475800000000002,
+            "layer_count": 14
+        }
+    },
+    "39-52": {
+        "gpu": {
+            "total_gpu_time_ms": 0.11361782999999999,
+            "layer_count": 14
+        }
+    },
+    "53-66": {
+        "gpu": {
+            "total_gpu_time_ms": 0.12426826999999999,
+            "layer_count": 14
+        }
+    },
+    "67-80": {
+        "gpu": {
+            "total_gpu_time_ms": 0.12624199,
+            "layer_count": 14
+        }
+    },
+    "81-94": {
+        "gpu": {
+            "total_gpu_time_ms": 0.1480437,
+            "layer_count": 14
+        }
+    },
+    "95-109": {
+        "gpu": {
+            "total_gpu_time_ms": 0.19840315,
+            "layer_count": 15
+        }
+    },
+    "110-123": {
+        "gpu": {
+            "total_gpu_time_ms": 0.12649119,
+            "layer_count": 14
+        }
+    },
+    "124-140": {
+        "gpu": {
+            "total_gpu_time_ms": 0.21479444,
+            "layer_count": 17
+        }
+    }
+}

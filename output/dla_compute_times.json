@@ -1,0 +1,42 @@
+{
+    "googlenet_gpu_transition_at_124": {
+        "total_time": 0.409120374,
+        "layer_diff": 0
+    },
+    "googlenet_gpu_transition_at_110": {
+        "total_time": 0.014915698,
+        "layer_diff": -0.39420467600000003
+    },
+    "googlenet_gpu_transition_at_95": {
+        "total_time": 0.94047332,
+        "layer_diff": 0.9255576219999999
+    },
+    "googlenet_gpu_transition_at_81": {
+        "total_time": 0.025681860000000004,
+        "layer_diff": -0.9147914599999999
+    },
+    "googlenet_gpu_transition_at_67": {
+        "total_time": 1.3862453899999998,
+        "layer_diff": 1.3605635299999999
+    },
+    "googlenet_gpu_transition_at_53": {
+        "total_time": 1.5890111500000001,
+        "layer_diff": 0.20276576000000035
+    },
+    "googlenet_gpu_transition_at_38": {
+        "total_time": 1.92355524,
+        "layer_diff": 0.33454408999999985
+    },
+    "googlenet_gpu_transition_at_24": {
+        "total_time": 0.04223459999999999,
+        "layer_diff": -1.88132064
+    },
+    "googlenet_gpu_transition_at_10": {
+        "total_time": 0.03596979,
+        "layer_diff": -0.006264809999999989
+    },
+    "googlenet_dla_transition_at_-1": {
+        "total_time": 0,
+        "layer_diff": 0
+    }
+}

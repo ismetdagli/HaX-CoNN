@@ -196,8 +196,8 @@ python3 src/build_engine.py \
 Similar to other analyses, the engines can be executed as such:
 ```bash
 /usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile \
---exportProfile=build/googlenet_transition_plans/profiles/googlenet_dla_transition_at_10.profile --avgRuns=1  \
---warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_dla_transition_at_10.plan > build/googlenet_transition_plans/profile_logs/googlenet_dla_transition_at_10.log
+--exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_38.profile --avgRuns=1  \
+--warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_38.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_38.log
 ```
 The commands produce both log and profile files which are useful depending on the analysis. 
 
@@ -207,6 +207,7 @@ The generated profile is useful for layer analysis of GPU however the profile ne
 To generate filtered layer timing information in Json:
 
 ```bash
+export PYTHONPATH="$(pwd):$PYTHONPATH"
 python3 scripts/layer_analysis/layer_gpu_util.py --profile build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_-1.profile
 ```
 The filtered output can be found here `build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json`.
@@ -214,39 +215,6 @@ The filtered output can be found here `build/googlenet_transition_plans/layer_ti
 Similarly in DLA the layer executions are analyzed from the profile. Due to inaccurate reading from the TensorRT platform a different method is utilized. Total layer execution time of transitioning engines are compared to find per layer group execution time. In addition, for increased accuracy, the transition cost which will be calculated in the transition analyses is added.
 
 3. Results Compilation
-
-When all DLA profiles are generated run the script below.
-
-```bash
-python3 scripts/layer_analysis/layer_dla_util.py --profiles_dir build/googlenet_transition_plans/profiles
-```
-This will create the `output/dla_compute_times.json` file. Here you can see the layer group executions together with their differences of their closest layer group.
-
-```
-> cat output/dla_compute_times.json 
-{
-    "0-9": {
-        "gpu": {
-            "total_gpu_time_ms": 0.3548035,
-            "layer_count": 10
-        }
-    },
-    "10-24": {
-        "gpu": {
-            "total_gpu_time_ms": 0.15014499,
-            "layer_count": 15
-        }
-    },
-    "25-38": {
-        "gpu": {
-            "total_gpu_time_ms": 0.2066831,
-            "layer_count": 14
-        }
-    },
-   ...
-```
-
-Note: This output represents the numbers we have represented DLA column of Table 2 in our paper. The numbers do not %100 match since we represent the normalized numbers (total time throughout DNN execution / total time spent profiling per layer) in the paper. We use normalized value of total profiling. Another major issue is that profiling DLA is very limited (unlike GPU given below). This does not allow us to get layer-wise execution time explicitly.
 
 To process the filtered json for the GPU run the script below.
 
@@ -272,7 +240,7 @@ GPU results can be seen here.
         },
 	...
 ```
-Note: This output represents the numbers we have represented GPU column of Table 2 in our paper. The numbers do not match exactly for many reasons. First, results in different versions might be inconsistent (check  "Difference among results" subsection below). We also did long warmup periods and 1000 iterations to be consistent in our process. The pattern among the numbers are very similar to the ones in our paper. The output here slightly better since we are fully utilizing the device at the maximum power mode (MAXN) unlike the default power mode. We have observed that this mode provides a better utilization out of the system.
+Note: This output represents the numbers we have represented GPU column of Table 2 in our paper. The numbers do not match exactly for many reasons. First, results in different versions might be inconsistent (check  "Difference among results" subsection below). We also did long warmup periods and 1000 iterations to be consistent in our process. The pattern among the numbers are very similar to the ones in our paper. The output here better since we are fully utilizing the device at the maximum power mode (MAXN) unlike the default power mode. We have observed that this mode provides a better utilization out of the system. It is important to note that improvement on layer's profilings are better for each layer groups even though the execution time ratio among layers are similar to each other in this artifact and the actual results in the paper.
 
 #### Difference among results
 
@@ -350,16 +318,18 @@ Scripts which are specific to Transition analysis are summarised below:
 
 #### Process Overview:
 
-To build all necessary engines, measure their transition costs and save the output run the following. You can view the final results in the `output/emc_results.json` file.
+To build all necessary engines, measure their transition costs and save the output run the following. You can view the final results in the `output/emc_results.json` file. The command below gives overall experiments here.
 
 ```bash
 make emc
 cat output/transition_results.json
 ```
 
+For detailed step-by-step experiments, we follow three-step experiments.
+
  1. Engine File Generation:
  The build_engine.py script is used to generate engine files for both GPU and DLA executions based on the GoogleNet model defined in the Prototxt file.
- Two sets of engine files with different transition layers are generated at this step.
+ Two sets of engine files with different transition layers are generated at this step. We give a transition at layer 24 below:
 
 Makefile generates all the engines in every transition layer. Example builds for single engine:
 ```bash
@@ -380,34 +350,34 @@ python3 src/build_engine.py \
 
  2. Profile and Log Generation:
     Using trtexec, the model is run with each engine file, and detailed performance profiles are collected.
-    These profiles are saved as intermediate files in TR_TIME_PROFILES_DIR, accompanied by logs in TR_TIME_PROF_LOGS_DIR.
+    These profiles are saved as intermediate files in TR_TIME_PROFILES_DIR, accompanied by logs in TR_TIME_PROF_LOGS_DIR. We give a 
 
 ```bash
 /usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile \
---avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_0.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_0.log
+--avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_24.log
 ```
 The transition analysis makes use of mean compute values. You can view the logs to see the mean values:
 ```bash
-> cat build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_109.log | grep -C 4 mean
-[11/26/2023-13:46:01] [I] Average on 1 runs - GPU latency: 2.62305 ms - Host latency: 2.68164 ms (end to end 2.69336 ms, enqueue 2.63281 ms)
-[11/26/2023-13:46:01] [I] Host Latency
-[11/26/2023-13:46:01] [I] min: 2.38086 ms (end to end 2.3877 ms)
-[11/26/2023-13:46:01] [I] max: 7.18164 ms (end to end 7.19727 ms)
-[11/26/2023-13:46:01] [I] mean: 2.56869 ms (end to end 2.57815 ms)
-[11/26/2023-13:46:01] [I] median: 2.50391 ms (end to end 2.51367 ms)
-[11/26/2023-13:46:01] [I] percentile: 3.17871 ms at 99% (end to end 3.19629 ms at 99%)
-[11/26/2023-13:46:01] [I] throughput: 383.698 qps
-[11/26/2023-13:46:01] [I] walltime: 26.0622 s
+> cat build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_24.log | grep -C 4 mean
+[12/27/2023-21:42:32] [I] Average on 1 runs - GPU latency: 1.95703 ms - Host latency: 2.00195 ms (end to end 2.00781 ms, enqueue 1.96484 ms)
+[12/27/2023-21:42:32] [I] Host Latency
+[12/27/2023-21:42:32] [I] min: 1.97266 ms (end to end 1.97852 ms)
+[12/27/2023-21:42:32] [I] max: 2.20117 ms (end to end 2.21094 ms)
+[12/27/2023-21:42:32] [I] mean: 2.00712 ms (end to end 2.0141 ms)
+[12/27/2023-21:42:32] [I] median: 2.00586 ms (end to end 2.01367 ms)
+[12/27/2023-21:42:32] [I] percentile: 2.03125 ms at 99% (end to end 2.03906 ms at 99%)
+[12/27/2023-21:42:32] [I] throughput: 496.392 qps
+[12/27/2023-21:42:32] [I] walltime: 20.1454 s
 --
-[11/26/2023-13:46:01] [I] median: 2.46094 ms
-[11/26/2023-13:46:01] [I] GPU Compute
-[11/26/2023-13:46:01] [I] min: 2.33887 ms
-[11/26/2023-13:46:01] [I] max: 7.11914 ms
-[11/26/2023-13:46:01] [I] mean: 2.51739 ms
-[11/26/2023-13:46:01] [I] median: 2.45142 ms
-[11/26/2023-13:46:01] [I] percentile: 3.10742 ms at 99%
-[11/26/2023-13:46:01] [I] total compute time: 25.1739 s
-[11/26/2023-13:46:01] [I] 
+[12/27/2023-21:42:32] [I] median: 1.9707 ms
+[12/27/2023-21:42:32] [I] GPU Compute
+[12/27/2023-21:42:32] [I] min: 1.92773 ms
+[12/27/2023-21:42:32] [I] max: 2.14062 ms
+[12/27/2023-21:42:32] [I] mean: 1.96148 ms
+[12/27/2023-21:42:32] [I] median: 1.96094 ms
+[12/27/2023-21:42:32] [I] percentile: 1.98242 ms at 99%
+[12/27/2023-21:42:32] [I] total compute time: 19.6148 s
+[12/27/2023-21:42:32] [I] 
 ```
 
 3. Results Compilation
@@ -415,28 +385,46 @@ The transition analysis makes use of mean compute values. You can view the logs 
 The final python script parses the mean values, processes the difference between baseline value and compiles all of the data into a single json:
 
 ```bash
+export PYTHONPATH="$(pwd):$PYTHONPATH"
 python3 scripts/transition_time_analysis/transition_util.py
 ```
 
 You can view the transition cost analysis results in `output/transition_results.json`
 
+
 ```bash
 > cat output/transition_results.json                         
 {
-    "googlenet_dla_transition_at_-1": {
-        "mean_time": 1.9701,
+    "googlenet_dla_mark_at_-1": {
+        "mean_time": 3.64919,
         "transition_cost": 0.0
     },
-    "googlenet_dla_transition_at_10": {
-        "mean_time": 3.11484,
-        "transition_cost": 1.14474
+    "googlenet_dla_mark_at_10": {
+        "mean_time": 3.718,
+        "transition_cost": 0.06881
     },
-    "googlenet_dla_transition_at_24": {
-        "mean_time": 3.05384,
-        "transition_cost": 1.08374
+    "googlenet_dla_mark_at_24": {
+        "mean_time": 3.73284,
+        "transition_cost": 0.08365
+.
+.
+.
+.
     },
-    ...
+    "googlenet_gpu_mark_at_-1": {
+        "mean_time": 1.96281,
+        "transition_cost": 0.0
+    },
+    "googlenet_gpu_mark_at_10": {
+        "mean_time": 1.98737,
+        "transition_cost": 0.02456
+    },
+    "googlenet_gpu_mark_at_24": {
+        "mean_time": 2.00455,
+        "transition_cost": 0.04174
 ```
+Note: We list the transition costs here as similar to Table 2 transition cost column. In the submitted version, we have included only GPU transition cost whereas DLA transition cost will be also added in the final version.
+
 
 ### Step 4: EMC Analysis 
 
@@ -480,6 +468,7 @@ python3 src/build_engine.py --prototxt convolution_characterization_prototxts/co
  2.  EMC Utilization Measurement: The script `emc_single_run.sh` is executed for each engine file. It runs the engine and measures the EMC utilization, storing the results in `EMC_TIMES_DIR` (`build/convolution_characterization_plans/times` directory).
 
  An example EMC utilization measurement from single engine:
+ Note: this command requires sudo privilege.
  ```bash
 mkdir build/convolution_characterization_plans/times
 scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/conv1_kernel1.plan build/convolution_characterization_plans/times/conv1_kernel1.txt
@@ -506,7 +495,8 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
 
  Running the script:
  ```bash
- python3 scripts/emc_util_all.py
+ export PYTHONPATH="$(pwd):$PYTHONPATH"
+ python3 scripts/emc_analysis/emc_util_all.py
  ```
  View the output: 
  ```bash
@@ -514,13 +504,6 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
 {
     "conv1": {
         "kernel1": "89%",
-        "kernel2": "78%",
-        "kernel3": "70%",
-        "kernel4": "56%",
-        "kernel5": "48%"
-    },
-    "conv2": {
-        "kernel1": "77%",
     ...
  ```
 
@@ -535,6 +518,8 @@ mkdir nsight_compute_logs
 # This prompt requests sudo privilege. Takes a couple of minutes to run
 python3 src/nsight_compute.py
 ```
+
+Note: If you face any "Error opening engine file: starter_guide_logs/googlenet_only_gpu.plan" error, please build the only googlenet plan  by running this: "python3 starter_guide_experiment.py"
 
 This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of effort to match the layers and their instructions. We leave this script here for a reference.
 
@@ -633,7 +618,7 @@ Average time of the schedule found by H2H: 14.2
 Average time of the schedule found by HaX-CoNN: 13.8
 Overall improvement over best-baseline: 3.12%
 ```
-For more comprehensive experiments, please check out 
+
 
 #### Reusability on Orin AGX
 For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).

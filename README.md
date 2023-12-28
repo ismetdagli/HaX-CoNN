@@ -249,7 +249,21 @@ To generate filtered layer timing information in Json:
 export PYTHONPATH="$(pwd):$PYTHONPATH"
 python3 scripts/layer_analysis/layer_gpu_util.py --profile build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_-1.profile
 ```
-The filtered output can be found here `build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json`.
+The filtered output can be found here 
+```bash
+cat build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json
+# Summary given below:
+# {
+#     "name": "loss3/classifier",
+#     "average_time_ms": 0.0361852,
+#     "layer_count": 1
+# },
+# {
+#     "name": "prob",
+#     "average_time_ms": 0.00607107,
+#     "layer_count": 1
+# }
+```
 
 Similarly in DLA the layer executions are analyzed from the profile. Due to inaccurate reading from the TensorRT platform a different method is utilized. Total layer execution time of transitioning engines are compared to find per layer group execution time. In addition, for increased accuracy, the transition cost which will be calculated in the transition analyses is added.
 
@@ -353,6 +367,8 @@ cat output_expected/transition_results.json
 
 #### Details
 
+Important note: This is a step-by-step example. The particular output that will be generated here is already generated in the summary. 
+
 Input File:
 
  -  Prototxt File: Specified in `PROTOTXT` (`prototxt_input_files/googlenet.prototxt`). This file describes the architecture of the GoogleNet model used for transition time analysis.
@@ -393,16 +409,16 @@ Makefile generates all the engines in every transition layer. Example builds for
 ```bash
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
---output build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan \
+--output build/googlenet_transition_plans/googlenet_gpu_transition_at_38.plan \
 --start gpu \
---mark 24 \
+--mark 38 \
 --verbose
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
---output build/googlenet_transition_plans/googlenet_dla_transition_at_24.plan \
+--output build/googlenet_transition_plans/googlenet_dla_transition_at_38.plan \
 --start dla \
---mark 24 \
+--mark 38 \
 --verbose
 ```
 
@@ -411,31 +427,20 @@ python3 src/build_engine.py \
     These profiles are saved as intermediate files in TR_TIME_PROFILES_DIR, accompanied by logs in TR_TIME_PROF_LOGS_DIR. We give a 
 
 ```bash
-/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_0.profile \
---avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_24.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_24.log
+/usr/src/tensorrt/bin/trtexec --iterations=10000  --dumpProfile --exportProfile=build/googlenet_transition_plans/profiles/googlenet_gpu_transition_at_38.profile \
+--avgRuns=1 --warmUp=5000 --duration=0 --loadEngine=build/googlenet_transition_plans/googlenet_gpu_transition_at_38.plan > build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_38.log
 ```
 The transition analysis makes use of mean compute values. You can view the logs to see the mean values:
 ```bash
-> cat build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_24.log | grep -C 4 mean
-[12/27/2023-21:42:32] [I] Average on 1 runs - GPU latency: 1.95703 ms - Host latency: 2.00195 ms (end to end 2.00781 ms, enqueue 1.96484 ms)
-[12/27/2023-21:42:32] [I] Host Latency
-[12/27/2023-21:42:32] [I] min: 1.97266 ms (end to end 1.97852 ms)
-[12/27/2023-21:42:32] [I] max: 2.20117 ms (end to end 2.21094 ms)
-[12/27/2023-21:42:32] [I] mean: 2.00712 ms (end to end 2.0141 ms)
-[12/27/2023-21:42:32] [I] median: 2.00586 ms (end to end 2.01367 ms)
-[12/27/2023-21:42:32] [I] percentile: 2.03125 ms at 99% (end to end 2.03906 ms at 99%)
-[12/27/2023-21:42:32] [I] throughput: 496.392 qps
-[12/27/2023-21:42:32] [I] walltime: 20.1454 s
---
-[12/27/2023-21:42:32] [I] median: 1.9707 ms
-[12/27/2023-21:42:32] [I] GPU Compute
-[12/27/2023-21:42:32] [I] min: 1.92773 ms
-[12/27/2023-21:42:32] [I] max: 2.14062 ms
-[12/27/2023-21:42:32] [I] mean: 1.96148 ms
-[12/27/2023-21:42:32] [I] median: 1.96094 ms
-[12/27/2023-21:42:32] [I] percentile: 1.98242 ms at 99%
-[12/27/2023-21:42:32] [I] total compute time: 19.6148 s
-[12/27/2023-21:42:32] [I] 
+> cat build/googlenet_transition_plans/profile_logs/googlenet_gpu_transition_at_38.log | grep -C 4 mean | grep -v "end to end"
+[12/28/2023-12:42:25] [I] median: 1.98828 ms
+[12/28/2023-12:42:25] [I] GPU Compute
+[12/28/2023-12:42:25] [I] min: 1.93848 ms
+[12/28/2023-12:42:25] [I] max: 2.08691 ms
+[12/28/2023-12:42:25] [I] mean: 1.9787 ms
+[12/28/2023-12:42:25] [I] median: 1.97852 ms
+[12/28/2023-12:42:25] [I] percentile: 2.00391 ms at 99%
+[12/28/2023-12:42:25] [I] total compute time: 19.787 s
 ```
 
 3. Results Compilation
@@ -575,6 +580,7 @@ scripts/emc_analysis/emc_single_run.sh build/convolution_characterization_plans/
  ```bash
  export PYTHONPATH="$(pwd):$PYTHONPATH"
  python3 scripts/emc_analysis/emc_util_all.py
+ #Note: Please use sudo if privilege error is thrown. This might occur since we recorded the initial data by using sudo
  ```
  View the output: 
  ```bash

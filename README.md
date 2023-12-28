@@ -88,9 +88,8 @@ This is an empirical study. We are listing the details on how we collected data.
 > Even though collecting data per executions takes a couple of seconds, building an engine/plan takes a couple of minutes. This is because TensorRT builder checks and applies possible optimizations to run the kernels efficiently. Even though disabling some of them are partially provided by their APIs, this is not definitely suggested to comprehensively evaluate our work. So, building the binary files and running `make` below takes ~1 hours on Xavier AGX. 
 
 ```bash
-cd HaX-CoNN/
 export PYTHONPATH="$(pwd):$PYTHONPATH"
-#After running make, it requests sudo in a couple of minutes and waits until reading the password. Please watch out!
+#After running make, it requests sudo in a couple of seconds and waits until reading the password. Please watch out!
 make
 ```
 
@@ -344,9 +343,9 @@ cat output/transition_results.json
 # Summary of last lines given below:
 # ...
 # "googlenet_gpu_mark_at_124": {
-#     "mean_time": 1.98731,
-#     "transition_cost": 0.0245
-# }
+#         "mean_time": 2.00979,
+#         "transition_cost": 0.04957
+#  }
 
 #Expected output given below in detail for further comparison
 cat output_expected/transition_results.json
@@ -495,10 +494,12 @@ This step explains how emc utilizations are collected. Summary of comprehensive 
 make emc
 cat output/emc_results.json
 # Summary of last lines given below:
-# {
-#    "conv1": {
-#        "kernel1": "89%",
-#    ...
+# "conv5": {
+#         "kernel1": "35%",
+#         "kernel2": "40%",
+#         "kernel3": "24%",
+#         "kernel4": "29%",
+#         "kernel5": "24%"
 # }
 
 #Expected output given below in detail for further comparison
@@ -588,7 +589,8 @@ Reference from paper: The outputs in Json file demonstrates very similar pattern
 
 ### Step 5: Memory Throughput Profiling
 
-This step targets to profile memory throughput.  This code profiles the memory throughput in kernel level(Nsight compute automatically converts layers to kernels).
+#### Summary
+This step targets to profile memory throughput.  This code profiles the memory throughput in kernel level(Nsight compute automatically converts layers to kernels). The output file generates 'nsight_compute_googlenet_only_gpu_set_full.report.nsight-cuprof-report' file that includes memory throughput results. The file can be opened in a Desktop through Nsight Compute. For the sake of easiness of the artifact, manual operation and extracting of data manually is not excluded. 
 
 ```bash
 mkdir nsight_compute_logs
@@ -596,6 +598,7 @@ mkdir nsight_compute_logs
 python3 src/nsight_compute.py
 ```
 
+#### Details
 Note: If you face any "Error opening engine file: starter_guide_logs/googlenet_only_gpu.plan" error, please build the only googlenet plan  by running this: "python3 starter_guide_experiment.py"
 
 This code outputs a nsight_compute_$DNN_.report. TensorRT has its own naming and output report structure that becomes very complicated. This requires a lot of effort to match the layers and their instructions. We leave this script here for a reference.

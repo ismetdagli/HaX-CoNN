@@ -19,7 +19,7 @@ for line in Lines:
     
     if "resnet101_gpu_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
-only_gpu_exec_time=max(googlenet_average_time,resnet_average_time)
+only_gpu_exec_time=googlenet_average_time+resnet_average_time
 print("Only GPU:", round(only_gpu_exec_time,1) , "ms")
 
 googlenet_average_time=0

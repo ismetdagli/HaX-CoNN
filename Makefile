@@ -121,6 +121,6 @@ emc: output/emc_results.json
 
 
 clean:
-	rm -rf output/* build/*
+	rm -rf output/* build/* starter_guide_logs/*
 
 .PHONY: all clean

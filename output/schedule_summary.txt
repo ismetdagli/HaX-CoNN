@@ -1,4 +1,0 @@
-GoogleNet starts on GPU
-GoogleNet applies transition at layer 52
-AlexNet starts on DLA
-AlexNet applies transition at layer 2

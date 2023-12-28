@@ -154,8 +154,9 @@ This step explains how layers are profiled. Summary of comprehensive profiling r
 
 ```bash
 make layer
-#Pythonpath might be ignored if alreayd modified.
+#Pythonpath and mkdir output might be ignored if alreayd modified.
 export PYTHONPATH="$(pwd):$PYTHONPATH"
+mkdir output
 python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 
 # Summary given below:
@@ -487,6 +488,7 @@ This step explains how layers are profiled. Summary of comprehensive profiling r
 ```bash
 make emc
 cat output/emc_results.json
+# Summary of last lines given below:
 # {
 #    "conv1": {
 #        "kernel1": "89%",

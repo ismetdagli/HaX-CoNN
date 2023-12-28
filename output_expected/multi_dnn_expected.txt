@@ -1,0 +1,38 @@
+Summary of Exp1. GoogleNet and ResNet
+Only GPU: 8.1 ms
+GPU&DLA: 10.2 ms
+Herald: 10.7 ms
+H2H: 10.2 ms
+HaX-CoNN: 7.8 ms
+Overall improvement over best-baseline: 4.86
+This is claimed in the paper as 0%.
+
+
+Summary of Exp2. Inception and Resnet152
+Only GPU: 18.1 ms
+GPU&DLA: 16.7 ms
+Herald: 16.9 ms
+H2H: 17.1 ms
+HaX-CoNN: 14.4 ms
+Overall improvement over best-baseline: 15.67
+This is claimed in the paper as 20%.
+
+
+Summary of Exp3. Alexnet Resnet101
+Only GPU: 13.4 ms
+GPU&DLA: 10.4 ms
+Herald: 11.5 ms
+H2H: 11.4 ms
+HaX-CoNN: 8.4 ms
+Overall improvement over best-baseline: 23.87
+This is claimed in the paper as 26%.
+
+
+Summary of Exp4. VGG19 Resnet152
+Only GPU: 15.6 ms
+GPU&DLA: 19.8 ms
+Herald: 18.6 ms
+H2H: 18.7 ms
+HaX-CoNN: 13.6 ms
+Overall improvement over best-baseline: 15.18%
+This is claimed in the paper as 23%.

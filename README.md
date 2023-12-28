@@ -153,10 +153,10 @@ Until step 6, we settle our examples on GoogleNet. Each DNN has different detail
 This step explains how layers are profiled. Summary of comprehensive profiling results can be obtained by running the command below. 
 
 ```bash
+mkdir output
 make layer
 #Pythonpath and mkdir output might be ignored if alreayd modified.
 export PYTHONPATH="$(pwd):$PYTHONPATH"
-mkdir output
 python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 
 # Summary of last lines given below:
@@ -667,19 +667,22 @@ chmod +x collect_data_multidnn_experiment.sh
 ./baseline_engine_building.sh
 ./collect_data_multidnn_experiment.sh
 python3 src/summarize_multi_dnn_executions.py
+
 ```
 
 Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design. 
 ```bash
-#EXPECTED OUTPUT for Exp 4.
-Summary of Exp4. VGG19 Resnet152
-Average time of using only GPU: 29.1
-Average time of VGG on GPU and Resnet152 on DLA: 24.0
-Average time of VGG on DLA and Resnet152 on GPU: 34.9
-Average time of the schedule found by Herald: 19.0
-Average time of the schedule found by H2H: 14.2
-Average time of the schedule found by HaX-CoNN: 13.8
-Overall improvement over best-baseline: 3.12%
+# Summary of Exp3. Alexnet Resnet101
+# Only GPU: 13.4 ms
+# GPU&DLA: 10.4 ms
+# Herald: 11.5 ms
+# H2H: 11.4 ms
+# HaX-CoNN: 8.4 ms
+# Overall improvement over best-baseline: 23.87
+# This is claimed in the paper as 26%.
+
+#Expected output given below in detail for further comparison
+cat output_expected/transition_results.json
 ```
 
 

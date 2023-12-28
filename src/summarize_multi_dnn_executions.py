@@ -19,20 +19,8 @@ for line in Lines:
     
     if "resnet101_gpu_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
-only_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of using only GPU:", round(only_gpu_exec_time,1) )
-
-googlenet_average_time=0
-resnet_average_time=0
-for line in Lines:
-    if "googlenet_dla_only_resnet101_gpu_only" in line:
-        googlenet_average_time = index_mean(line)
-    
-    if "resnet101_gpu_only_googlenet_gpu_only" in line:
-        resnet_average_time = index_mean(line)
-
-gpu_dla_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of Resnet101 on GPU and Googlenet on DLA:",round(gpu_dla_exec_time,1) )
+only_gpu_exec_time=max(googlenet_average_time,resnet_average_time)
+print("Only GPU:", round(only_gpu_exec_time,1) , "ms")
 
 googlenet_average_time=0
 resnet_average_time=0
@@ -43,33 +31,33 @@ for line in Lines:
     if "resnet101_dla_only_googlenet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 
-dla_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of Resnet101 on DLA and Googlenet on GPU:", round(dla_gpu_exec_time,1) )
+gpu_dla_exec_time=max(googlenet_average_time,resnet_average_time)
+print("GPU&DLA:", round(gpu_dla_exec_time,1) , "ms")
     
 
 googlenet_average_time=0
 resnet_average_time=0
 for line in Lines:
-    if "googlenet_dla_transition_at_10_resnet101_gpu_transition_at_4" in line:
+    if "googlenet_dla_transition_at_24_resnet101_gpu_transition_at_58" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_gpu_transition_at_4_googlenet_dla_transition_at_10" in line:
+    if "resnet101_gpu_transition_at_58_googlenet_dla_transition_at_24" in line:
         resnet_average_time = index_mean(line)
 herald_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by Herald:",round(herald_exec,1))
+print("Herald:",round(herald_exec,1), "ms")
 
 googlenet_average_time=0
 resnet_average_time=0
 for line in Lines:
-    if "googlenet_dla_transition_at_39_resnet101_gpu_transition_at_101" in line:
+    if "googlenet_gpu_transition_at_52_resnet101_dla_transition_at_312" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_gpu_transition_at_101_googlenet_dla_transition_at_39" in line:
+    if "resnet101_dla_transition_at_312_googlenet_gpu_transition_at_52" in line:
         resnet_average_time = index_mean(line)
 h2h_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by H2H:",round(h2h_exec,1))
+print("H2H:",round(h2h_exec,1), "ms")
 
 googlenet_average_time=0
 resnet_average_time=0
@@ -81,10 +69,10 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by HaX-CoNN:",round(hax_conn_exec,1))
+print("HaX-CoNN:",round(hax_conn_exec,1), "ms")
 
-print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,dla_gpu_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%\n\n")
-
+print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2)))
+print("This is claimed in the paper as 0%."+"\n\n")
 
 
 #--------------------------EXP2--------------------------
@@ -99,8 +87,8 @@ for line in Lines:
     
     if "resnet152_gpu_only_inception_gpu_only" in line:
         resnet_average_time = index_mean(line)
-only_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of using only GPU:", round(only_gpu_exec_time,1) )
+only_gpu_exec_time=max(googlenet_average_time,resnet_average_time)
+print("Only GPU:", round(only_gpu_exec_time,1) , "ms")
 
 
 for line in Lines:
@@ -110,42 +98,30 @@ for line in Lines:
     if "resnet152_gpu_only_inception_dla_only" in line:
         resnet_average_time = index_mean(line)
 
-gpu_dla_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of ResNet152 on GPU and Inception on DLA:",round(gpu_dla_exec_time,1) )
+gpu_dla_exec_time=max(googlenet_average_time,resnet_average_time)
+print("GPU&DLA:",round(gpu_dla_exec_time,1) , "ms")
 
 
 for line in Lines:
-    if "inception_gpu_only_resnet152_dla_only" in line:
+    if "inception_gpu_transition_at_410_resnet152_dla_transition_at_58" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet152_dla_only_inception_gpu_only" in line:
-        resnet_average_time = index_mean(line)
-
-dla_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of ResNet152 on DLA and Inception on GPU:", round(dla_gpu_exec_time,1) )
-    
-
-
-for line in Lines:
-    if "inception_dla_transition_at_30_resnet152_gpu_transition_at_46" in line:
-        googlenet_average_time = index_mean(line)
-    
-    if "resnet101_gpu_transition_at_4_inception_dla_transition_at_30" in line:
+    if "resnet152_dla_transition_at_58_inception_gpu_transition_at_410" in line:
         resnet_average_time = index_mean(line)
 herald_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by Herald:",round(herald_exec,1))
+print("Herald:",round(herald_exec,1), "ms")
 
 
 for line in Lines:
-    if "inception_dla_transition_at_95_resnet152_gpu_transition_at_101" in line:
+    if "inception_gpu_transition_at_380_resnet152_dla_transition_at_101" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet152_gpu_transition_at_101_inception_dla_transition_at_95" in line:
+    if "resnet152_dla_transition_at_101_inception_gpu_transition_at_380" in line:
         resnet_average_time = index_mean(line)
 h2h_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by H2H:",round(h2h_exec,1))
+print("H2H:",round(h2h_exec,1), "ms")
 
 
 for line in Lines:
@@ -156,10 +132,10 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by HaX-CoNN:",round(hax_conn_exec,1))
+print("HaX-CoNN:",round(hax_conn_exec,1), "ms")
 
-print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,dla_gpu_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%\n\n")
-
+print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2)))
+print("This is claimed in the paper as 20%."+"\n\n")
 
 
 
@@ -177,7 +153,7 @@ for line in Lines:
     if "resnet101_gpu_only_alexnet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 only_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of using only GPU:", round(only_gpu_exec_time,1) )
+print("Only GPU:", round(only_gpu_exec_time,1) , "ms")
 
 
 for line in Lines:
@@ -187,31 +163,10 @@ for line in Lines:
     if "resnet101_dla_only_alexnet_gpu_only" in line:
         resnet_average_time = index_mean(line)
 
-gpu_dla_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of Alexnet on GPU and Resnet101 on DLA:",round(gpu_dla_exec_time,1) )
+gpu_dla_exec_time=max(googlenet_average_time,resnet_average_time)
+print("GPU&DLA:",round(gpu_dla_exec_time,1) , "ms")
 
 
-for line in Lines:
-    if "alexnet_dla_only_resnet101_gpu_only" in line:
-        googlenet_average_time = index_mean(line)
-    
-    if "resnet101_gpu_only_alexnet_dla_only" in line:
-        resnet_average_time = index_mean(line)
-
-dla_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of Alexnet on DLA and Resnet101 on GPU:", round(dla_gpu_exec_time,1) )
-    
-
-
-for line in Lines:
-    if "alexnet_gpu_transition_at_16_resnet101_dla_transition_at_58" in line:
-        googlenet_average_time = index_mean(line)
-    
-    if "resnet101_dla_transition_at_58_alexnet_gpu_transition_at_16" in line:
-        resnet_average_time = index_mean(line)
-herald_exec=max(googlenet_average_time,resnet_average_time)
-
-print("Average time of the schedule found by Herald:",round(herald_exec,1))
 
 
 for line in Lines:
@@ -220,9 +175,20 @@ for line in Lines:
     
     if "resnet101_dla_transition_at_101_alexnet_gpu_transition_at_14" in line:
         resnet_average_time = index_mean(line)
+herald_exec=max(googlenet_average_time,resnet_average_time)
+
+print("Herald:",round(herald_exec,1), "ms")
+
+
+for line in Lines:
+    if "alexnet_gpu_transition_at_5_resnet101_dla_transition_at_46" in line:
+        googlenet_average_time = index_mean(line)
+    
+    if "resnet101_dla_transition_at_46_alexnet_gpu_transition_at_5" in line:
+        resnet_average_time = index_mean(line)
 h2h_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by H2H:",round(h2h_exec,1))
+print("H2H:",round(h2h_exec,1), "ms")
 
 
 for line in Lines:
@@ -233,12 +199,10 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by HaX-CoNN:",round(hax_conn_exec,1))
+print("HaX-CoNN:",round(hax_conn_exec,1), "ms")
 
-print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,dla_gpu_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%\n\n")
-
-
-
+print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2)))
+print("This is claimed in the paper as 26%."+"\n\n")
 
 
 
@@ -246,7 +210,9 @@ print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_ti
 
 
 
-#--------------------------EXP3--------------------------
+
+
+#--------------------------EXP4--------------------------
 
 print("Summary of Exp4. VGG19 Resnet152")
 googlenet_average_time=0
@@ -257,19 +223,8 @@ for line in Lines:
     
     if "resnet152_gpu_only_vgg19_gpu_only" in line:
         resnet_average_time = index_mean(line)
-only_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of using only GPU:", round(only_gpu_exec_time,1) )
-
-
-for line in Lines:
-    if "vgg19_gpu_only_resnet152_dla_only" in line:
-        googlenet_average_time = index_mean(line)
-    
-    if "resnet152_dla_only_vgg19_gpu_only" in line:
-        resnet_average_time = index_mean(line)
-
-gpu_dla_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of VGG on GPU and Resnet152 on DLA:",round(gpu_dla_exec_time,1) )
+only_gpu_exec_time=max(googlenet_average_time,resnet_average_time)
+print("Only GPU:", round(only_gpu_exec_time,1) , "ms")
 
 
 for line in Lines:
@@ -279,8 +234,8 @@ for line in Lines:
     if "resnet152_gpu_only_vgg19_dla_only" in line:
         resnet_average_time = index_mean(line)
 
-dla_gpu_exec_time=googlenet_average_time+resnet_average_time
-print("Average time of VGG on DLA and Resnet152 on GPU:", round(dla_gpu_exec_time,1) )
+gpu_dla_exec_time=max(googlenet_average_time,resnet_average_time)
+print("GPU&DLA:",round(gpu_dla_exec_time,1) , "ms")
     
 
 
@@ -292,18 +247,18 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 herald_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by Herald:",round(herald_exec,1))
+print("Herald:",round(herald_exec,1), "ms")
 
 
 for line in Lines:
-    if "vgg19_gpu_transition_at_27_resnet152_dla_transition_at_286" in line:
+    if "vgg19_dla_transition_at_9_resnet152_gpu_transition_at_46" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet152_dla_transition_at_286_vgg19_gpu_transition_at_27" in line:
+    if "resnet152_gpu_transition_at_46_vgg19_dla_transition_at_9" in line:
         resnet_average_time = index_mean(line)
 h2h_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by H2H:",round(h2h_exec,1))
+print("H2H:",round(h2h_exec,1), "ms")
 
 
 for line in Lines:
@@ -314,10 +269,10 @@ for line in Lines:
         resnet_average_time = index_mean(line)
 hax_conn_exec=max(googlenet_average_time,resnet_average_time)
 
-print("Average time of the schedule found by HaX-CoNN:",round(hax_conn_exec,1))
+print("HaX-CoNN:",round(hax_conn_exec,1), "ms")
 
-print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,dla_gpu_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%")
-
+print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,gpu_dla_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%")
+print("This is claimed in the paper as 23%.")
 
 
 

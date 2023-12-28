@@ -38,33 +38,33 @@ python3 src/build_engine.py \
 #Herald PLAN 1
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
---output baseline_engines/googlenet_dla_transition_at_10.plan \
+--output baseline_engines/googlenet_dla_transition_at_24.plan \
 --start dla \
---transition 10 \
+--transition 24 \
 --verbose
 
 #Herald PLAN 2
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet101.prototxt \
---output baseline_engines/resnet101_gpu_transition_at_4.plan \
+--output baseline_engines/resnet101_gpu_transition_at_58.plan \
 --start gpu \
---transition -1 \
+--transition 58 \
 --verbose
 
 #H2H PLAN 1
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/googlenet.prototxt \
---output baseline_engines/googlenet_dla_transition_at_39.plan \
---start dla \
---transition 39 \
+--output baseline_engines/googlenet_gpu_transition_at_52.plan \
+--start gpu \
+--transition 52 \
 --verbose
 
 #H2H PLAN 2
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet101.prototxt \
---output baseline_engines/resnet101_gpu_transition_at_101.plan \
---start gpu \
---transition -1 \
+--output baseline_engines/resnet101_dla_transition_at_312.plan \
+--start dla \
+--transition 312 \
 --verbose
 
 #HaX-CoNN PLAN 1
@@ -120,35 +120,35 @@ python3 src/build_engine.py \
 --verbose
 
 
-#inception_30_resnet152_46_1_results.log:[11/23/2023-10:39:59]
+
 #Herald
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/inception.prototxt \
---output baseline_engines/inception_dla_transition_at_30.plan \
---start dla \
---transition 30 \
+--output baseline_engines/inception_gpu_transition_at_410.plan \
+--start gpu \
+--transition 410 \
 --verbose
 #Herald
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet152.prototxt \
---output baseline_engines/resnet152_gpu_transition_at_46.plan \
---start gpu \
---transition 46 \
+--output baseline_engines/resnet152_dla_transition_at_58.plan \
+--start dla \
+--transition 58 \
 --verbose
 
-# inception_95_resnet152_101_1_results.log:[11/23/2023-11:11:27]
+
 #H2H
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/inception.prototxt \
---output baseline_engines/inception_dla_transition_at_95.plan \
---start dla \
---transition 95 \
+--output baseline_engines/inception_gpu_transition_at_380.plan \
+--start gpu \
+--transition 380 \
 --verbose
 #H2H
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet152.prototxt \
---output baseline_engines/resnet152_gpu_transition_at_101.plan \
---start gpu \
+--output baseline_engines/resnet152_dla_transition_at_101.plan \
+--start dla \
 --transition 101 \
 --verbose
 
@@ -189,36 +189,36 @@ python3 src/build_engine.py \
 --transition -1 \
 --verbose
 
-#Note: Resnet101 gpu/dla plans previous built.
+#Note: Resnet101 gpu/dla plans has been previously built.
 
 #Herald
-python3 src/build_engine.py \
---prototxt prototxt_input_files/alexnet.prototxt \
---output baseline_engines/alexnet_gpu_transition_at_16.plan \
---start gpu \
---transition 9 \
---verbose
-#Herald
-python3 src/build_engine.py \
---prototxt prototxt_input_files/resnet101.prototxt \
---output baseline_engines/resnet101_dla_transition_at_58.plan \
---start dla \
---transition 58 \
---verbose
-
-#H2H
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/alexnet.prototxt \
 --output baseline_engines/alexnet_gpu_transition_at_14.plan \
 --start gpu \
 --transition 14 \
 --verbose
-#H2H
+#Herald
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet101.prototxt \
 --output baseline_engines/resnet101_dla_transition_at_101.plan \
 --start dla \
 --transition 101 \
+--verbose
+
+#H2H
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/alexnet.prototxt \
+--output baseline_engines/alexnet_gpu_transition_at_5.plan \
+--start gpu \
+--transition 5 \
+--verbose
+#H2H
+python3 src/build_engine.py \
+--prototxt prototxt_input_files/resnet101.prototxt \
+--output baseline_engines/resnet101_dla_transition_at_46.plan \
+--start dla \
+--transition 46 \
 --verbose
 
 #HaX-CoNN
@@ -277,15 +277,15 @@ python3 src/build_engine.py \
 #Herald
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/vgg19.prototxt \
---output baseline_engines/vgg19_gpu_transition_at_9.plan \
---start gpu \
+--output baseline_engines/vgg19_dla_transition_at_9.plan \
+--start dla \
 --transition 9 \
 --verbose
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet152.prototxt \
---output baseline_engines/resnet152_dla_transition_at_46.plan \
---start dla \
+--output baseline_engines/resnet152_gpu_transition_at_46.plan \
+--start gpu \
 --transition 46 \
 --verbose
 
@@ -293,16 +293,16 @@ python3 src/build_engine.py \
 #resnet152_286_vgg19_modified_gpu_27_2_results.log
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/vgg19.prototxt \
---output baseline_engines/vgg19_gpu_transition_at_27.plan \
+--output baseline_engines/vgg19_gpu_transition_at_22.plan \
 --start gpu \
---transition 27 \
+--transition 22 \
 --verbose
 
 python3 src/build_engine.py \
 --prototxt prototxt_input_files/resnet152.prototxt \
---output baseline_engines/resnet152_dla_transition_at_286.plan \
+--output baseline_engines/resnet152_dla_transition_at_165.plan \
 --start dla \
---transition 286 \
+--transition 165 \
 --verbose
 
 ##HaX-CoNN

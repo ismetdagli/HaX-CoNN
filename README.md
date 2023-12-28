@@ -96,6 +96,12 @@ make
 
 ### Step 1: Building Engines
 
+#### Summary
+
+This step explains how building engine scripts work. No instructions are needed for evaluation.
+
+#### Details
+
 The builder script `src/build_engine.py` can be used to serve TensorRT engines with varying configurations. Engines can be configured to be run only on gpu or dla or both by setting a transition layer.
 
 ```bash
@@ -140,7 +146,35 @@ The output of file will be used as an input file to TensorRT binary file (trtexe
 
 Until step 6, we settle our examples on GoogleNet. Each DNN has different details and settings that we need to go over. To keep the story flowing and consistent, we target on GoogleNet in this README.
 
-### Step 2: Layer profiling: 
+### Step 2: Layer profiling:
+
+#### Summary
+
+This step explains how layers are profiled. Summary of comprehensive profiling results can be obtained by running the command below. 
+
+```bash
+make layer
+#Pythonpath might be ignored if alreayd modified.
+export PYTHONPATH="$(pwd):$PYTHONPATH"
+python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
+
+# Summary given below:
+# {
+# ...
+#     "124-140": {
+#         "gpu": {
+#             "total_gpu_time_ms": 0.21411756,
+#             "layer_count": 17
+#         }
+#     }
+# }
+```
+
+
+
+
+#### Details
+
 
 Input File:
 
@@ -164,6 +198,8 @@ Output Files:
 To generate all necessary files:
 ```bash
 make layer
+export PYTHONPATH="$(pwd):$PYTHONPATH"
+python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 ```
 
 1. Engine File Generation
@@ -293,7 +329,23 @@ Different DNNs may generate more inconsistencies among devices/versions etc. Thi
 
 ### Step 3: Transition time profiling: 
 
-#### File Summary
+#### Summary
+
+This step explains how layers are profiled. Summary of comprehensive profiling result can be obtained by running the command below:
+
+```bash
+make layer
+python3 scripts/transition_time_analysis/transition_util.py
+cat output/transition_results.json
+# Summary of last lines given below:
+# ...
+# "googlenet_gpu_mark_at_124": {
+#     "mean_time": 1.98731,
+#     "transition_cost": 0.0245
+# }
+```
+
+#### Details
 
 Input File:
 
@@ -428,7 +480,21 @@ Note: We list the transition costs here as similar to Table 2 transition cost co
 
 ### Step 4: EMC Analysis 
 
-#### File Summary
+#### Summary
+
+This step explains how layers are profiled. Summary of comprehensive profiling result can be obtained by running the command below:
+
+```bash
+make emc
+cat output/emc_results.json
+# {
+#    "conv1": {
+#        "kernel1": "89%",
+#    ...
+# }
+```
+
+#### Details
 
 Input Files:
 

@@ -179,6 +179,7 @@ cat output_expected/layer_results.json
 
 #### Details
 
+The details subsection elaborates step by step how the data is obtained. The results that can be collected here are already presented in the summary.
 
 Input File:
 

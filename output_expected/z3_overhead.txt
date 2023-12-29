@@ -1,0 +1,28 @@
+1,6c1,6
+< alexnet_dla_alexnet_1_results.log:[12/28/2023-19:33:36] [I]                                                                                                                Total     6426.50             6.43    100.0
+< alexnet_dla_densenet_1_results.log:[12/28/2023-19:33:50] [I]                                                                                                                Total     5796.64             5.80    100.0
+< alexnet_dla_googlenet_1_results.log:[12/28/2023-19:34:07] [I]                                                                                                                Total     6176.86             6.18    100.0
+< alexnet_dla_inception_1_results.log:[12/28/2023-19:34:23] [I]                                                                                                                Total     5711.77             5.71    100.0
+< alexnet_dla_inc-res-v2_1_results.log:[12/28/2023-19:34:45] [I]                                                                                                                Total     5776.71             5.78    100.0
+< alexnet_dla_mobilenet_1_results.log:[12/28/2023-19:35:10] [I]                                                                                                                Total     6190.48             6.19    100.0
+---
+> alexnet_dla_alexnet_1_results.log:[12/28/2023-19:50:44] [I]                                                                                                                Total     6371.32             6.37    100.0
+> alexnet_dla_densenet_1_results.log:[12/28/2023-19:50:58] [I]                                                                                                                Total     5889.75             5.89    100.0
+> alexnet_dla_googlenet_1_results.log:[12/28/2023-19:51:15] [I]                                                                                                                Total     6377.38             6.38    100.0
+> alexnet_dla_inception_1_results.log:[12/28/2023-19:51:31] [I]                                                                                                                Total     5727.24             5.73    100.0
+> alexnet_dla_inc-res-v2_1_results.log:[12/28/2023-19:51:53] [I]                                                                                                                Total     5760.13             5.76    100.0
+> alexnet_dla_mobilenet_1_results.log:[12/28/2023-19:52:17] [I]                                                                                                                Total     6128.70             6.13    100.0
+8,13c8,13
+< alexnet_dla_resnet101_1_results.log:[12/28/2023-19:35:23] [I]                                                                                                                Total     5733.57             5.73    100.0
+< alexnet_dla_resnet152_1_results.log:[12/28/2023-19:35:39] [I]                                                                                                                Total     5810.15             5.81    100.0
+< alexnet_dla_resnet18_1_results.log:[12/28/2023-19:35:59] [I]                                                                                                                Total     6067.57             6.07    100.0
+< alexnet_dla_resnet50_1_results.log:[12/28/2023-19:36:14] [I]                                                                                                                Total     6248.41             6.25    100.0
+< alexnet_dla_vgg16_1_results.log:[12/28/2023-19:36:30] [I]                                                                                                                Total     5963.71             5.96    100.0
+< alexnet_dla_vgg19_1_results.log:[12/28/2023-19:36:47] [I]                                                                                                                Total     5832.63             5.83    100.0
+---
+> alexnet_dla_resnet101_1_results.log:[12/28/2023-19:52:30] [I]                                                                                                                Total     5788.15             5.79    100.0
+> alexnet_dla_resnet152_1_results.log:[12/28/2023-19:52:46] [I]                                                                                                                Total     5911.26             5.91    100.0
+> alexnet_dla_resnet18_1_results.log:[12/28/2023-19:53:06] [I]                                                                                                                Total     6230.35             6.23    100.0
+> alexnet_dla_resnet50_1_results.log:[12/28/2023-19:53:22] [I]                                                                                                                Total     6346.43             6.35    100.0
+> alexnet_dla_vgg16_1_results.log:[12/28/2023-19:53:37] [I]                                                                                                                Total     6054.71             6.05    100.0
+> alexnet_dla_vgg19_1_results.log:[12/28/2023-19:53:55] [I]                                                                                                                Total     5839.28             5.84    100.0

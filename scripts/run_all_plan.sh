@@ -5,6 +5,10 @@
 # Ensure the log directory exists
 # mkdir -p "$2"
 
+# engine logs from previous steps are cleared.
+rm -rf baseline_engine_logs
+mkdir baseline_engine_logs
+
 # Loop over all .plan files in the PLAN_DIR
 for plan_file in "$1"/*.plan; do
     # Extract the base name without the extension

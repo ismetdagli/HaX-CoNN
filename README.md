@@ -152,9 +152,10 @@ Until step 6, we settle our examples on GoogleNet. Each DNN has different detail
 This step explains how layers are profiled. Summary of comprehensive profiling results can be obtained by running the command below. 
 
 ```bash
+#Pythonpath and output folder might be ignored if already done.
+#Note: If "make" is done before, "make layer" does not build a file. 
 mkdir output
 make layer
-#Pythonpath and mkdir output might be ignored if alreayd modified.
 export PYTHONPATH="$(pwd):$PYTHONPATH"
 python3 scripts/layer_analysis/layer_all_util.py --gpu_json build/googlenet_transition_plans/layer_times/googlenet_gpu_transition_at_-1_filtered.json --dla_json output/dla_compute_times.json
 
@@ -351,6 +352,7 @@ Different DNNs may generate more inconsistencies among devices/versions etc. Thi
 This step explains how transition times are collect. Summary of comprehensive profiling result can be obtained by running the command below:
 
 ```bash
+#Note: If "make" is done before, "make layer" does not build a file. 
 make layer
 python3 scripts/transition_time_analysis/transition_util.py
 cat output/transition_results.json
@@ -496,11 +498,13 @@ Note: We list the transition costs here as similar to Table 2 transition cost co
 This step explains how emc utilizations are collected. Summary of comprehensive profiling result can be obtained by running the command below:
 
 ```bash
+#Note: If "make" is done before, "make emc" does not build a file. 
+#Note 2: make emc might require sudo
 make emc
 cat output/emc_results.json
 # Summary of last lines given below:
 # "conv5": {
-#         "kernel1": "35%",
+#         "kernel1": "34%",
 #         "kernel2": "40%",
 #         "kernel3": "24%",
 #         "kernel4": "29%",
@@ -596,12 +600,21 @@ Reference from paper: The outputs in Json file demonstrates very similar pattern
 ### Step 5: Memory Throughput Profiling
 
 #### Summary
-This step targets to profile memory throughput.  This code profiles the memory throughput in kernel level(Nsight compute automatically converts layers to kernels). The output file generates 'nsight_compute_googlenet_only_gpu_set_full.report.nsight-cuprof-report' file that includes memory throughput results. The file can be opened in a Desktop through Nsight Compute. For the sake of easiness of the artifact, manual operation and extracting of data manually is not excluded. 
+This step targets to profile memory throughput.  This code profiles the memory throughput in kernel level(Nsight compute automatically converts layers to kernels). The output file generates 'nsight_compute_googlenet_only_gpu_set_full.report.nsight-cuprof-report' file that includes memory throughput results. The file can be opened in a Desktop through Nsight Compute. For the sake of easiness of the artifact, nsight compute report analysis of data manually is excluded, yet explained in detail below. 
 
 ```bash
 mkdir nsight_compute_logs
 # This prompt requests sudo privilege. Takes a couple of minutes to run
 python3 src/nsight_compute.py
+
+cat nsight_compute_logs/googlenet_only_gpu_fullset_profiling.logs | grep "==PROF=="
+#Expected output:
+# ==PROF== Profiling "op_generic_tensor_kernel" - 76: 0%....50%....100% - 51 passes
+# ==PROF== Profiling "softmaxForwardNChHW2kernelMan..." - 77: 0%....50%....100% - 49 passes
+# ==PROF== Profiling "nchhw2ToNchw" - 78: 0%....50%....100%[12/28/2023-16:00:13] [I] Warmup completed 0 queries over 0 ms
+# ==PROF== Disconnected from process 9280
+# ==PROF== Report:  nsight_compute_googlenet_only_gpu_set_full.report.nsight-cuprof-report
+
 ```
 
 #### Details
@@ -632,8 +645,8 @@ chmod +x sync_multi_dnn_exec.sh
 ./sync_multi_dnn_exec.sh
 
 # Expected Output
-# [12/28/2023-06:36:24] [I] mean: 4.67762 ms # this is DLA exec
-# [12/28/2023-06:36:21] [I] mean: 3.30332 ms # this is GPU exec
+# [12/28/2023-06:36:24] [I] mean: 4.67762 ms         # this is DLA exec of GoogleNet
+# [12/28/2023-06:36:21] [I] mean: 3.30332 ms         # this is GPU exec of GoogleNet
 
 ```
 
@@ -647,16 +660,12 @@ The code implements the model given in Section 3.5. To run the model:
 
 ```bash
 python3 src/z3_solver_multi_dnn.py > output/schedule_summary.txt
-```
-
-The expected output from the solver is the schedule of DNNs.
-
-```bash
-> cat output/schedule_summary.txt
-GoogleNet starts on GPU
-GoogleNet applies transition at layer 52
-AlexNet starts on DLA
-AlexNet applies transition at layer 2
+cat output/schedule_summary.txt
+#The expected output from the solver is the schedule of DNNs.
+# GoogleNet starts on GPU
+# GoogleNet applies transition after layer 52
+# AlexNet starts on DLA
+# AlexNet applies transition after layer 2
 ```
 
 For other DNNs execution scenarios, previous steps needs to be followed and the profile data needs to be given the corresponding files.
@@ -673,14 +682,14 @@ For the sake of simplicity of the artifact, we provide the schedules previously 
 ```bash
 chmod +x baseline_engine_building.sh
 chmod +x collect_data_multidnn_experiment.sh
+#Note: Engine building can take around 25 mins
 ./baseline_engine_building.sh
+#Note: Data collection can take around 10 mins
 ./collect_data_multidnn_experiment.sh
 python3 src/summarize_multi_dnn_executions.py
 
-```
+#Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design. 
 
-Summary of experiments prints out the baseline values per baseline, HaX-CoNN value and the improvement over the best baseline. A short output given below and the real execution prints for each experiment design. 
-```bash
 # Summary of Exp3. Alexnet Resnet101
 # Only GPU: 13.4 ms
 # GPU&DLA: 10.4 ms
@@ -696,10 +705,10 @@ cat output_expected/transition_results.json
 
 
 #### Reusability on Orin AGX
-For a demonstrationg of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
-Moreover, in order to add another dimension for reusability, we proposa to use INT8 setting, whereas we use FP16 in Xavier AGX settings. Even though these changes seems easy enough, using a new devices with a different setting could be a good candidate for the reusability bagde. [A recent paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9638444) titled as "Performance Evaluation of INT8 Quantized Inference on Mobile GPUs" evaluates and characterizes the importance of difference between INT8 and FP16. 
+For a demonstration of reusability of our setup, we target to run the same DNNs. We have to use TensorRT to be able to use DLA. However, TensorRT version is 8.5 in Orin AGX (unlike Xavier AGX which has 7.1.3).
+Moreover, in order to add another dimension for reusability, we propose to use INT8 setting, whereas we use FP16 in Xavier AGX settings. Even though these changes seem easy enough, using new devices with a different setting could be a good candidate for the reusability bagde. [A recent paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9638444) titled as "Performance Evaluation of INT8 Quantized Inference on Mobile GPUs" evaluates and characterizes the importance of difference between INT8 and FP16. 
 
-For the sake of simplicity during reviewing process, profiling data has been preprocessed and the functions are adapted for new TensorRT version. (There has been changes in the function name in TensorRT's API). Plus, we have integrated the calibration files for DNNs from FP16 to INT8. 
+For the sake of simplicity during reviewing process, profiling data has been preprocessed and the functions are adapted for a new TensorRT version. (There have been some changes in the function name in TensorRT's API). Plus, we have integrated the calibration files for DNNs from FP16 to INT8. 
 
 
 Follow the steps to build tensorrt binary files. Since the version is different, sampleInference is given in a different file (sampleInference$Number_orinagx.cpp) Also, building engine file is different too(src/build_engine_orin.py). For the sake of easiness of the reviewer, we add the commands to run below for Orin AGX.
@@ -744,6 +753,7 @@ python3 src/build_engine.py --prototxt prototxt_input_files/alexnet.prototxt --o
 - Build GPU engines for DenseNet GoogleNet Inc-res-v2 Inception MobileNet ResNet18 ResNet50 ResNet101 ResNet152 VGG16 VGG19
 
 ```bash
+#This takes around 20 mins
 python3 src/build_engine.py --prototxt prototxt_input_files/ --output build/overhead_gpu --start gpu
 ```
 
@@ -751,14 +761,36 @@ python3 src/build_engine.py --prototxt prototxt_input_files/ --output build/over
     
 ```bash
 ./scripts/run_all_plan.sh build/overhead_gpu
-grep -r "                            Total   " alexnet_dla_*.log >> without_contention_alexnet_dla_time.log
+cd baseline_engine_logs 
+#Gather the results of 
+grep -r "                            Total   " alexnet_dla_*.log >> ../without_contention_alexnet_dla_time.log
+cd ..
 
 #IMPORTANT COMMENT: Open two different command lines. 
-#In the first, run run_forever script that constantly searches for the schedules by using z3.
+#In the first, run run_forever script that constantly searches for the schedules by using z3. 
 ./scripts/run_forever.sh
 #In the second, run DNN pairs similar to above.
 ./scripts/run_all_plan.sh build/overhead_gpu 
-grep -r "                            Total   " alexnet_dla_*.log >> with_contention_alexnet_dla_time.log
+#After run_all is completed, run_forever process can be killed.
+cd baseline_engine_logs 
+grep -r "                            Total   " alexnet_dla_*.log >> ../with_contention_alexnet_dla_time.log
+cd ..
+diff without_contention_alexnet_dla_time.log with_contention_alexnet_dla_time.log
+#Expected results are also given in output_expected/z3_overhead.txt
+# < alexnet_dla_resnet101_1_results.log:[12/28/2023-19:35:23]       Total     5733.57             5.73    100.0
+# < alexnet_dla_resnet152_1_results.log:[12/28/2023-19:35:39]       Total     5810.15             5.81    100.0
+# < alexnet_dla_resnet18_1_results.log:[12/28/2023-19:35:59]       Total     6067.57             6.07    100.0
+# < alexnet_dla_resnet50_1_results.log:[12/28/2023-19:36:14]       Total     6248.41             6.25    100.0
+# < alexnet_dla_vgg16_1_results.log:[12/28/2023-19:36:30]       Total     5963.71             5.96    100.0
+# < alexnet_dla_vgg19_1_results.log:[12/28/2023-19:36:47]       Total     5832.63             5.83    100.0
+# ---
+# > alexnet_dla_resnet101_1_results.log:[12/28/2023-19:52:30]       Total     5788.15             5.79    100.0
+# > alexnet_dla_resnet152_1_results.log:[12/28/2023-19:52:46]       Total     5911.26             5.91    100.0
+# > alexnet_dla_resnet18_1_results.log:[12/28/2023-19:53:06]       Total     6230.35             6.23    100.0
+# > alexnet_dla_resnet50_1_results.log:[12/28/2023-19:53:22]       Total     6346.43             6.35    100.0
+# > alexnet_dla_vgg16_1_results.log:[12/28/2023-19:53:37]       Total     6054.71             6.05    100.0
+# > alexnet_dla_vgg19_1_results.log:[12/28/2023-19:53:55]       Total     5839.28             5.84    100.0
 ```
 
-The log files might give inconsistent output results where parsing might cause an error. Instead of throwing an error, we leave the naive comparison of the results between without contention log and with contention log. The outputs are also given in Table 7 of the paper.
+Note: Authors have observed that the log files might be generate inconsistent profiling where parsing might cause an error. Instead of throwing an error, we leave the naive comparison of the results between without contention log and with contention log. The outputs are also given in Table 7 of the paper.
+Note2: Some DNN pairs might take less time when z3 is running. This unexpected behaviour is caused by running the example with limited iteration and any arbitrary big noise might affect the average time.

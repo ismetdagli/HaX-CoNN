@@ -158,7 +158,7 @@ if opt.check() == sat:
             print(f'GoogleNet starts on {acc}')
         else:
             if previous_acc != acc:
-                print(f'GoogleNet applies transition at layer {layer_group_nn1[i]}')
+                print(f'GoogleNet applies transition after layer {layer_group_nn1[i]}')
         previous_acc=acc
     
     previous_acc=""
@@ -168,7 +168,7 @@ if opt.check() == sat:
             print(f'AlexNet starts on {acc}')
         else:
             if previous_acc != acc:
-                print(f'AlexNet applies transition at layer {layer_group_nn2[i]}')
+                print(f'AlexNet applies transition after layer {layer_group_nn2[i]}')
         previous_acc=acc
 else:
     print("No feasible solution found")

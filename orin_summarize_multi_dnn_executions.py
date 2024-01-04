@@ -25,7 +25,7 @@ for line in Lines:
     
     if "resnet101_only_gpu_googlenet_only_gpu" in line:
         resnet_average_time = index_mean(line)
-only_gpu_exec_time=googlenet_average_time+resnet_average_time
+only_gpu_exec_time=max(googlenet_average_time,resnet_average_time)
 print("Average time of using only GPU:", round(only_gpu_exec_time,2) )
 
 
@@ -43,10 +43,10 @@ print("Average time of Resnet101 on DLA and Googlenet on GPU:", round(dla_gpu_ex
 
 
 for line in Lines:
-    if "googlenet_dla_transition_at_10_resnet101_gpu_transition_at_101" in line:
+    if "googlenet_dla_transition_at_24_resnet101_gpu_transition_at_101" in line:
         googlenet_average_time = index_mean(line)
     
-    if "resnet101_gpu_transition_at_101_googlenet_dla_transition_at_10" in line:
+    if "resnet101_gpu_transition_at_101_googlenet_dla_transition_at_24" in line:
         resnet_average_time = index_mean(line)
 herald_exec=max(googlenet_average_time,resnet_average_time)
 

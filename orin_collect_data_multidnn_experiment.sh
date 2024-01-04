@@ -13,7 +13,7 @@ printf '\n'
 python3 orin_run_multiple_dnn_experiments.py --plan1=baseline_engines/googlenet_dla_transition_at_24.plan --plan2=baseline_engines/resnet101_gpu_transition_at_101.plan
 printf '\n'
 #H2H
-python3 orin_run_multiple_dnn_experiments.py --plan1=baseline_engines/googlenet_dla_transition_at_95.plan --plan2=baseline_engines/resnet101_gpu_transition_at_415.plan
+python3 orin_run_multiple_dnn_experiments.py --plan1=baseline_engines/googlenet_dla_transition_at_81.plan --plan2=baseline_engines/resnet101_gpu_transition_at_415.plan
 printf '\n'
 #HaX-CoNN
 python3 orin_run_multiple_dnn_experiments.py --plan1=baseline_engines/googlenet_dla_transition_at_38.plan --plan2=baseline_engines/resnet101_gpu_transition_at_312.plan

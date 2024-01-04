@@ -177,98 +177,98 @@ if __name__ == "__main__":
     calibration_files = "calibrator_networks/googlenet_calibration"
     nn_protoxt_path = "prototxt_input_files/googlenet.prototxt"  # This variable must be modified for the correct PATH.
 
-    count = 0
-    batch = 1
-    transition = -1
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/googlenet_only_gpu.plan"),
-    )
+    # count = 0
+    # batch = 1
+    # transition = -1
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/googlenet_only_gpu.plan"),
+    # )
 
 
-    transition = 10
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, False, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/googlenet_dla_transition_at_10.plan"),
-    )
-
-    
-    transition = 81
+    transition = 24
     serialized_engine = serialized_engine = build_engine_caffe(
         None, nn_protoxt_path, False, transition, calibration_files
     )
     save_engine(
         serialized_engine,
-        str("baseline_engines/googlenet_dla_transition_at_81.plan"),
+        str("baseline_engines/googlenet_dla_transition_at_24.plan"),
     )
 
     
-    transition = 38
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, False, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/googlenet_dla_transition_at_38.plan"),
-    )
-
-
-
-
-    calibration_files = "calibrator_networks/resnet101_calibration"
-    nn_protoxt_path = "prototxt_input_files/resnet101.prototxt"  # This variable must be modified for the correct PATH.
-
-    count = 0
-    batch = 1
-    transition = -1
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/resnet101_only_gpu.plan"),
-    )
+    # transition = 81
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, False, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/googlenet_dla_transition_at_81.plan"),
+    # )
 
     
-    transition =999
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/resnet101_only_dla.plan"),
-    )
+    # transition = 38
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, False, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/googlenet_dla_transition_at_38.plan"),
+    # )
+
+
+
+
+    # calibration_files = "calibrator_networks/resnet101_calibration"
+    # nn_protoxt_path = "prototxt_input_files/resnet101.prototxt"  # This variable must be modified for the correct PATH.
+
+    # count = 0
+    # batch = 1
+    # transition = -1
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/resnet101_only_gpu.plan"),
+    # )
 
     
-    transition = 101
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/resnet101_gpu_transition_at_101.plan"),
-    )
+    # transition =999
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/resnet101_only_dla.plan"),
+    # )
+
     
-    transition = 415
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/resnet101_gpu_transition_at_415.plan"),
-    )
+    # transition = 101
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/resnet101_gpu_transition_at_101.plan"),
+    # )
     
-    transition = 312
-    serialized_engine = serialized_engine = build_engine_caffe(
-        None, nn_protoxt_path, True, transition, calibration_files
-    )
-    save_engine(
-        serialized_engine,
-        str("baseline_engines/resnet101_gpu_transition_at_312.plan"),
-    )
+    # transition = 415
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/resnet101_gpu_transition_at_415.plan"),
+    # )
+    
+    # transition = 312
+    # serialized_engine = serialized_engine = build_engine_caffe(
+    #     None, nn_protoxt_path, True, transition, calibration_files
+    # )
+    # save_engine(
+    #     serialized_engine,
+    #     str("baseline_engines/resnet101_gpu_transition_at_312.plan"),
+    # )

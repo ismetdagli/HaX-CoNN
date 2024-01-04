@@ -15,7 +15,7 @@ cd ../../../
 
 mkdir baseline_engines
 mkdir orin_baseline_engines_logs
-# python3 build_engine_orin.py
+python3 build_engine_orin.py
 chmod +x orin_collect_data_multidnn_experiment.sh
 ./orin_collect_data_multidnn_experiment.sh
 python3 orin_summarize_multi_dnn_executions.py

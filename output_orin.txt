@@ -1,0 +1,280 @@
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+Compiling: ../common/sampleOptions.cpp
+Compiling: trtexec.cpp
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: trtexec.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+Linking: ../../bin/trtexec_debug
+Linking: ../../bin/trtexec
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+Compiling: ../common/sampleOptions.cpp
+Compiling: trtexec.cpp
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: trtexec.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Linking: ../../bin/trtexec_debug
+Compiling: ../common/sampleEngines.cpp
+Linking: ../../bin/trtexec
+
+
+Experiment 1: GoogleNet and ResNet101 data profiling
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_gpu.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_gpu
+--------------------
+iter: 2024-01-04 13:58:13.369090
+iter: 2024-01-04 13:58:14.371091
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_dla.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_dla
+--------------------
+iter: 2024-01-04 13:58:14.486514
+iter: 2024-01-04 13:58:15.488136
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_10.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_101.plan
+Network1: googlenet_dla_transition_at_10
+Network2: resnet101_gpu_transition_at_101
+--------------------
+iter: 2024-01-04 13:58:15.602455
+iter: 2024-01-04 13:58:16.604665
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_81.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_415.plan
+Network1: googlenet_dla_transition_at_81
+Network2: resnet101_gpu_transition_at_415
+--------------------
+iter: 2024-01-04 13:58:16.719812
+iter: 2024-01-04 13:58:17.721829
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_38.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_312.plan
+Network1: googlenet_dla_transition_at_38
+Network2: resnet101_gpu_transition_at_312
+--------------------
+iter: 2024-01-04 13:58:17.848073
+iter: 2024-01-04 13:58:18.849940
+
+
+
+
+Summary of Exp1. GoogleNet and ResNet101
+Average time of using only GPU: 0
+Average time of Resnet101 on DLA and Googlenet on GPU: 0
+Average time of the schedule found by Herald: 0
+Average time of the schedule found by H2H: 0
+Average time of the schedule found by HaX-CoNN: 0
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+2nd test
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+Compiling: ../common/sampleInference.cpp
+Linking: ../../bin/trtexec
+Linking: ../../bin/trtexec_debug
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+Compiling: ../common/sampleInference.cpp
+Linking: ../../bin/trtexec
+Linking: ../../bin/trtexec_debug
+
+
+Experiment 1: GoogleNet and ResNet101 data profiling
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_gpu.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_gpu
+--------------------
+iter: 2024-01-04 14:02:47.976812
+iter: 2024-01-04 14:02:48.978548
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_dla.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_dla
+--------------------
+iter: 2024-01-04 14:02:49.077518
+iter: 2024-01-04 14:02:50.079082
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_10.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_101.plan
+Network1: googlenet_dla_transition_at_10
+Network2: resnet101_gpu_transition_at_101
+--------------------
+iter: 2024-01-04 14:02:50.177660
+iter: 2024-01-04 14:02:51.179377
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_81.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_415.plan
+Network1: googlenet_dla_transition_at_81
+Network2: resnet101_gpu_transition_at_415
+--------------------
+iter: 2024-01-04 14:02:51.280341
+iter: 2024-01-04 14:02:52.281259
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_38.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_312.plan
+Network1: googlenet_dla_transition_at_38
+Network2: resnet101_gpu_transition_at_312
+--------------------
+iter: 2024-01-04 14:02:52.381509
+iter: 2024-01-04 14:02:53.383124
+
+
+
+
+Summary of Exp1. GoogleNet and ResNet101
+Average time of using only GPU: 0
+Average time of Resnet101 on DLA and Googlenet on GPU: 0
+Average time of the schedule found by Herald: 0
+Average time of the schedule found by H2H: 0
+Average time of the schedule found by HaX-CoNN: 0
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+Compiling: ../common/sampleInference.cpp
+Linking: ../../bin/trtexec
+Linking: ../../bin/trtexec_debug
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+Compiling: ../common/sampleInference.cpp
+Linking: ../../bin/trtexec
+Linking: ../../bin/trtexec_debug
+[01/04/2024-14:04:20] [TRT] [W] The implicit batch dimension mode has been deprecated. Please create the network with NetworkDefinitionCreationFlag::kEXPLICIT_BATCH flag whenever possible.
+[01/04/2024-14:04:20] [TRT] [E] CaffeParser: Could not open file prototxts/resNet-101_deploy.prototxt
+[01/04/2024-14:04:20] [TRT] [E] CaffeParser: Could not parse deploy file
+[01/04/2024-14:04:20] [TRT] [E] 1: Unexpected exception vector::_M_range_check: __n (which is 18446744073709551615) >= this->size() (which is 0)
+
+
+Experiment 1: GoogleNet and ResNet101 data profiling
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_gpu.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_gpu
+--------------------
+iter: 2024-01-04 14:04:21.092929
+iter: 2024-01-04 14:04:22.095057
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_dla.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_dla
+--------------------
+iter: 2024-01-04 14:04:22.300507
+iter: 2024-01-04 14:04:23.302152
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_10.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_101.plan
+Network1: googlenet_dla_transition_at_10
+Network2: resnet101_gpu_transition_at_101
+--------------------
+iter: 2024-01-04 14:04:23.504777
+iter: 2024-01-04 14:04:24.506533
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_81.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_415.plan
+Network1: googlenet_dla_transition_at_81
+Network2: resnet101_gpu_transition_at_415
+--------------------
+iter: 2024-01-04 14:04:24.716804
+iter: 2024-01-04 14:04:25.719191
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_38.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_312.plan
+Network1: googlenet_dla_transition_at_38
+Network2: resnet101_gpu_transition_at_312
+--------------------
+iter: 2024-01-04 14:04:25.926251
+iter: 2024-01-04 14:04:26.928674
+
+
+
+
+Summary of Exp1. GoogleNet and ResNet101
+Average time of using only GPU: 0
+Average time of Resnet101 on DLA and Googlenet on GPU: 0
+Average time of the schedule found by Herald: 0
+Average time of the schedule found by H2H: 0
+Average time of the schedule found by HaX-CoNN: 0

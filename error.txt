@@ -1,0 +1,540 @@
+                                                 |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:945:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  945 |     int k = *shm;
+      |         ^
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1124:77:   required from here
+../common/sampleInference.cpp:980:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  980 |     printf("Before Loop: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:945:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  945 |     int k = *shm;
+      |         ^
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: trtexec.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleOptions.cpp
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::safe::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::safe::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1120:81:   required from here
+../common/sampleInference.cpp:980:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  980 |     printf("Before Loop: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:945:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  945 |     int k = *shm;
+      |         ^
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1124:77:   required from here
+../common/sampleInference.cpp:980:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  980 |     printf("Before Loop: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:945:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  945 |     int k = *shm;
+      |         ^
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Linking: ../../bin/trtexec_debug
+Compiling: ../common/sampleEngines.cpp
+Linking: ../../bin/trtexec
+../Makefile.config:13: CUDA_INSTALL_DIR variable is not specified, using /usr/local/cuda by default, use CUDA_INSTALL_DIR=<cuda_directory> to change.
+../Makefile.config:18: CUDNN_INSTALL_DIR variable is not specified, using /usr/local/cuda by default, use CUDNN_INSTALL_DIR=<cudnn_directory> to change.
+../Makefile.config:38: TRT_LIB_DIR is not specified, searching ../../lib, ../../lib, ../lib by default, use TRT_LIB_DIR=<trt_lib_directory> to change.
+../Makefile.config:43: PROTOBUF_INSTALL_DIR variable is not specified, use PROTOBUF_INSTALL_DIR=<protobuf_directory> to change. Using default value: /usr/lib/x86_64-linux-gnu
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+Compiling: ../common/sampleOptions.cpp
+Compiling: trtexec.cpp
+Compiling: ../common/sampleInference.cpp
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::safe::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::safe::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1120:81:   required from here
+../common/sampleInference.cpp:969:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  969 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:981:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  981 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:928:9: warning: unused variable ‘v1’ [-Wunused-variable]
+  928 |     int v1;
+      |         ^~
+../common/sampleInference.cpp:946:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  946 |     int k = *shm;
+      |         ^
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1124:77:   required from here
+../common/sampleInference.cpp:969:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  969 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:981:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  981 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:928:9: warning: unused variable ‘v1’ [-Wunused-variable]
+  928 |     int v1;
+      |         ^~
+../common/sampleInference.cpp:946:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  946 |     int k = *shm;
+      |         ^
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/dchobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: trtexec.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleInference.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleUtils.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleOptions.cpp
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::safe::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::safe::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1120:81:   required from here
+../common/sampleInference.cpp:969:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  969 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:981:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  981 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:928:9: warning: unused variable ‘v1’ [-Wunused-variable]
+  928 |     int v1;
+      |         ^~
+../common/sampleInference.cpp:946:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  946 |     int k = *shm;
+      |         ^
+../common/sampleInference.cpp: In instantiation of ‘bool sample::{anonymous}::inferenceLoop(std::vector<std::unique_ptr<sample::{anonymous}::Iteration<ContextType> > >&, const TimePoint&, const sample::TrtCudaEvent&, int, float, float, std::vector<sample::InferenceTrace>&, bool, float) [with ContextType = nvinfer1::IExecutionContext; sample::{anonymous}::TimePoint = std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long int, std::ratio<1, 1000000000> > >]’:
+../common/sampleInference.cpp:1093:23:   required from ‘void sample::{anonymous}::inferenceExecution(const sample::InferenceOptions&, sample::InferenceEnvironment&, sample::{anonymous}::SyncStruct&, int32_t, int32_t, int32_t, std::vector<sample::InferenceTrace>&) [with ContextType = nvinfer1::IExecutionContext; int32_t = int]’
+../common/sampleInference.cpp:1124:77:   required from here
+../common/sampleInference.cpp:969:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  969 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:981:38: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+  981 |     printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                     ~^                                           ~~~~~~~~~~
+      |                                      |                                              |
+      |                                      int                                            __suseconds_t {aka long int}
+      |                                     %ld
+../common/sampleInference.cpp:1005:62: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1005 |                 printf("\n\n COUNTER EXCEEDED: %d:%02d:%02d %d \n\n\n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                                             ~^                                               ~~~~~~~~~~
+      |                                                              |                                                  |
+      |                                                              int                                                __suseconds_t {aka long int}
+      |                                                             %ld
+../common/sampleInference.cpp:1016:42: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1016 |         printf("StartTime: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                         ~^                                           ~~~~~~~~~~
+      |                                          |                                              |
+      |                                          int                                            __suseconds_t {aka long int}
+      |                                         %ld
+../common/sampleInference.cpp:1051:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1051 |     printf("2nd Streams: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                       ~^                                           ~~~~~~~~~~
+      |                                        |                                              |
+      |                                        int                                            __suseconds_t {aka long int}
+      |                                       %ld
+../common/sampleInference.cpp:1059:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘__suseconds_t’ {aka ‘long int’} [-Wformat=]
+ 1059 |     printf("At the end: %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
+      |                                      ~^                                           ~~~~~~~~~~
+      |                                       |                                              |
+      |                                       int                                            __suseconds_t {aka long int}
+      |                                      %ld
+../common/sampleInference.cpp:922:11: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+  922 |     char *s;
+      |           ^
+../common/sampleInference.cpp:923:10: warning: unused variable ‘c’ [-Wunused-variable]
+  923 |     char c;
+      |          ^
+../common/sampleInference.cpp:926:9: warning: unused variable ‘shmid’ [-Wunused-variable]
+  926 |     int shmid = shmget(my_key,sizeof(int),0666|IPC_CREAT); // shmget returns an ide in shmid
+      |         ^~~~~
+../common/sampleInference.cpp:928:9: warning: unused variable ‘v1’ [-Wunused-variable]
+  928 |     int v1;
+      |         ^~
+../common/sampleInference.cpp:946:9: warning: variable ‘k’ set but not used [-Wunused-but-set-variable]
+  946 |     int k = *shm;
+      |         ^
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/logger.cpp
+Compiling: ../common/getOptions.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleReporting.cpp
+if [ ! -d ../../bin/chobj/trtexec/trtexec/../common ]; then mkdir -p ../../bin/chobj/trtexec/trtexec/../common; fi && :
+Compiling: ../common/sampleEngines.cpp
+Linking: ../../bin/trtexec_debug
+Linking: ../../bin/trtexec
+python3: can't open file 'orin_build_engine.py': [Errno 2] No such file or directory
+
+
+Experiment 1: GoogleNet and ResNet101 data profiling
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_gpu.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_gpu
+--------------------
+iter: 2024-01-04 13:47:18.570475
+[01/04/2024-13:47:18] [E] Error opening engine file: baseline_engines/googlenet_only_gpu.plan
+[01/04/2024-13:47:18] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:18] [E] Engine set up failed
+iter: 2024-01-04 13:47:19.572491
+[01/04/2024-13:47:19] [E] Error opening engine file: baseline_engines/resnet101_only_gpu.plan
+[01/04/2024-13:47:19] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:19] [E] Engine set up failed
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_only_gpu.plan
+this is the plan2 path:  baseline_engines/resnet101_only_dla.plan
+Network1: googlenet_only_gpu
+Network2: resnet101_only_dla
+--------------------
+iter: 2024-01-04 13:47:19.779385
+[01/04/2024-13:47:19] [E] Error opening engine file: baseline_engines/googlenet_only_gpu.plan
+[01/04/2024-13:47:19] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:19] [E] Engine set up failed
+iter: 2024-01-04 13:47:20.780987
+[01/04/2024-13:47:20] [E] Error opening engine file: baseline_engines/resnet101_only_dla.plan
+[01/04/2024-13:47:20] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:20] [E] Engine set up failed
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_10.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_101.plan
+Network1: googlenet_dla_transition_at_10
+Network2: resnet101_gpu_transition_at_101
+--------------------
+iter: 2024-01-04 13:47:20.989982
+[01/04/2024-13:47:21] [E] Error opening engine file: baseline_engines/googlenet_dla_transition_at_10.plan
+[01/04/2024-13:47:21] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:21] [E] Engine set up failed
+iter: 2024-01-04 13:47:21.991853
+[01/04/2024-13:47:22] [E] Error opening engine file: baseline_engines/resnet101_gpu_transition_at_101.plan
+[01/04/2024-13:47:22] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:22] [E] Engine set up failed
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_81.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_415.plan
+Network1: googlenet_dla_transition_at_81
+Network2: resnet101_gpu_transition_at_415
+--------------------
+iter: 2024-01-04 13:47:22.210571
+[01/04/2024-13:47:22] [E] Error opening engine file: baseline_engines/googlenet_dla_transition_at_81.plan
+[01/04/2024-13:47:22] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:22] [E] Engine set up failed
+iter: 2024-01-04 13:47:23.212694
+[01/04/2024-13:47:23] [E] Error opening engine file: baseline_engines/resnet101_gpu_transition_at_415.plan
+[01/04/2024-13:47:23] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:23] [E] Engine set up failed
+
+Code started
+this is the plan1 path:  baseline_engines/googlenet_dla_transition_at_38.plan
+this is the plan2 path:  baseline_engines/resnet101_gpu_transition_at_312.plan
+Network1: googlenet_dla_transition_at_38
+Network2: resnet101_gpu_transition_at_312
+--------------------
+iter: 2024-01-04 13:47:23.424357
+[01/04/2024-13:47:23] [E] Error opening engine file: baseline_engines/googlenet_dla_transition_at_38.plan
+[01/04/2024-13:47:23] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:23] [E] Engine set up failed
+iter: 2024-01-04 13:47:24.425433
+[01/04/2024-13:47:24] [E] Error opening engine file: baseline_engines/resnet101_gpu_transition_at_312.plan
+[01/04/2024-13:47:24] [E] Failed to create engine from model or file.
+[01/04/2024-13:47:24] [E] Engine set up failed
+
+
+
+
+Summary of Exp1. GoogleNet and ResNet101
+Average time of using only GPU: 0
+Average time of Resnet101 on DLA and Googlenet on GPU: 0
+Average time of the schedule found by Herald: 0
+Average time of the schedule found by H2H: 0
+Average time of the schedule found by HaX-CoNN: 0
+Traceback (most recent call last):
+  File "orin_summarize_multi_dnn_executions.py", line 77, in <module>
+    print("Overall improvement over best-baseline: "+str(round((min(only_gpu_exec_time,dla_gpu_exec_time,herald_exec,h2h_exec)/hax_conn_exec-1)*100,2))+"%\n\n")
+ZeroDivisionError: division by zero

@@ -927,7 +927,7 @@ bool inferenceLoop(std::vector<std::unique_ptr<Iteration<ContextType>>>& iStream
     // shm = (char*) shmat(shmid,(void*)0,0); // shmat to join to shared memory
     int v1;
     struct stat statbuf;
-    int fd = open("/tmp/shared_mem.txt", O_RDWR,S_IRUSR | S_IWUSR);
+    int fd = open("shared_mem.txt", O_RDWR,S_IRUSR | S_IWUSR);
     fstat(fd, &statbuf);
     char *shm = (char*) mmap(
         /* addr= */ NULL,
